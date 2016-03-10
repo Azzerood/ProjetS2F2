@@ -1,0 +1,21 @@
+public class Element {
+	int ID;
+	
+	Element(int n){
+		ID=n;
+	}
+	
+	public String toString(){
+		if(ID==0)return "N";//navire equipe1
+		if(ID==1)return "n";//navire equipe2
+		if(ID==2)return "R";//Rocher
+		if(ID==3)return "C";//Coffre
+		if(ID==4)return "c";//clé
+		if(ID==5)return "T";//trésor
+		return " ";
+	}
+	public static void main(String[] args){
+		
+	}
+
+}
