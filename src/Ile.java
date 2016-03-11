@@ -46,22 +46,56 @@ public class Ile {
 		plateau[x][y].ajouterClé();
 	}
 	public boolean Bloque(int x,int y){ //(En cours) Permet de savoir si un rocher bloque une parcelle de l'ile
-		//Empeche d'obtenir des patterns qui pourraient entourer certaines parcelles de l'ile (mis bout à bout).
-		if(x>0 && plateau[x-1][y].listeelements.contains(new Element(2))){  
-			if(x+1<plateau.length && plateau[x+1][y].listeelements.contains(new Element(2))) return true;
-			if(y+1<plateau[0].length && plateau[x][y+1].listeelements.contains(new Element(2))) return true;
-			if (y>0 && plateau[x][y-1].listeelements.contains(new Element(2))) return true;
+		if(x==0){ //vérifie le bord gauche
+			if(!plateau[x+1][y].listeelements.isEmpty()) return true;
+			if(y+1<plateau[0].length){
+				if(!plateau[x][y+1].listeelements.isEmpty()) return true;
+			}
+			if(y>0){
+			if(!plateau[x][y-1].listeelements.isEmpty()) return true;
+			
+			if(!plateau[x+1][y-1].listeelements.isEmpty()) return true;
+			}
 		}
-		if(x+1<plateau.length && plateau[x+1][y].listeelements.contains(new Element(2))){
-			if (y>0 && plateau[x][y-1].listeelements.contains(new Element(2))) return true;
-			if(y+1<plateau[0].length && plateau[x][y+1].listeelements.contains(new Element(2))) return true;
+		if(x==plateau.length-1){ //Vérifie le bord droit
+			if(!plateau[x-1][y].listeelements.isEmpty()) return true;
+			if(y>0){
+				if(!plateau[x-1][y-1].listeelements.isEmpty()) return true;
+				if(!plateau[x][y-1].listeelements.isEmpty()) return true;
+			}
+			if(y+1<plateau[0].length){
+			if(!plateau[x-1][y+1].listeelements.isEmpty()) return true;
+			if(!plateau[x][y+1].listeelements.isEmpty()) return true;
+			}
 		}
-		if (y>0 && plateau[x][y-1].listeelements.contains(new Element(2))){
-			if(y+1<plateau[0].length && plateau[x][y+1].listeelements.contains(new Element(2))) return true;
+		
+		if(y==0){ //vérifie le bord supérieur
+			if(!plateau[x][y+1].listeelements.isEmpty()) return true;
+			if(x>0){
+				if(!plateau[x-1][y].listeelements.isEmpty()) return true;
+				if(!plateau[x-1][y+1].listeelements.isEmpty()) return true;
+			}
+			if(x+1<plateau.length){
+				if(!plateau[x+1][y].listeelements.isEmpty()) return true;
+				if(!plateau[x+1][y+1].listeelements.isEmpty()) return true;
+			}
+			
 		}
-		if(x+1<plateau.length && x>0 && y+1<plateau[0].length && y>0 && plateau[x-1][y-1].listeelements.contains(new Element(2))){
-			if(plateau[x+1][y+1].listeelements.contains(new Element(2)))return true;
+		if(y==plateau[0].length-1){ //Vérifie le bord inférieur
+			
 		}
+		
+		if(x+1<plateau.length && x>0 && y+1<plateau[0].length && y>0  ){ //Vérifie le bord intérieur
+			if(!plateau[x-1][y-1].listeelements.isEmpty()) return true;
+			if(!plateau[x][y-1].listeelements.isEmpty()) return true;
+			if(!plateau[x+1][y-1].listeelements.isEmpty()) return true;
+			if(!plateau[x-1][y].listeelements.isEmpty()) return true;
+			if(!plateau[x+1][y].listeelements.isEmpty()) return true;
+			if(!plateau[x-1][y+1].listeelements.isEmpty()) return true;
+			if(!plateau[x][y+1].listeelements.isEmpty()) return true;
+			if(!plateau[x+1][y+1].listeelements.isEmpty()) return true;
+		}
+		
 		return false;
 	}
 	public void placerRocher(){
@@ -71,11 +105,12 @@ public class Ile {
 			r1 = r.nextInt(plateau.length);
 			r2 = r.nextInt(plateau[0].length);
 				
-			while(!plateau[r1][r2].listeelements.isEmpty() && !Bloque(r1,r2)) {
+			while(!plateau[r1][r2].listeelements.isEmpty() || Bloque(r1,r2)) {
 				r1 = r.nextInt(plateau.length);
 				r2 = r.nextInt(plateau[0].length);
 			} 
 			plateau[r1][r2].ajouterRocher();
+			
 		}
 	}
 	
