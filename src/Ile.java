@@ -35,7 +35,7 @@ public class Ile {
 			}
 			res+="|\n";
 		}
-		res+=ligne;
+		res+=ligne; //ligne
 		return res;
 	}
 	
