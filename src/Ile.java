@@ -43,9 +43,25 @@ public class Ile {
 		plateau[x][y].ajouterClé();
 	}
 	public boolean Bloque(int x,int y){ //(En cours) Permet de savoir si un rocher bloque une parcelle de l'ile
+		//Empeche d'obtenir des patterns qui pourraient entourer certaines parcelles de l'ile (mis bout à bout).
+		if(x>0 && plateau[x-1][y].listeelements.contains(new Element(2))){  
+			if(x+1<plateau.length && plateau[x+1][y].listeelements.contains(new Element(2))) return true;
+			if(y+1<plateau[0].length && plateau[x][y+1].listeelements.contains(new Element(2))) return true;
+			if (y>0 && plateau[x][y-1].listeelements.contains(new Element(2))) return true;
+		}
+		if(x+1<plateau.length && plateau[x+1][y].listeelements.contains(new Element(2))){
+			if (y>0 && plateau[x][y-1].listeelements.contains(new Element(2))) return true;
+			if(y+1<plateau[0].length && plateau[x][y+1].listeelements.contains(new Element(2))) return true;
+		}
+		if (y>0 && plateau[x][y-1].listeelements.contains(new Element(2))){
+			if(y+1<plateau[0].length && plateau[x][y+1].listeelements.contains(new Element(2))) return true;
+		}
+		if(x+1<plateau.length && x>0 && y+1<plateau[0].length && y>0 && plateau[x-1][y-1].listeelements.contains(new Element(2))){
+			if(plateau[x+1][y+1].listeelements.contains(new Element(2)))return true;
+		}
 		return false;
 	}
-public String toString(){
+	public String toString(){
 		String ligne="";
 		for(int nbcases=0;nbcases<plateau.length;nbcases++){
 		ligne+="+---";
