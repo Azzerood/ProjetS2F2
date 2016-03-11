@@ -2,6 +2,7 @@ import java.util.Random;
 
 public class Ile {
 	Parcelle[][] plateau; //plateau
+	
 	Ile(int d){
 		plateau=new Parcelle[d][d];
 		for(int l=0;l<plateau.length;l++){
@@ -21,6 +22,26 @@ public class Ile {
 		
 	}
 	
+	public void placerCoffre(){  //place aléatoirement sur la carte le coffre sous un rocher (dissimulé par un rocher)
+		Random r=new Random();
+		int x;
+		int y;
+		do{
+		x=r.nextInt(plateau.length);  // S'adapte au dimension du plateau
+		y=r.nextInt(plateau[0].length); //S'adapte au dimension du plateau
+		}while(!plateau[x][y].listeelements.isEmpty()); // Empeche de placer le coffre sur une case deja existente.
+		plateau[x][y].ajouterCoffre();
+	}
+	public void placerClé(){ //place aléatoirement sur la carte le coffre sous un rocher (dissimulé par un rocher)
+		Random r=new Random();
+		int x;
+		int y;
+		do{
+		x=r.nextInt(plateau.length);  // S'adapte au dimension du plateau
+		y=r.nextInt(plateau[0].length); //S'adapte au dimension du plateau
+		}while(!plateau[x][y].listeelements.isEmpty()); // Empeche de placer la clé sur une case deja existente.
+		plateau[x][y].ajouterClé();
+	}
 	public String toString(){
 		String ligne="";
 		for(int nbcases=0;nbcases<plateau.length;nbcases++){
@@ -41,12 +62,12 @@ public class Ile {
 	
 	
 	public static void main(String[] args){
-		Random r=new Random();
 		Ile i=new Ile();
 		System.out.print(i.toString());
 		i.plateau[0][0].ajouterNaviree1();
-		i.plateau[r.nextInt(10)][r.nextInt(10)].ajouterClé();
-		i.plateau[r.nextInt(10)][r.nextInt(10)].ajouterCoffre();
+		i.plateau[i.plateau.length-1][i.plateau[0].length-1].ajouterNaviree2();
+		i.placerCoffre();
+		i.placerCoffre();
 		System.out.println("*******************************************");
 		System.out.print(i.toString());
 		
