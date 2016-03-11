@@ -1,7 +1,6 @@
 
 public class Ile {
 	Parcelle[][] plateau; //plateau
-	
 	Ile(int d){
 		plateau=new Parcelle[d][d];
 		for(int l=0;l<plateau.length;l++){
