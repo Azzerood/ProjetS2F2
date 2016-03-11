@@ -21,7 +21,10 @@ public class Ile {
 		
 		
 	}
-	
+	public void placerLesNavires(){
+		plateau[0][0].ajouterNaviree1();
+		plateau[plateau.length-1][plateau[0].length-1].ajouterNaviree2();
+	}
 	public void placerCoffre(){  //place aléatoirement sur la carte le coffre sous un rocher (dissimulé par un rocher)
 		Random r=new Random();
 		int x;
@@ -61,6 +64,21 @@ public class Ile {
 		}
 		return false;
 	}
+	public void placerRocher(){
+		Random r = new Random();
+		int r1, r2;
+		for(int i = 0; i<(plateau.length)*(plateau[0].length)*0.1; i++){
+			r1 = r.nextInt(plateau.length);
+			r2 = r.nextInt(plateau[0].length);
+				
+			while(!plateau[r1][r2].listeelements.isEmpty() && !Bloque(r1,r2)) {
+				r1 = r.nextInt(plateau.length);
+				r2 = r.nextInt(plateau[0].length);
+			} 
+			plateau[r1][r2].ajouterRocher();
+		}
+	}
+	
 	public String toString(){
 		String ligne="";
 		for(int nbcases=0;nbcases<plateau.length;nbcases++){
@@ -81,14 +99,7 @@ public class Ile {
 	
 	
 	public static void main(String[] args){
-		Ile i=new Ile();
-		System.out.print(i.toString());
-		i.plateau[0][0].ajouterNaviree1();
-		i.plateau[i.plateau.length-1][i.plateau[0].length-1].ajouterNaviree2();
-		i.placerCoffre();
-		i.placerCoffre();
-		System.out.println("*******************************************");
-		System.out.print(i.toString());
+		
 		
 		
 	}
