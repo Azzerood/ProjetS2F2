@@ -16,26 +16,24 @@ public class Parcelle {
 	}
 	
 	
-	public void ajouterNaviree1(){
+	public void ajouterNaviree1(){ //ajoute le navire de l'équipe 1 dans la liste d'élèment de la parcelle
 		listeelements.add(new Element(0));
 	}
-	public void ajouterNaviree2(){
+	public void ajouterNaviree2(){ //ajoute le navire de l'équipe 2 dans la liste d'élèment de la parcelle
 		listeelements.add(new Element(1));
 	}
-	public void ajouterRocher(){
+	public void ajouterRocher(){ //ajoute un rocher dans la liste d'élèment de la parcelle
 		listeelements.add(new Element(2));
 	}
-	
-	public void ajouterClé(){
+	public void ajouterClé(){ // ajoute la clé dans la liste d'élèlement de la parcelle + un rocher en premier
 		ajouterRocher(); //ajouter d'abord un rocher pour ne pas toString() la clé
 		listeelements.add(new Element(4));
 	}
-	
-	public void ajouterCoffre(){
+	public void ajouterCoffre(){ // ajoute le coffre dans la liste d'élèlement de la parcelle + un rocher en premier
 		ajouterRocher();//ajouter d'abord un rocher pour ne pas toString() le coffre
 		listeelements.add(new Element(3));
 	}
-
+	
 	
 	public static void main(String[]args){
 		Parcelle p=new Parcelle();

@@ -42,7 +42,10 @@ public class Ile {
 		}while(!plateau[x][y].listeelements.isEmpty()); // Empeche de placer la clé sur une case deja existente.
 		plateau[x][y].ajouterClé();
 	}
-	public String toString(){
+	public boolean Bloque(int x,int y){ //(En cours) Permet de savoir si un rocher bloque une parcelle de l'ile
+		return false;
+	}
+public String toString(){
 		String ligne="";
 		for(int nbcases=0;nbcases<plateau.length;nbcases++){
 		ligne+="+---";
