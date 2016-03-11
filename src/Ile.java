@@ -1,3 +1,4 @@
+import java.util.Random;
 
 public class Ile {
 	Parcelle[][] plateau; //plateau
@@ -40,9 +41,12 @@ public class Ile {
 	
 	
 	public static void main(String[] args){
+		Random r=new Random();
 		Ile i=new Ile();
 		System.out.print(i.toString());
 		i.plateau[0][0].ajouterNaviree1();
+		i.plateau[r.nextInt(10)][r.nextInt(10)].ajouterClé();
+		i.plateau[r.nextInt(10)][r.nextInt(10)].ajouterCoffre();
 		System.out.println("*******************************************");
 		System.out.print(i.toString());
 		
