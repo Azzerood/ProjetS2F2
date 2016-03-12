@@ -82,10 +82,20 @@ public class Ile {
 			
 		}
 		if(y==plateau[0].length-1){ //Vérifie le bord inférieur
+			if(!plateau[x][y-1].listeelements.isEmpty()) return true;
+			if(x>0){
+				if(!plateau[x-1][y].listeelements.isEmpty()) return true;
+				if(!plateau[x-1][y-1].listeelements.isEmpty()) return true;
+			}
+			if(x+1<plateau.length){
+				if(!plateau[x+1][y].listeelements.isEmpty()) return true;
+				if(!plateau[x+1][y-1].listeelements.isEmpty()) return true;
+			}
+				
 			
 		}
 		
-		if(x+1<plateau.length && x>0 && y+1<plateau[0].length && y>0  ){ //Vérifie le bord intérieur
+		if(x+1<plateau.length && x>0 && y+1<plateau[0].length && y>0  ){ //Vérifie le carré intérieur
 			if(!plateau[x-1][y-1].listeelements.isEmpty()) return true;
 			if(!plateau[x][y-1].listeelements.isEmpty()) return true;
 			if(!plateau[x+1][y-1].listeelements.isEmpty()) return true;
@@ -104,11 +114,11 @@ public class Ile {
 		for(int i = 0; i<(plateau.length)*(plateau[0].length)*0.1; i++){
 			r1 = r.nextInt(plateau.length);
 			r2 = r.nextInt(plateau[0].length);
-				
 			while(!plateau[r1][r2].listeelements.isEmpty() || Bloque(r1,r2)) {
 				r1 = r.nextInt(plateau.length);
-				r2 = r.nextInt(plateau[0].length);
+				r2 = r.nextInt(plateau[0].length);	
 			} 
+			
 			plateau[r1][r2].ajouterRocher();
 			
 		}
@@ -134,7 +144,6 @@ public class Ile {
 	
 	
 	public static void main(String[] args){
-		
 		
 		
 	}
