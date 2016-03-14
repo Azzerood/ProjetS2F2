@@ -5,6 +5,11 @@ public class Element {
 		ID=n;
 	}
 	
+	public boolean compareTo(Element e){
+		if(e.ID==this.ID)return true;
+		else return false;
+	}
+	
 	public String toString(){
 		if(ID==0)return "N";//navire equipe1
 		if(ID==1)return "n";//navire equipe2
