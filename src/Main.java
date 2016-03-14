@@ -16,13 +16,6 @@ public class Main {
 		i.placerRocher();
 		System.out.println("***********Plaçons les rochers***********");
 		System.out.print(i.toString());
-		int[][] x=plateau.i.getPlateau();
-		for(int l=0;l<plateau.i.plateau.length;l++){
-			for(int c=0;c<plateau.i.plateau[0].length;c++){
-				System.out.print(x[l][c]);
-			}
-			System.out.println();
-		}
 		plateau.setJeu();
 		plateau.affichage();
 	}
