@@ -22,8 +22,8 @@ public class Ile {
 		
 	}
 	public void placerLesNavires(){
-		plateau[0][0].ajouterNaviree1();
-		plateau[plateau.length-1][plateau[0].length-1].ajouterNaviree2();
+		plateau[0][plateau[0].length/2].ajouterNaviree1();
+		plateau[plateau.length-1][plateau[0].length/2].ajouterNaviree2();
 	}
 	public void placerCoffre(){  //place aléatoirement sur la carte le coffre sous un rocher (dissimulé par un rocher)
 		Random r=new Random();
@@ -114,7 +114,7 @@ public class Ile {
 		for(int i = 0; i<(plateau.length)*(plateau[0].length)*0.1; i++){
 			r1 = r.nextInt(plateau.length);
 			r2 = r.nextInt(plateau[0].length);
-			while(!plateau[r1][r2].listeelements.isEmpty() || Bloque(r1,r2)) {
+			while(!plateau[r1][r2].listeelements.isEmpty() || Bloque(r1,r2) ) {
 				r1 = r.nextInt(plateau.length);
 				r2 = r.nextInt(plateau[0].length);	
 			} 
