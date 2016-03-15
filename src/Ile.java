@@ -37,8 +37,8 @@ public class Ile {
 		int x;
 		int y;
 		do{
-		x=r.nextInt(plateau.length);  // S'adapte au dimension du plateau
-		y=r.nextInt(plateau[0].length); //S'adapte au dimension du plateau
+		x=1+r.nextInt(plateau.length-2);  // S'adapte au dimension du plateau
+		y=1+r.nextInt(plateau[0].length-2); //S'adapte au dimension du plateau
 		}while(!plateau[x][y].listeelements.isEmpty()); // Empeche de placer le coffre sur une case deja existente.
 		plateau[x][y].ajouterCoffre();
 	}
@@ -50,8 +50,8 @@ public class Ile {
 		int x;
 		int y;
 		do{
-		x=r.nextInt(plateau.length);  // S'adapte au dimension du plateau
-		y=r.nextInt(plateau[0].length); //S'adapte au dimension du plateau
+		x=1+r.nextInt(plateau.length-2);  // S'adapte au dimension du plateau
+		y=1+r.nextInt(plateau[0].length-2); //S'adapte au dimension du plateau
 		}while(!plateau[x][y].listeelements.isEmpty()); // Empeche de placer la clé sur une case deja existente.
 		plateau[x][y].ajouterClé();
 	}
