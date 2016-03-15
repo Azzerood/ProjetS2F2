@@ -5,12 +5,17 @@ public class Element {
 		ID=n;
 	}
 	
-	public boolean compareTo(Element e){
+	/**
+	 * retourne vrai si l'element est identique à celui passé en parametre.
+	 * @param e
+	 * @return
+	 */
+	public boolean compareTo(Element e){ 
 		if(e.ID==this.ID)return true;
 		else return false;
 	}
 	
-	public String toString(){
+	public String toString(){ //retourne l'Element sous la forme d'une lettre.
 		if(ID==0)return "N";//navire equipe1
 		if(ID==1)return "n";//navire equipe2
 		if(ID==2)return "R";//Rocher
