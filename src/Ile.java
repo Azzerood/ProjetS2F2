@@ -25,8 +25,9 @@ public class Ile {
 	 * place les navires des deux équipes à des positions fixées
 	 */
 	public void placerLesNavires(){ 
-		plateau[0][plateau[0].length/2].ajouterNaviree1();
-		plateau[plateau.length-1][plateau[0].length/2].ajouterNaviree2();
+		plateau[plateau.length/2][0].ajouterNaviree1();
+		plateau[plateau.length/2][plateau[0].length-1].ajouterNaviree2();
+		
 	}
 	/**
 	 * place aléatoirement sur la carte le coffre sous un rocher (dissimulé par un rocher)
@@ -82,11 +83,11 @@ public class Ile {
 		Random r = new Random();
 		int r1, r2;
 		for(int i = 0; i<(plateau.length)*(plateau[0].length)*pourcentage; i++){
-			r1 = 1+r.nextInt(plateau.length-2);
-			r2 = 1+r.nextInt(plateau[0].length-2);
+			r1 =1+r.nextInt(plateau.length-2);
+			r2 =1+r.nextInt(plateau[0].length-2);
 			while(!plateau[r1][r2].listeelements.isEmpty() || Bloque(r1,r2) ) {
-				r1 =1+ r.nextInt(plateau.length-2);
-				r2 =1+ r.nextInt(plateau[0].length-2);
+				r1 =1+r.nextInt(plateau.length-2);
+				r2 =1+r.nextInt(plateau[0].length-2);
 			} 
 			plateau[r1][r2].ajouterRocher();
 			
@@ -122,11 +123,11 @@ public class Ile {
 		int[][]resultat=new int[this.plateau.length][this.plateau[0].length];
 		for(int l=0;l<plateau.length;l++){
 			for(int c=0;c<plateau[0].length;c++){
-				if(plateau[l][c].listeelements.isEmpty())resultat[l][c]=1;//sol
-				if(!plateau[l][c].listeelements.isEmpty() && plateau[l][c].listeelements!=null){
-				if(plateau[l][c].listeelements.get(0).compareTo(new Element(2)))resultat[l][c]=2;//rocher plateau[l][c].listeelements.contains(new Element(2))
-				if(plateau[l][c].listeelements.get(0).compareTo(new Element(0)))resultat[l][c]=3;//navire equipe1
-				if(plateau[l][c].listeelements.get(0).compareTo(new Element(1)))resultat[l][c]=4;//navire equipe2
+				if(plateau[l][c].listeelements.isEmpty())resultat[c][l]=1;//sol
+				if(!plateau[l][c].listeelements.isEmpty() && plateau[c][l].listeelements!=null){
+				if(plateau[l][c].listeelements.get(0).compareTo(new Element(2)))resultat[c][l]=2;//rocher plateau[l][c].listeelements.contains(new Element(2))
+				if(plateau[l][c].listeelements.get(0).compareTo(new Element(0)))resultat[c][l]=3;//navire equipe1
+				if(plateau[l][c].listeelements.get(0).compareTo(new Element(1)))resultat[c][l]=4;//navire equipe2
 				//else if(plateau[l][c].listeelements.get(0).equals(new Element(3)))resultat[l][c]=1;//cofre
 				//else if(plateau[l][c].listeelements.get(0).equals(new Element(4)))resultat[l][c]=1;//clé
 				}
@@ -138,9 +139,6 @@ public class Ile {
 	public static void main(String[] args){
 		Ile i=new Ile();
 		i.placerLesNavires();
-		i.placerClé();
-		i.placerCoffre();
-		i.placerRocher(0.1);
 		System.out.println(i.toString());
 		System.out.println("-------------------------------------------------");
 		for(int lignes=0;lignes<i.plateau.length;lignes++){
