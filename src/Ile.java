@@ -43,7 +43,7 @@ public class Ile {
 		plateau[x][y].ajouterCoffre();
 	}
 	/**
-	 * place aléatoirement sur la carte le coffre sous un rocher (dissimulé par un rocher)
+	 * place aléatoirement sur la carte la clé sous un rocher (dissimulé par un rocher)
 	 */
 	public void placerClé(){ 
 		Random r=new Random();
