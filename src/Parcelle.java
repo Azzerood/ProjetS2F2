@@ -2,12 +2,13 @@ import java.util.ArrayList;
 
 public class Parcelle {
 	ArrayList<Element> listeelements=new ArrayList<Element>();
-	
+	boolean accessible;
 	Parcelle(){
-		
+		accessible=false;
 	}
 	Parcelle(Element e){
 		listeelements.add(e);
+		accessible=false;
 	}
 
 	/**
@@ -51,7 +52,9 @@ public class Parcelle {
 		ajouterRocher();//ajouter d'abord un rocher pour ne pas toString() le coffre
 		listeelements.add(new Element(3));
 	}
-	
+	public void estAccessible(){
+		
+	}
 	
 	public static void main(String[]args){
 		Parcelle p=new Parcelle();
