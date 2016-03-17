@@ -35,6 +35,9 @@ public class Ile {
 		plateau[plateau.length/2][plateau[0].length-1].ajouterNaviree2();
 		
 	}
+	/**
+	 * Génère de l'eau tout autour de l'ile.
+	 */
 	public void placerEau(){
 		for(int l=0;l<plateau.length;l++){
 			for(int c=0;c<plateau[0].length;c++){
@@ -71,26 +74,7 @@ public class Ile {
 		}while(!plateau[x][y].listeelements.isEmpty()); // Empeche de placer la clé sur une case deja existente.
 		plateau[x][y].ajouterClé();
 	}
-	/**
-	 * Permet de savoir si un rocher bloque une parcelle de l'ile
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-	public boolean Bloque(int x,int y){ 
-		if(x+1<plateau.length && x>0 && y+1<plateau[0].length && y>0  ){ //Vérifie le carré intérieur
-			if(!plateau[x-1][y-1].listeelements.isEmpty()) return true;
-			if(!plateau[x][y-1].listeelements.isEmpty()) return true;
-			if(!plateau[x+1][y-1].listeelements.isEmpty()) return true;
-			if(!plateau[x-1][y].listeelements.isEmpty()) return true;
-			if(!plateau[x+1][y].listeelements.isEmpty()) return true;
-			if(!plateau[x-1][y+1].listeelements.isEmpty()) return true;
-			if(!plateau[x][y+1].listeelements.isEmpty()) return true;
-			if(!plateau[x+1][y+1].listeelements.isEmpty()) return true;
-		}
-		
-		return false;
-	}
+	
 	private void estAccessible(int x,int y){
 			plateau[x][y].accessible=true;
 		if(x>0){
@@ -223,8 +207,8 @@ public class Ile {
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(1)))resultat[c][l]=4;//navire equipe2
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(6)))resultat[c][l]=7;//eau
 				if(plateau[l][c].listeelements.size()>1){
-				if(plateau[l][c].listeelements.get(0).compareTo(new Element(3)))resultat[c][l]=5;//coffre
-				if(plateau[l][c].listeelements.get(0).compareTo(new Element(4)))resultat[c][l]=6;//clé
+				if(plateau[l][c].listeelements.get(1).compareTo(new Element(3)))resultat[c][l]=5;//coffre
+				if(plateau[l][c].listeelements.get(1).compareTo(new Element(4)))resultat[c][l]=6;//clé
 				}
 				//else if(plateau[l][c].listeelements.get(0).equals(new Element(3)))resultat[l][c]=1;//cofre
 				//else if(plateau[l][c].listeelements.get(0).equals(new Element(4)))resultat[l][c]=1;//clé

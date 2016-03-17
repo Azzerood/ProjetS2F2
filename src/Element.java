@@ -15,14 +15,17 @@ public class Element {
 		else return false;
 	}
 	
-	public String toString(){ //retourne l'Element sous la forme d'une lettre.
-		if(ID==6)return "E";//Eau
+	/** 
+	 * Retourne l'Element sous la forme d'une lettre.
+	 **/
+	public String toString(){ 
 		if(ID==0)return "N";//navire equipe1
 		if(ID==1)return "n";//navire equipe2
 		if(ID==2)return "R";//Rocher
 		if(ID==3)return "C";//Coffre
 		if(ID==4)return "c";//clé
 		if(ID==5)return "T";//trésor
+		if(ID==6)return "E";//Eau
 		return " ";
 	}
 	public static void main(String[] args){

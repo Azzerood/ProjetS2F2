@@ -22,7 +22,7 @@ public class Main {
 		t= Taille.showInputDialog("Définissez le pourcentage de rochers");
 		if(t.matches("[0-9]+")){
 			pourcentage=Double.parseDouble(t);
-			if(pourcentage<=25)isnombre=true;
+			if(pourcentage<=35)isnombre=true;
 			
 		}
 		}while(!isnombre);
