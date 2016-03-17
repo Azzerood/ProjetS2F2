@@ -16,6 +16,7 @@ public class Element {
 	}
 	
 	public String toString(){ //retourne l'Element sous la forme d'une lettre.
+		if(ID==6)return "E";//Eau
 		if(ID==0)return "N";//navire equipe1
 		if(ID==1)return "n";//navire equipe2
 		if(ID==2)return "R";//Rocher

@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 public class Main {
 
 	public static void main(String[] args) {
-		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png"};
+		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png"};
 		JOptionPane Taille=new JOptionPane();
 		boolean isnombre=false;
 		String t;
@@ -31,6 +31,7 @@ public class Main {
 		plateau.setIle(i);
 		System.out.print(i.toString());
 		i.placerLesNavires();
+		i.placerEau();
 		System.out.println("***********Plaçons les navires***********");
 		System.out.print(i.toString());
 		i.placerCoffre();

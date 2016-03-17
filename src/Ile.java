@@ -35,6 +35,16 @@ public class Ile {
 		plateau[plateau.length/2][plateau[0].length-1].ajouterNaviree2();
 		
 	}
+	public void placerEau(){
+		for(int l=0;l<plateau.length;l++){
+			for(int c=0;c<plateau[0].length;c++){
+				if(l==0 || l==plateau.length-1 || c==0 || c==plateau[0].length-1){
+					if(plateau[l][c].listeelements.isEmpty()) plateau[l][c].listeelements.add(new Element(6));
+				}
+			}
+		}
+	}
+	
 	/**
 	 * place aléatoirement sur la carte le coffre sous un rocher (dissimulé par un rocher)
 	 */
@@ -119,19 +129,21 @@ public class Ile {
 		
 		for(int l=0;l<plateau.length;l++){
 			for(int c=0;c<plateau.length;c++){
-				if(plateau[l][c].listeelements.size()>1){
-				if(plateau[l][c].listeelements.get(0).compareTo(new Element(0))){ //si la case contient le navire1 
-					x1=l;y1=c;
-				}
-				if(plateau[l][c].listeelements.get(0).compareTo(new Element(1))){ //si la case contient le navire2
-					x2=l;y2=c;
-				}
-				if(plateau[l][c].listeelements.get(0).compareTo(new Element(4)) || plateau[l][c].listeelements.get(1).compareTo(new Element(4))){ //si la case contient la clé
-					xcl=l;ycl=c;
-				}
-				if(plateau[l][c].listeelements.get(0).compareTo(new Element(3)) || plateau[l][c].listeelements.get(1).compareTo(new Element(3))){ //si la case contient le coffre
-					xco=l;yco=c;
-				}
+				if(!plateau[l][c].listeelements.isEmpty()){
+					if(plateau[l][c].listeelements.get(0).compareTo(new Element(0))){ //si la case contient le navire1 
+						x1=l;y1=c;
+					}
+					if(plateau[l][c].listeelements.get(0).compareTo(new Element(1))){ //si la case contient le navire2
+						x2=l;y2=c;
+					}
+					if(plateau[l][c].listeelements.size()>1){
+						if( plateau[l][c].listeelements.get(1).compareTo(new Element(4))){ //si la case contient la clé
+							xcl=l;ycl=c;
+						}
+						if( plateau[l][c].listeelements.get(1).compareTo(new Element(3))){ //si la case contient le coffre
+							xco=l;yco=c;
+						}
+					}
 				}
 			}
 		}
@@ -209,6 +221,7 @@ public class Ile {
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(2)))resultat[c][l]=2;//rocher plateau[l][c].listeelements.contains(new Element(2))
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(0)))resultat[c][l]=3;//navire equipe1
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(1)))resultat[c][l]=4;//navire equipe2
+				if(plateau[l][c].listeelements.get(0).compareTo(new Element(6)))resultat[c][l]=7;//eau
 				if(plateau[l][c].listeelements.size()>1){
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(3)))resultat[c][l]=5;//coffre
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(4)))resultat[c][l]=6;//clé
