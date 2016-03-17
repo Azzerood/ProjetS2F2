@@ -3,6 +3,9 @@ import java.util.Random;
 public class Ile {
 	Parcelle[][] plateau; //plateau
 	
+	/**
+	 * @param d
+	 */
 	Ile(int d){
 		plateau=new Parcelle[d][d];
 		for(int l=0;l<plateau.length;l++){
@@ -11,6 +14,9 @@ public class Ile {
 			}
 		}
 	}
+	/**
+	 * 
+	 */
 	Ile(){
 		plateau=new Parcelle[10][10];
 		for(int l=0;l<plateau.length;l++){
@@ -75,7 +81,7 @@ public class Ile {
 		
 		return false;
 	}
-	public void estAccessible(int x,int y){
+	private void estAccessible(int x,int y){
 			plateau[x][y].accessible=true;
 		if(x>0){
 			if(plateau[x-1][y].listeelements.isEmpty() && !plateau[x-1][y].accessible ) estAccessible(x-1,y);
@@ -99,12 +105,14 @@ public class Ile {
 			else{plateau[x][y+1].accessible=true;}
 		}
 	}
+	/**
+	 * Retourne vrai si la clé et le coffre sont accessible à partir des navires
+	 * @return
+	 */
 	public boolean estAccessible(){
 		int x1,x2,y1,y2,xcl,ycl,xco,yco;
-		x1=0;
-		x2=0;
-		y1=0;
-		y2=0;
+		x1=0;x2=0;
+		y1=0;y2=0;
 		xcl=0;ycl=0;
 		xco=0;yco=0;
 		
@@ -127,19 +135,18 @@ public class Ile {
 				}
 			}
 		}
-	
 		estAccessible(x1,y1);
-		plateau[x1][y1].accessible=true;
 		if(plateau[x2][y2].accessible && plateau[xco][yco].accessible && plateau[xcl][ycl].accessible)return true;
 		else return false;
 		
 	}
 	/**
-	 * Supprime tous les rochers de la carte (sauf celui de la clé et du coffre)
+	 * Supprime tous les rochers de la carte (sauf celui de la clé et du coffre)et remet à faux le boolean d'accessibilité de la parcelle
 	 */
-	public void clearRocher(){ 
+	private void clearRocher(){ 
 		for(int l=0;l<plateau.length;l++){
 			for(int c=0;c<plateau[0].length;c++){
+				plateau[l][c].accessible=false;
 				if(plateau[l][c].listeelements.size()==1 && plateau[l][c].listeelements.get(0).compareTo(new Element(2))){
 					plateau[l][c].listeelements.clear();
 				}
@@ -154,7 +161,7 @@ public class Ile {
 	public void placerRocher(double pourcentage){ //
 		Random r = new Random();
 		int r1, r2;
-		for(int i = 0; i<(plateau.length)*(plateau[0].length)*pourcentage; i++){
+		for(int i = 0; i<(plateau.length)*(plateau[0].length)*pourcentage/100; i++){
 			do{
 				r1 =1+r.nextInt(plateau.length-2);
 				r2 =1+r.nextInt(plateau[0].length-2);
@@ -203,8 +210,8 @@ public class Ile {
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(0)))resultat[c][l]=3;//navire equipe1
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(1)))resultat[c][l]=4;//navire equipe2
 				if(plateau[l][c].listeelements.size()>1){
-				if(plateau[l][c].listeelements.get(1).compareTo(new Element(3)))resultat[c][l]=5;//coffre
-				if(plateau[l][c].listeelements.get(1).compareTo(new Element(4)))resultat[c][l]=6;//clé
+				if(plateau[l][c].listeelements.get(0).compareTo(new Element(3)))resultat[c][l]=5;//coffre
+				if(plateau[l][c].listeelements.get(0).compareTo(new Element(4)))resultat[c][l]=6;//clé
 				}
 				//else if(plateau[l][c].listeelements.get(0).equals(new Element(3)))resultat[l][c]=1;//cofre
 				//else if(plateau[l][c].listeelements.get(0).equals(new Element(4)))resultat[l][c]=1;//clé

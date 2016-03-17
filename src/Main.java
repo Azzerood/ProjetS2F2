@@ -1,5 +1,6 @@
 import javax.swing.JOptionPane;
 
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -13,7 +14,18 @@ public class Main {
 			isnombre=true;
 		}
 		}while(!isnombre);
+		
 		int taille=Integer.parseInt(t);
+		isnombre=false;
+		double pourcentage=10;
+		do{
+		t= Taille.showInputDialog("Définissez le pourcentage de rochers");
+		if(t.matches("[0-9]+")){
+			pourcentage=Double.parseDouble(t);
+			if(pourcentage<=25)isnombre=true;
+			
+		}
+		}while(!isnombre);
 		Ile i=new Ile(taille);
 		SuperPlateau plateau=new SuperPlateau(images, taille);
 		plateau.setIle(i);
@@ -25,7 +37,7 @@ public class Main {
 		i.placerClé();
 		System.out.println("*******Plaçons le coffre et sa clé*******");
 		System.out.print(i.toString());
-		i.placerRocher(0.1);
+		i.placerRocher(pourcentage);
 		System.out.println("***********Plaçons les rochers***********");
 		System.out.print(i.toString());
 		plateau.setJeu();
