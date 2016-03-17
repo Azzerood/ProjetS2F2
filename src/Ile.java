@@ -49,7 +49,7 @@ public class Ile {
 	}
 	
 	/**
-	 * place aléatoirement sur la carte le coffre sous un rocher (dissimulé par un rocher)
+	 * place aléatoirement sur la carte le coffre sous un rocher 
 	 */
 	public void placerCoffre(){  
 		Random r=new Random();
@@ -57,12 +57,12 @@ public class Ile {
 		int y;
 		do{
 		x=1+r.nextInt(plateau.length-2);  // S'adapte au dimension du plateau
-		y=1+r.nextInt(plateau[0].length-2); //S'adapte au dimension du plateau
+		y=2+r.nextInt(plateau[0].length-3); //S'adapte au dimension du plateau
 		}while(!plateau[x][y].listeelements.isEmpty()); // Empeche de placer le coffre sur une case deja existente.
 		plateau[x][y].ajouterCoffre();
 	}
 	/**
-	 * place aléatoirement sur la carte la clé sous un rocher (dissimulé par un rocher)
+	 * place aléatoirement sur la carte la clé sous un rocher 
 	 */
 	public void placerClé(){ 
 		Random r=new Random();
@@ -70,7 +70,7 @@ public class Ile {
 		int y;
 		do{
 		x=1+r.nextInt(plateau.length-2);  // S'adapte au dimension du plateau
-		y=1+r.nextInt(plateau[0].length-2); //S'adapte au dimension du plateau
+		y=2+r.nextInt(plateau[0].length-3); //S'adapte au dimension du plateau
 		}while(!plateau[x][y].listeelements.isEmpty()); // Empeche de placer la clé sur une case deja existente.
 		plateau[x][y].ajouterClé();
 	}
