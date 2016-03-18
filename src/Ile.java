@@ -171,7 +171,7 @@ public class Ile {
 	
 	public boolean placerRocher(double pourcentage){
 		int nbtours=0;
-		int max=50; //max de tour permis
+		int max=50; 
 		do{
 			placeRocher(pourcentage);
 			nbtours+=1;

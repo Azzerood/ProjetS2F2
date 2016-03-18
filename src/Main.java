@@ -7,7 +7,7 @@ public class Main {
 		boolean Rochers=false;
 		Ile i;
 		SuperPlateau plateau;
-		do{ //début do while
+		do{ 
 		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png"};
 		JOptionPane Taille=new JOptionPane();
 		boolean isnombre=false;
