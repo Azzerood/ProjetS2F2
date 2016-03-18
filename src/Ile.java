@@ -154,7 +154,8 @@ public class Ile {
 	 * place des rochers sur x% de la map.
 	 * @param pourcentage
 	 */
-	public void placerRocher(double pourcentage){ //
+	private void placeRocher(double pourcentage){ //
+		clearRocher();
 		Random r = new Random();
 		int r1, r2;
 		for(int i = 0; i<(plateau.length)*(plateau[0].length)*pourcentage/100; i++){
@@ -165,12 +166,19 @@ public class Ile {
 			plateau[r1][r2].ajouterRocher();
 			
 		}
-		if(!estAccessible()){
-			clearRocher();
-			placerRocher(pourcentage);
-		}
+		
 	}
 	
+	public boolean placerRocher(double pourcentage){
+		int nbtours=0;
+		int max=50;
+		do{
+			placeRocher(pourcentage);
+			nbtours+=1;
+		}while(!estAccessible() && nbtours<max);
+		if(nbtours==max)return false;
+		else return true;
+	}
 	/**
 	 * retourne l'ile sous forme d'un tableau de String.
 	 * 
