@@ -10,4 +10,4 @@ POUR ACCEDER A LA JAVADOC:
 *Ouvrir doc/index.html
 
 POUR ACCEDER A L'UML DU PROJET:
-*Ouvrir UML_PROJET_F2.xmi
+*Ouvrir UML_PROJET_F2.png
