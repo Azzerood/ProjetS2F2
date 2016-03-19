@@ -105,8 +105,7 @@ public class Ile {
 		}
 	}
 	/**
-	 * Retourne vrai si la clé et le coffre sont accessible à partir des navires
-	 * @return
+	 *@return Retourne vrai si la clé et le coffre sont accessible à partir des navires
 	 */
 	public boolean estAccessible(){
 		
@@ -175,11 +174,10 @@ public class Ile {
 		
 	}
 	
-	/**
-	 * Place des rochers sur pourcentage% de la map et réitère l'opération si le coffre et la clé ne sont pas accessible (100généraions max)
-	 * Retourne vrai si une génération est correcte en moins de 100 essais
-	 * @param pourcentage
-	 * @return
+	/** 
+	 *@return Retourne vrai si une génération est correcte en moins de 100 essais
+	 **Place des rochers sur pourcentage% de la map et réitère l'opération si le coffre et la clé ne sont pas accessible (100généraions max)
+	 *@param pourcentage double saisie par l'utilisateur
 	 */
 	public boolean placerRocher(double pourcentage){
 		int nbtours=0;
@@ -214,7 +212,7 @@ public class Ile {
 	}
 	
 	/**
-	 * retourne l'ile sous forme d'un tableau de chiffre pour la classe Superplateau.
+	 * @return retourne l'ile sous forme d'un tableau de chiffre pour la classe Superplateau.
 	 */
 	public int[][] getPlateau(){ 
 		int[][]resultat=new int[this.plateau.length][this.plateau[0].length];
