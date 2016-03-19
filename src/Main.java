@@ -1,8 +1,5 @@
 import javax.swing.JOptionPane;
 
-
-
-
 public class Main {
 	/**
 	 * Retourne le nombre saisie par l'utilisateur pour définir la taille de l'ile
@@ -46,7 +43,7 @@ public class Main {
 	}
 	private void erreurRocher(){
 		JOptionPane Taille=new JOptionPane();
-		Taille.showMessageDialog(Taille, "Désolé capitaine, nous n'avons pas trouver une telle île dans les environs.", "Oops...", JOptionPane.ERROR_MESSAGE);
+		Taille.showMessageDialog(Taille, "Désolé capitaine, nous n'avons pas trouvé une telle île dans les environs.", "Oops...", JOptionPane.ERROR_MESSAGE);
 	}
 	
 	public static void main(String[] args) {
