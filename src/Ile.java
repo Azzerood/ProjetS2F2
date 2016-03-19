@@ -36,7 +36,7 @@ public class Ile {
 		
 	}
 	/**
-	 * Génère de l'eau tout autour de l'ile.
+	 * Génère de l'eau  autour de l'ile.
 	 */
 	public void placerEau(){
 		for(int l=0;l<plateau.length;l++){
@@ -75,6 +75,11 @@ public class Ile {
 		plateau[x][y].ajouterClé();
 	}
 	
+	/**
+	 * Marque comme "accessible" toutes les cases accessibles depuis la case de coordonnées(x,y)
+	 * @param x
+	 * @param y
+	 */
 	private void estAccessible(int x,int y){
 			plateau[x][y].accessible=true;
 		if(x>0){
@@ -152,7 +157,7 @@ public class Ile {
 	}
 	
 	/**
-	 * place des rochers sur x% de la map.
+	 * place des rochers sur pourcentage% de la map.
 	 * @param pourcentage
 	 */
 	private void placeRocher(double pourcentage){ //
@@ -170,6 +175,12 @@ public class Ile {
 		
 	}
 	
+	/**
+	 * Place des rochers sur pourcentage% de la map et réitère l'opération si le coffre et la clé ne sont pas accessible (100généraions max)
+	 * Retourne vrai si une génération est correcte en moins de 100 essais
+	 * @param pourcentage
+	 * @return
+	 */
 	public boolean placerRocher(double pourcentage){
 		int nbtours=0;
 		int max=100; 
@@ -215,12 +226,11 @@ public class Ile {
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(0)))resultat[c][l]=3;//navire equipe1
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(1)))resultat[c][l]=4;//navire equipe2
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(6)))resultat[c][l]=7;//eau
-				if(plateau[l][c].listeelements.size()>1){
+				//if(plateau[l][c].listeelements.size()>1){
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(3)))resultat[c][l]=5;//coffre
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(4)))resultat[c][l]=6;//clé
-				}
-				//else if(plateau[l][c].listeelements.get(0).equals(new Element(3)))resultat[l][c]=1;//cofre
-				//else if(plateau[l][c].listeelements.get(0).equals(new Element(4)))resultat[l][c]=1;//clé
+				//}
+				
 				}
 			}
 		}
@@ -228,16 +238,7 @@ public class Ile {
 	}
 	
 	public static void main(String[] args){
-		Ile i=new Ile();
-		i.placerLesNavires();
-		System.out.println(i.toString());
-		System.out.println("-------------------------------------------------");
-		for(int lignes=0;lignes<i.plateau.length;lignes++){
-			for(int colonnes=0;colonnes<i.plateau[0].length;colonnes++){
-				System.out.print(i.plateau[lignes][colonnes].toString()+" ");
-			}
-			System.out.println();
-		}
+		
 		
 	}
 

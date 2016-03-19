@@ -1,6 +1,9 @@
 public class Element {
 	int ID;
 	
+	/**
+	 * @param n
+	 */
 	Element(int n){
 		ID=n;
 	}

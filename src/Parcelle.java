@@ -45,14 +45,14 @@ public class Parcelle {
 		listeelements.add(new Element(2));
 	}
 	/**
-	 * ajoute la clé dans la liste d'élèlement de la parcelle + un rocher en premier
+	 * ajoute la clé dans la liste d'élèlement de la parcelle précédé d'un rocher 
 	 **/
 	public void ajouterClé(){ 
 		ajouterRocher(); //ajouter d'abord un rocher pour ne pas toString() la clé
 		listeelements.add(new Element(4));
 	}
 	/**
-	 *  ajoute le coffre dans la liste d'élèlement de la parcelle + un rocher en premier
+	 *  ajoute le coffre dans la liste d'élèlement de la parcelle précédé d'un rocher
 	 **/
 	public void ajouterCoffre(){ 
 		ajouterRocher();//ajouter d'abord un rocher pour ne pas toString() le coffre

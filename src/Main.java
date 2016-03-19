@@ -4,6 +4,11 @@ import javax.swing.JOptionPane;
 
 
 public class Main {
+	/**
+	 * Retourne le nombre saisie par l'utilisateur pour définir la taille de l'ile
+	 * @param min
+	 * @return
+	 */
 	private int définirTailleIle(int min){
 		JOptionPane Taille=new JOptionPane();
 		boolean isnombre=false;
@@ -19,6 +24,11 @@ public class Main {
 		}while(!isnombre);
 		return taille;
 	}
+	/**
+	 * Retourne le nombre saisie par l'utilisateur pour définir le pourcentage de rocher sur l'ile
+	 * @param max
+	 * @return
+	 */
 	private int definirProportionRocher(int max){
 		JOptionPane Taille=new JOptionPane();
 		boolean isnombre=false;
@@ -47,7 +57,7 @@ public class Main {
 		do{ 
 		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png"};
 		int taille=main.définirTailleIle(6);
-		int pourcentage=main.definirProportionRocher(50);
+		int pourcentage=main.definirProportionRocher(30);
 		i=new Ile(taille);
 		plateau=new SuperPlateau(images, taille);
 		plateau.setIle(i);
