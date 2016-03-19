@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 
 public class Main {
-	private int définirTailleIle(){
+	private int définirTailleIle(int min){
 		JOptionPane Taille=new JOptionPane();
 		boolean isnombre=false;
 		String t;
@@ -13,19 +13,18 @@ public class Main {
 		t= Taille.showInputDialog("Définissez la taille de l'ile");
 		if(t.matches("[0-9]+")){
 			taille=Integer.parseInt(t);
-			if(taille>6)
+			if(taille>min)
 			isnombre=true;
 		}
 		}while(!isnombre);
 		return taille;
 	}
-	private int definirProportionRocher(){
+	private int definirProportionRocher(int max){
 		JOptionPane Taille=new JOptionPane();
 		boolean isnombre=false;
 		String t;
 		int pourcentage=10;
 		do{
-			int max=30;
 		t= Taille.showInputDialog("Définissez le pourcentage de rochers [0-"+max+"]");
 		if(t.matches("[0-9]+")){
 			pourcentage=Integer.parseInt(t);
@@ -37,7 +36,7 @@ public class Main {
 	}
 	private void erreurRocher(){
 		JOptionPane Taille=new JOptionPane();
-		Taille.showMessageDialog(Taille, "Nous n'avons pas pu configurer l'ile. Recommencez", "Error", JOptionPane.ERROR_MESSAGE);
+		Taille.showMessageDialog(Taille, "Désolé capitaine, nous n'avons pas trouver une telle île dans les environs.", "Oops...", JOptionPane.ERROR_MESSAGE);
 	}
 	
 	public static void main(String[] args) {
@@ -47,8 +46,8 @@ public class Main {
 		SuperPlateau plateau;
 		do{ 
 		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png"};
-		int taille=main.définirTailleIle();
-		int pourcentage=main.definirProportionRocher();
+		int taille=main.définirTailleIle(6);
+		int pourcentage=main.definirProportionRocher(50);
 		i=new Ile(taille);
 		plateau=new SuperPlateau(images, taille);
 		plateau.setIle(i);
