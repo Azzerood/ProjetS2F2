@@ -190,7 +190,7 @@ public class Ile {
 		else return true;
 	}
 	/**
-	 * retourne l'ile sous forme d'un tableau de String.
+	 *@return retourne l'ile sous forme d'un tableau de String.
 	 * 
 	 **/
 	public String toString(){ 
