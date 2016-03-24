@@ -19,4 +19,8 @@ public class SuperPlateau {
 	public int[][] getJeu(){
 		return this.test.getJeu();
 	}
+	//
+	
 }
+	
+

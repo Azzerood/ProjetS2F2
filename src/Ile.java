@@ -31,12 +31,35 @@ public class Ile {
 	 * place les navires des deux équipes à des positions fixées
 	 */
 	public void placerLesNavires(){ 
-		plateau[plateau.length/2][0].ajouterNaviree1();
-		plateau[plateau.length/2][plateau[0].length-1].ajouterNaviree2();
+		plateau[plateau.length/2][1].ajouterNaviree1();
+		plateau[plateau.length/2][plateau[0].length-2].ajouterNaviree2();
 		
 	}
+	
 	/**
-	 * Génère de l'eau  autour de l'ile.
+	 * @param x
+	 * @param y
+	 * @return retourne vrai si les cases autoursS (haut, bas,gauche,droite) des navires sont vides .
+	 */
+	public boolean accostagepossible(int x,int y){
+		boolean bloque=false;
+		if(x>1){
+		if(!plateau[x-1][y].listeelements.isEmpty())bloque=true;
+		}
+		if(x<plateau.length-2){
+		if(!plateau[x+1][y].listeelements.isEmpty())bloque=true;
+		}
+		if(y>1){
+		if(!plateau[x][y-1].listeelements.isEmpty())bloque=true;
+		}
+		if(y<plateau[0].length-2){
+		if(!plateau[x][y+1].listeelements.isEmpty())bloque=true;
+		}
+		
+		return !bloque;
+	}
+	/**
+	 * Génère de l'eau tout autour de l'ile.
 	 */
 	public void placerEau(){
 		for(int l=0;l<plateau.length;l++){
@@ -75,11 +98,6 @@ public class Ile {
 		plateau[x][y].ajouterClé();
 	}
 	
-	/**
-	 * Marque comme "accessible" toutes les cases accessibles depuis la case de coordonnées(x,y)
-	 * @param x
-	 * @param y
-	 */
 	private void estAccessible(int x,int y){
 			plateau[x][y].accessible=true;
 		if(x>0){
@@ -105,10 +123,10 @@ public class Ile {
 		}
 	}
 	/**
-	 *@return Retourne vrai si la clé et le coffre sont accessible à partir des navires
+	 * Retourne vrai si la clé et le coffre sont accessible à partir des navires
+	 * @return
 	 */
 	public boolean estAccessible(){
-		
 		int x1,x2,y1,y2,xcl,ycl,xco,yco;
 		x1=0;x2=0;
 		y1=0;y2=0;
@@ -136,8 +154,10 @@ public class Ile {
 				}
 			}
 		}
+		boolean accostage1=accostagepossible(x1, y1);
+		boolean accostage2=accostagepossible(x2, y2);
 		estAccessible(x1,y1);
-		if(plateau[x2][y2].accessible && plateau[xco][yco].accessible && plateau[xcl][ycl].accessible)return true;
+		if(plateau[x2][y2].accessible && plateau[xco][yco].accessible && plateau[xcl][ycl].accessible && accostage1 && accostage2)return true;
 		else return false;
 		
 	}
@@ -156,7 +176,7 @@ public class Ile {
 	}
 	
 	/**
-	 * place des rochers sur pourcentage% de la map.
+	 * place des rochers sur x% de la map.
 	 * @param pourcentage
 	 */
 	private void placeRocher(double pourcentage){ //
@@ -174,11 +194,6 @@ public class Ile {
 		
 	}
 	
-	/** 
-	 *@return Retourne vrai si une génération est correcte en moins de 100 essais
-	 **Place des rochers sur pourcentage% de la map et réitère l'opération si le coffre et la clé ne sont pas accessible (100généraions max)
-	 *@param pourcentage double saisie par l'utilisateur
-	 */
 	public boolean placerRocher(double pourcentage){
 		int nbtours=0;
 		int max=100; 
@@ -190,7 +205,7 @@ public class Ile {
 		else return true;
 	}
 	/**
-	 *@return retourne l'ile sous forme d'un tableau de String.
+	 * retourne l'ile sous forme d'un tableau de String.
 	 * 
 	 **/
 	public String toString(){ 
@@ -212,7 +227,7 @@ public class Ile {
 	}
 	
 	/**
-	 * @return retourne l'ile sous forme d'un tableau de chiffre pour la classe Superplateau.
+	 * retourne l'ile sous forme d'un tableau de chiffre pour la classe Superplateau.
 	 */
 	public int[][] getPlateau(){ 
 		int[][]resultat=new int[this.plateau.length][this.plateau[0].length];
@@ -224,21 +239,19 @@ public class Ile {
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(0)))resultat[c][l]=3;//navire equipe1
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(1)))resultat[c][l]=4;//navire equipe2
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(6)))resultat[c][l]=7;//eau
-				//if(plateau[l][c].listeelements.size()>1){
-				if(plateau[l][c].listeelements.get(0).compareTo(new Element(3)))resultat[c][l]=5;//coffre
-				if(plateau[l][c].listeelements.get(0).compareTo(new Element(4)))resultat[c][l]=6;//clé
-				//}
-				
+				if(plateau[l][c].listeelements.size()>1){
+				if(plateau[l][c].listeelements.get(1).compareTo(new Element(3)))resultat[c][l]=5;//coffre
+				if(plateau[l][c].listeelements.get(1).compareTo(new Element(4)))resultat[c][l]=6;//clé
+				}
+				//else if(plateau[l][c].listeelements.get(0).equals(new Element(3)))resultat[l][c]=1;//cofre
+				//else if(plateau[l][c].listeelements.get(0).equals(new Element(4)))resultat[l][c]=1;//clé
 				}
 			}
 		}
 		return resultat;
 	}
 	
-	public static void main(String[] args){
-		
-		
-	}
+	
 
 }
 

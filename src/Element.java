@@ -1,16 +1,14 @@
 public class Element {
 	int ID;
 	
-	/**
-	 * @param n
-	 */
 	Element(int n){
 		ID=n;
 	}
 	
 	/**
-	 * @param e : ID souhaité
-	 * @return retourne vrai si l'element est identique à celui passé en parametre.
+	 * retourne vrai si l'element est identique à celui passé en parametre .
+	 * @param e
+	 * @return
 	 */
 	public boolean compareTo(Element e){ 
 		if(e.ID==this.ID)return true;
