@@ -1,4 +1,4 @@
-
+ 
 public class SuperPlateau {
 	Plateau test;
 	Ile i;

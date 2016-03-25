@@ -1,4 +1,4 @@
-import java.awt.GraphicsEnvironment;
+import java.awt.GraphicsEnvironment; 
 
 import javax.swing.JFrame;
 

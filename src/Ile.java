@@ -174,7 +174,7 @@ public class Ile {
 			}
 		}
 	}
-	
+	 
 	/**
 	 * place des rochers sur x% de la map.
 	 * @param pourcentage

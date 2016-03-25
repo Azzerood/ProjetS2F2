@@ -48,7 +48,7 @@ public class Partie {
 		int pourcentage=definirProportionRocher();
 		i=new Ile(taille);
 		s=new SuperPlateau(images, taille,true);
-		s.setIle(i);
+		s.setIle(i); 
 		i.placerLesNavires();
 		i.placerEau();
 		s.println("***********Plaçons les navires***********");
