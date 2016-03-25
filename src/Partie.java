@@ -47,24 +47,21 @@ public class Partie {
 		int taille=définirTailleIle();
 		int pourcentage=definirProportionRocher();
 		i=new Ile(taille);
-		s=new SuperPlateau(images, taille);
+		s=new SuperPlateau(images, taille,true);
 		s.setIle(i);
-		System.out.print(i.toString());
 		i.placerLesNavires();
 		i.placerEau();
-		System.out.println("***********Plaçons les navires***********");
-		System.out.print(i.toString());
+		s.println("***********Plaçons les navires***********");
 		i.placerCoffre();
 		i.placerClé();
-		System.out.println("*******Plaçons le coffre et sa clé*******");
-		System.out.print(i.toString());
+		s.println("*******Plaçons le coffre et sa clé*******");
 		Rochers=i.placerRocher(pourcentage);
 		if(!Rochers){
 			erreurRocher();
+			s.test.close();
 		}
 		}while(!Rochers);
-		System.out.println("***********Plaçons les rochers***********");
-		System.out.print(i.toString());
+		s.println("***********Plaçons les rochers***********");
 		s.setJeu();
 		s.affichage();
 	}

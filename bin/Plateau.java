@@ -95,7 +95,6 @@ public class Plateau {
 		window = new JFrame() ;
 		graphic = new GraphicPane(gif, taille) ;
 		console = null ;
-		
 
 		// Caractéristiques initiales pour la fenetre.
 		window.setTitle("Plateau de jeu ("+taille+"X"+taille+")");
@@ -119,7 +118,6 @@ public class Plateau {
 		graphic.addMouseListener(new Mouse());
 		window.addKeyListener(new Key()) ;
 		currentEvent = null ;
-		window.setLocation(0, 0);
 	}
 	/**
 	 * Méthode permettant de placer les éléments sur le plateau. Le tableau doit être  
