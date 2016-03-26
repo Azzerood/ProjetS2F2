@@ -204,6 +204,11 @@ public class Ile {
 		if(nbtours==max)return false;
 		else return true;
 	}
+	public boolean deplacementPossible(int x,int y){
+		if(plateau[x][y].listeelements.isEmpty() && plateau[x][y].perso==null)return true;
+		else return false;
+	}
+	
 	/**
 	 * retourne l'ile sous forme d'un tableau de String.
 	 * 
@@ -233,16 +238,24 @@ public class Ile {
 		int[][]resultat=new int[this.plateau.length][this.plateau[0].length];
 		for(int l=0;l<plateau.length;l++){
 			for(int c=0;c<plateau[0].length;c++){
-				if(plateau[l][c].listeelements.isEmpty())resultat[c][l]=1;//sol
+				if(plateau[l][c].listeelements.isEmpty()){
+					if(plateau[l][c].perso!=null){
+						if(plateau[l][c].perso.toString().equals("E"))resultat[c][l]=8; //explorateur equipe1
+						if(plateau[l][c].perso.toString().equals("e"))resultat[c][l]=9; //explorateur equipe2
+					}
+					else resultat[c][l]=1;//sol
+				}
+				
 				if(!plateau[l][c].listeelements.isEmpty() && plateau[c][l].listeelements!=null){
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(2)))resultat[c][l]=2;//rocher plateau[l][c].listeelements.contains(new Element(2))
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(0)))resultat[c][l]=3;//navire equipe1
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(1)))resultat[c][l]=4;//navire equipe2
 				if(plateau[l][c].listeelements.get(0).compareTo(new Element(6)))resultat[c][l]=7;//eau
 				if(plateau[l][c].listeelements.size()>1){
-				if(plateau[l][c].listeelements.get(1).compareTo(new Element(3)))resultat[c][l]=5;//coffre
-				if(plateau[l][c].listeelements.get(1).compareTo(new Element(4)))resultat[c][l]=6;//clé
+					if(plateau[l][c].listeelements.get(1).compareTo(new Element(3)))resultat[c][l]=5;//coffre
+					if(plateau[l][c].listeelements.get(1).compareTo(new Element(4)))resultat[c][l]=6;//clé
 				}
+				
 				//else if(plateau[l][c].listeelements.get(0).equals(new Element(3)))resultat[l][c]=1;//cofre
 				//else if(plateau[l][c].listeelements.get(0).equals(new Element(4)))resultat[l][c]=1;//clé
 				}

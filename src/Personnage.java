@@ -1,17 +1,17 @@
 
 public class Personnage {
 int energie=100;
-boolean equipe1 = false, equipe2=false;
+int equipe;
 String symbole;
 public Personnage(boolean equipe1){
 	if(equipe1){
-	this.equipe1 = true;
+	this.equipe = 1;
 	}else{
-		this.equipe2=true;
+		this.equipe=2;
 	}
 }
 public String toString(){
-	if (equipe1){
+	if (equipe==1){
 		return symbole.toUpperCase();
 	}else return symbole.toLowerCase();
 	

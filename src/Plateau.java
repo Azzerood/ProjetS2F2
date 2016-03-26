@@ -17,7 +17,7 @@ import javax.swing.JFrame;
  * @author M2103-Team
  */
 public class Plateau {
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 	private JFrame window ;
 	private GraphicPane graphic ;
 	private ConsolePane console ;

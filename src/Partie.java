@@ -1,3 +1,7 @@
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
+
+
 import javax.swing.JOptionPane;
 
 public class Partie {
@@ -39,11 +43,22 @@ public class Partie {
 	/**
 	 * 
 	 */
-	public void initialiserPartie(){
+	private boolean sontAdjacent(int x, int y, int x2, int y2){
+		if(x==x2){
+			if(y2==y-1)return true;
+			if(y2==y+1)return true;
+		}
+		if(y==y2){
+			if(x2==x-1)return true;
+			if(x2==x+1)return true;
+		}
+		return false;
+	}
+public void initialiserPartie(){
 		boolean Rochers=false;
 		Ile i;
 		do{ 
-		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png"};
+		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png"};
 		int taille=définirTailleIle();
 		int pourcentage=definirProportionRocher();
 		i=new Ile(taille);
@@ -51,20 +66,51 @@ public class Partie {
 		s.setIle(i); 
 		i.placerLesNavires();
 		i.placerEau();
-		s.println("***********Plaçons les navires***********");
 		i.placerCoffre();
 		i.placerClé();
-		s.println("*******Plaçons le coffre et sa clé*******");
 		Rochers=i.placerRocher(pourcentage);
 		if(!Rochers){
 			erreurRocher();
 			s.test.close();
 		}
 		}while(!Rochers);
-		s.println("***********Plaçons les rochers***********");
 		s.setJeu();
 		s.affichage();
 	}
+	public int[] choisirPersonnage(){
+		int[] coordonnées=new int[2];
+		s.println("Choissisez un personnage");
+		InputEvent event=s.waitEvent();
+		int x=s.getX((MouseEvent) event);
+		int y=s.getY((MouseEvent) event);
+		coordonnées[0]=x;
+		coordonnées[1]=y;
+		return coordonnées;
 		
+	}
+	public int[] choisirCase(){
+		int[] coordonnées=new int[2];
+		s.println("Choissisez où aller");
+		InputEvent event=s.waitEvent();
+		int x=s.getX((MouseEvent) event);
+		int y=s.getY((MouseEvent) event);
+		coordonnées[0]=x;
+		coordonnées[1]=y;
+		return coordonnées;
+	}
+	public void tour(int joueur){
+		s.refresh();
+		int[] persoChoisi;
+		int[] caseChoisi;
+		do{
+			s.println("Joueur "+joueur+" :");
+			persoChoisi=choisirPersonnage();
+		}while(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso==null || s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso.equipe!=joueur );
+		do{
+			s.println("Joueur "+joueur+" :");
+			caseChoisi=choisirCase();
+		}while(!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1]) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1]));
+	}
+
 }
 

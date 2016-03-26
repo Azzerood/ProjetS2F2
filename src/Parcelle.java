@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Parcelle {
 	ArrayList<Element> listeelements=new ArrayList<Element>();
 	boolean accessible;
+	Personnage perso;
 	/**
 	 * 
 	 */
@@ -22,6 +23,7 @@ public class Parcelle {
 	 **/
 	public String toString(){ 
 		if(listeelements!=null && !listeelements.isEmpty()) return listeelements.get(0).toString(); //l'alternative permet d'éviter toute erreur causée par l'éventuel manque d'un element.
+		if(perso!=null) return perso.toString();
 		else return " ";
 	}
 	

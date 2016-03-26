@@ -1,4 +1,6 @@
- 
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
+
 public class SuperPlateau {
 	Plateau test;
 	Ile i;
@@ -22,11 +24,24 @@ public class SuperPlateau {
 	public void println(String message){
 		this.test.println(message);
 	}
+	public InputEvent waitEvent() {
+		return test.waitEvent();
+	}
+	public int getX(MouseEvent event) {
+		return test.getX(event) ; 
+	}
+	
+	public int getY(MouseEvent event) { 	
+		return test.getY(event) ;
+	}
 	public int[][] getJeu(){
 		return this.test.getJeu();
 	}
 	//
-	
+	public void refresh(){
+		setJeu();
+		affichage();
+	}
 }
 	
 
