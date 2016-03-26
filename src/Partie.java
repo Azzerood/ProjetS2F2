@@ -111,6 +111,11 @@ public void initialiserPartie(){
 			caseChoisi=choisirCase();
 		}while(!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1]) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1]));
 	}
-
+	public void lancerPartie(){
+		do{
+			tour(1);
+			tour(2);
+		}while(true);
+	}
 }
 
