@@ -255,4 +255,5 @@ public class Plateau {
 		window.getContentPane().setPreferredSize(dim) ;
 		window.pack() ;
 	}
+	
 }

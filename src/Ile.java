@@ -2,7 +2,8 @@ import java.util.Random;
 
 public class Ile {
 	Parcelle[][] plateau; //plateau
-	
+	Equipe e1=new Equipe();
+	Equipe e2=new Equipe();
 	/**
 	 * @param d
 	 */
@@ -268,7 +269,10 @@ public class Ile {
 		}
 		return resultat;
 	}
-	
+	public boolean fini(){
+		if(e1.tresor || e2.tresor)return true;
+		else return false;
+	}
 	
 
 }

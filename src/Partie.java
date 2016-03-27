@@ -117,7 +117,16 @@ public void initialiserPartie(){
 		do{
 			tour(1);
 			tour(2);
-		}while(true);
+		}while(!s.i.fini());
+		afficherVainqueur();
+	}
+	public void afficherVainqueur(){
+		if(s.i.e1.tresor){
+			s.println("Joueur 1 a gagné!");
+		}
+		if(s.i.e2.tresor){
+			s.println("Joueur 2 a gagné!");
+		}
 	}
 }
 
