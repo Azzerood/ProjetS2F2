@@ -43,7 +43,7 @@ public class Main {
 		tab[0][0]=3;
 		s.setJeu(tab);
 		s.affichage();
-		
+		Thread.sleep(10000) ;
 		
 		s.close();
 		
