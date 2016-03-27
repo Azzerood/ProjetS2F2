@@ -19,7 +19,7 @@ public class Main {
 		    	Partie p=new Partie(); 
 		    	p.initialiserPartie();
 		    	p.s.i.plateau[6][1].perso=new Explorateur(true); // ajoute un personnage pour les test.
-		    	p.s.i.plateau[6][8].perso=new Explorateur(false); // ajoute un personnage pour les test.
+		    	p.s.i.plateau[6][8].perso=new Voleur(false); // ajoute un personnage pour les test.
 		    	p.lancerPartie();
 		    	Menu();	
 		    }else{

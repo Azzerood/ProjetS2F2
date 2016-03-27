@@ -43,7 +43,7 @@ public class Partie {
 	/**
 	 * 
 	 */
-	private boolean sontAdjacent(int x, int y, int x2, int y2){
+	private boolean sontAdjacent(int x, int y, int x2, int y2,boolean voleur){
 		if(x==x2){
 			if(y2==y-1)return true;
 			if(y2==y+1)return true;
@@ -52,13 +52,20 @@ public class Partie {
 			if(x2==x-1)return true;
 			if(x2==x+1)return true;
 		}
+		if(voleur){
+			if(y2==y-1 && x2==x-1) return true;
+			if(y2==y-1 && x2==x+1) return true;
+			if(y2==y+1 && x2==x-1) return true;
+			if(y2==y+1 && x2==x+1) return true;
+			
+		}
 		return false;
 	}
-public void initialiserPartie(){
+	public void initialiserPartie(){
 		boolean Rochers=false;
 		Ile i;
 		do{ 
-		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png"};
+		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png"};
 		int taille=définirTailleIle();
 		int pourcentage=definirProportionRocher();
 		i=new Ile(taille);
@@ -101,6 +108,7 @@ public void initialiserPartie(){
 	public void tour(int joueur){
 		s.refresh();
 		boolean explorateur=false;
+		boolean voleur=false;
 		int[] persoChoisi;
 		int[] caseChoisi;
 		do{
@@ -108,10 +116,11 @@ public void initialiserPartie(){
 			persoChoisi=choisirPersonnage();
 		}while(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso==null || s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso.equipe!=joueur );
 		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Explorateur)explorateur=true;
+		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Voleur)voleur=true;
 		do{
 			s.println("Joueur "+joueur+" :");
 			caseChoisi=choisirCase();
-		}while(!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1],explorateur) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1]));
+		}while(!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1],explorateur) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1],voleur));
 	}
 	public void lancerPartie(){
 		do{
