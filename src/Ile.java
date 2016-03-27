@@ -204,9 +204,14 @@ public class Ile {
 		if(nbtours==max)return false;
 		else return true;
 	}
-	public boolean deplacementPossible(int x,int y){
-		if(plateau[x][y].listeelements.isEmpty() && plateau[x][y].perso==null)return true;
-		else return false;
+	public boolean deplacementPossible(int x,int y,boolean explorateur){
+		if(!explorateur){
+			if(plateau[x][y].listeelements.isEmpty() && plateau[x][y].perso==null)return true;
+			else return false;
+		}else{
+			if(plateau[x][y].listeelements.isEmpty() || plateau[x][y].listeelements.get(0).compareTo(new Element(2)) && plateau[x][y].perso==null)return true;
+			else return false;
+		}
 	}
 	
 	/**

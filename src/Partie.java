@@ -100,16 +100,18 @@ public void initialiserPartie(){
 	}
 	public void tour(int joueur){
 		s.refresh();
+		boolean explorateur=false;
 		int[] persoChoisi;
 		int[] caseChoisi;
 		do{
 			s.println("Joueur "+joueur+" :");
 			persoChoisi=choisirPersonnage();
 		}while(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso==null || s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso.equipe!=joueur );
+		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Explorateur)explorateur=true;
 		do{
 			s.println("Joueur "+joueur+" :");
 			caseChoisi=choisirCase();
-		}while(!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1]) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1]));
+		}while(!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1],explorateur) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1]));
 	}
 	public void lancerPartie(){
 		do{

@@ -13,6 +13,9 @@ public class SuperPlateau {
 	public void setIle(Ile ile){
 		this.i=ile;
 	}
+	public void setJeu(int[][]tab){
+		this.test.setJeu(tab);
+	}
 	public void setJeu() {
 		this.test.setJeu(i.getPlateau());
 	}
@@ -41,6 +44,9 @@ public class SuperPlateau {
 	public void refresh(){
 		setJeu();
 		affichage();
+	}
+	public void close() {
+		test.close();
 	}
 }
 	
