@@ -5,7 +5,9 @@ public class Main {
 	public static void Menu() throws InterruptedException{
 		 String[] choix = {"Lancer une partie","Guide" ,"Quitter"};
 		    JOptionPane jop = new JOptionPane();
-		    int rang = jop.showOptionDialog(null, 
+		   int rang;
+		   do{ 
+		   rang = jop.showOptionDialog(null, 
 		      "Que souhaitez vous faire?",
 		      "Menu Principal",
 		      JOptionPane.YES_NO_CANCEL_OPTION,
@@ -21,12 +23,14 @@ public class Main {
 		    	p.lancerPartie();
 		    	Menu();	
 		    }else{
-		    	if(rang==1){Tuto();Menu();}	
+		    	if(rang==1){Tuto();}	
 		    	else{
 		    		
 		    	}
 		    
 		    }
+		   }while(rang<choix.length-1);
+		   
 	}
 	public static void Tuto() throws InterruptedException{
 		String[] images={"img/tuto1.png","img/tuto2.png","img/tuto3.png","img/tuto4.png","img/tuto5.png","img/tuto6.png","img/tuto7.png",};
