@@ -61,6 +61,18 @@ public class Parcelle {
 		listeelements.add(new Element(3));
 	}
 	
+	public boolean estVide(){
+		return(listeelements.isEmpty() && perso== null);
+	}
+	
+	public boolean estNavireDe(int joueur){
+		if(!listeelements.isEmpty()){
+			if(listeelements.get(0).estNavireDe(joueur))return true;
+			
+		}
+		return false;
+	}
+	
 	
 	public static void main(String[]args){
 		

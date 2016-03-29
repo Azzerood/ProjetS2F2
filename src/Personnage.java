@@ -4,6 +4,8 @@
 		int energie=100;
 		int equipe;
 		String symbole;
+		boolean clé=false;
+		boolean coffre=false;
 		
 	public Personnage(boolean equipe1){
 	if(equipe1){

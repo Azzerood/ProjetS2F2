@@ -28,6 +28,10 @@ public class Element {
 		if(ID==6)return "E";//Eau
 		return " ";
 	}
+public boolean estNavireDe(int joueur){
+		if(ID==0 || ID==1)return true;
+		else return false;
+	}
 	public static void main(String[] args){
 		
 	}

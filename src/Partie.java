@@ -40,6 +40,12 @@ public class Partie {
 		JOptionPane Taille=new JOptionPane();
 		JOptionPane.showMessageDialog(Taille, "Nous n'avons pas pu configurer l'ile. Recommencez", "Error", JOptionPane.ERROR_MESSAGE);
 	}
+	
+	private boolean selectionnable(int x, int y ,int joueur){
+		if(s.i.plateau[x][y].perso!=null  && s.i.plateau[x][y].perso.equipe==joueur )return true;
+		if(s.i.plateau[x][y].estNavireDe(joueur))return true;
+		return false;
+	}
 	/**
 	 * 
 	 */
@@ -114,13 +120,15 @@ public class Partie {
 		do{
 			s.println("Joueur "+joueur+" :");
 			persoChoisi=choisirPersonnage();
-		}while(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso==null || s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso.equipe!=joueur );
+		}while(!selectionnable(persoChoisi[0], persoChoisi[1], joueur));
 		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Explorateur)explorateur=true;
 		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Voleur)voleur=true;
 		do{
 			s.println("Joueur "+joueur+" :");
 			caseChoisi=choisirCase();
-		}while(!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1],explorateur) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1],voleur));
+		}while(!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1],explorateur,joueur) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1],voleur));
+		s.i.deplacerPersonnage(persoChoisi[0],persoChoisi[1],caseChoisi[0],caseChoisi[1],joueur);
+	
 	}
 	public void lancerPartie(){
 		do{

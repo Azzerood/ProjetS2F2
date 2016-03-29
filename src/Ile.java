@@ -205,14 +205,23 @@ public class Ile {
 		if(nbtours==max)return false;
 		else return true;
 	}
-	public boolean deplacementPossible(int x,int y,boolean explorateur){
+	public boolean deplacementPossible(int x,int y,boolean explorateur,int joueur){
+		
 		if(!explorateur){
-			if(plateau[x][y].listeelements.isEmpty() && plateau[x][y].perso==null)return true;
-			else return false;
+			if(plateau[x][y].listeelements.isEmpty()){
+				if(plateau[x][y].perso==null)return true;
+			}
+			else{
+			if(joueur==1 && plateau[x][y].listeelements.get(0).compareTo(new Element(0)))return true;
+			if(joueur==2 && plateau[x][y].listeelements.get(0).compareTo(new Element(1))) return true;
+			return false;
+			}
 		}else{
 			if(plateau[x][y].listeelements.isEmpty() || plateau[x][y].listeelements.get(0).compareTo(new Element(2)) && plateau[x][y].perso==null)return true;
-			else return false;
+			if(joueur==1 && !plateau[x][y].listeelements.isEmpty() && plateau[x][y].listeelements.get(0).compareTo(new Element(0)))return true;
+			if(joueur==2 && !plateau[x][y].listeelements.isEmpty() && plateau[x][y].listeelements.get(0).compareTo(new Element(1))) return true;
 		}
+		return false;
 	}
 	
 	/**
@@ -271,6 +280,63 @@ public class Ile {
 	public boolean fini(){
 		if(e1.tresor || e2.tresor)return true;
 		else return false;
+	}
+	
+	public void recupererCoordonneesCoffre(int x,int y,int joueur){
+		if(joueur==1){
+			e1.positionCoffre[0]=x;
+			e1.positionCoffre[1]=y;
+		}else{
+			e2.positionCoffre[0]=x;
+			e2.positionCoffre[1]=y;
+		}
+	}
+
+	public void deplacerPersonnage(int x, int y , int x2, int y2,int joueur){
+		if(!plateau[x][y].listeelements.isEmpty()&& plateau[x][y].estNavireDe(joueur)){
+			if(joueur==1 && !e1.equipageAuRepos.isEmpty()){plateau[x2][y2].perso=e1.equipageAuRepos.get(0);e1.equipageAuRepos.remove(0);}
+			if(joueur==2 && !e2.equipageAuRepos.isEmpty()){plateau[x2][y2].perso=e2.equipageAuRepos.get(0);e2.equipageAuRepos.remove(0);}
+		}
+		else
+		if(plateau[x2][y2].estVide()){
+			plateau[x2][y2].perso=plateau[x][y].perso;
+			plateau[x][y].perso=null;		
+		}
+		else{
+			
+			if(plateau[x2][y2].listeelements.get(0).compareTo(new Element(0)) || plateau[x2][y2].listeelements.get(0).compareTo(new Element(1))){
+				if(joueur==1){
+					if(plateau[x][y].perso.coffre)e1.tresor=true;
+					e1.equipageAuRepos.add(plateau[x][y].perso);
+				}
+				if(joueur==2){
+					if(plateau[x][y].perso.coffre)e2.tresor=true;
+					e2.equipageAuRepos.add(plateau[x][y].perso);
+					}
+				plateau[x][y].perso=null;	
+			}
+			if(plateau[x2][y2].listeelements.get(0).compareTo(new Element(2))){//si contient un rocher
+				if(plateau[x2][y2].listeelements.size()>1){
+					if(plateau[x2][y2].listeelements.get(1).compareTo(new Element(3))){//rocher couvre la coffre
+						if(plateau[x][y].perso.clé){//le joueur a la clé
+							plateau[x2][y2].listeelements.remove(1);
+							plateau[x][y].perso.coffre=true;
+						}else{//le joueur n'a pas la clé
+							recupererCoordonneesCoffre(x2, y2, joueur);
+						}
+					
+					
+					}
+					else if(plateau[x2][y2].listeelements.get(1).compareTo(new Element(4))){ //rocher couvre la clé
+						plateau[x2][y2].listeelements.remove(1);
+						plateau[x][y].perso.clé=true;
+					}
+				}else{ //si le rocher ne couvre rien
+				
+				}
+			}
+		}
+		
 	}
 	
 
