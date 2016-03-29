@@ -268,6 +268,8 @@ public class Ile {
 					if(plateau[l][c].listeelements.get(0).compareTo(new Element(0)))resultat[c][l]=3;//navire equipe1
 					if(plateau[l][c].listeelements.get(0).compareTo(new Element(1)))resultat[c][l]=4;//navire equipe2
 					if(plateau[l][c].listeelements.get(0).compareTo(new Element(6)))resultat[c][l]=7;//eau
+					if(plateau[l][c].listeelements.get(0).compareTo(new Element(4)))resultat[c][l]=6;//clé
+					if(plateau[l][c].listeelements.get(0).compareTo(new Element(5)))resultat[c][l]=5;//clé
 					if(plateau[l][c].listeelements.size()>1){
 						if(plateau[l][c].listeelements.get(1).compareTo(new Element(3)))resultat[c][l]=5;//coffre
 						if(plateau[l][c].listeelements.get(1).compareTo(new Element(4)))resultat[c][l]=6;//clé
@@ -279,6 +281,7 @@ public class Ile {
 	}
 	public boolean fini(){
 		if(e1.tresor || e2.tresor)return true;
+		if(e1.plusDePersonnage() || e2.plusDePersonnage())return true;
 		else return false;
 	}
 	
@@ -291,52 +294,74 @@ public class Ile {
 			e2.positionCoffre[1]=y;
 		}
 	}
+	private void personnageMeurt(int x, int y){
+		if(plateau[x][y].perso.clé){
+			if(plateau[x][y].perso.coffre){
+				
+				plateau[x][y].listeelements.add(new Element(5));//pose le trésor sur le sol
+			}else{
+				plateau[x][y].listeelements.add(new Element(4));//pose la clé sur le sol
+			}
+		}
+		if(plateau[x][y].perso.equipe==1)e1.setNbpersonnages(e1.getNbpersonnages() - 1);
+		else e2.setNbpersonnages(e2.getNbpersonnages() - 1);
+		plateau[x][y].perso=null;
+		
+		
+	}
 
 	public void deplacerPersonnage(int x, int y , int x2, int y2,int joueur){
-		if(!plateau[x][y].listeelements.isEmpty()&& plateau[x][y].estNavireDe(joueur)){
+		if(!plateau[x][y].listeelements.isEmpty()&& plateau[x][y].estNavireDe(joueur)){ //si le navire est sélectionné
 			if(joueur==1 && !e1.equipageAuRepos.isEmpty()){plateau[x2][y2].perso=e1.equipageAuRepos.get(0);e1.equipageAuRepos.remove(0);}
 			if(joueur==2 && !e2.equipageAuRepos.isEmpty()){plateau[x2][y2].perso=e2.equipageAuRepos.get(0);e2.equipageAuRepos.remove(0);}
 		}
-		else
-		if(plateau[x2][y2].estVide()){
-			plateau[x2][y2].perso=plateau[x][y].perso;
-			plateau[x][y].perso=null;		
-		}
-		else{
-			
-			if(plateau[x2][y2].listeelements.get(0).compareTo(new Element(0)) || plateau[x2][y2].listeelements.get(0).compareTo(new Element(1))){
-				if(joueur==1){
-					if(plateau[x][y].perso.coffre)e1.tresor=true;
-					e1.equipageAuRepos.add(plateau[x][y].perso);
-				}
-				if(joueur==2){
-					if(plateau[x][y].perso.coffre)e2.tresor=true;
-					e2.equipageAuRepos.add(plateau[x][y].perso);
-					}
-				plateau[x][y].perso=null;	
-			}
-			if(plateau[x2][y2].listeelements.get(0).compareTo(new Element(2))){//si contient un rocher
-				if(plateau[x2][y2].listeelements.size()>1){
-					if(plateau[x2][y2].listeelements.get(1).compareTo(new Element(3))){//rocher couvre la coffre
-						if(plateau[x][y].perso.clé){//le joueur a la clé
-							plateau[x2][y2].listeelements.remove(1);
-							plateau[x][y].perso.coffre=true;
-						}else{//le joueur n'a pas la clé
-							recupererCoordonneesCoffre(x2, y2, joueur);
-						}
-					
-					
-					}
-					else if(plateau[x2][y2].listeelements.get(1).compareTo(new Element(4))){ //rocher couvre la clé
-						plateau[x2][y2].listeelements.remove(1);
-						plateau[x][y].perso.clé=true;
-					}
-				}else{ //si le rocher ne couvre rien
+		else{//si un personnage est selectionné
+		if(plateau[x2][y2].estVide()){ //si l'endroit ciblé est vide
+				plateau[x][y].perso.energie-=1;
+				plateau[x2][y2].perso=plateau[x][y].perso;
+				plateau[x][y].perso=null;
+				if(plateau[x2][y2].perso.energie<=0)personnageMeurt(x2, y2);
 				
+		}else{
+			
+				if(plateau[x2][y2].listeelements.get(0).compareTo(new Element(0)) || plateau[x2][y2].listeelements.get(0).compareTo(new Element(1))){ //si le navre est ciblé
+					plateau[x][y].perso.energie-=1;
+					if(joueur==1){
+						if(plateau[x][y].perso.coffre)e1.tresor=true; //s'il possède le coffre
+							e1.equipageAuRepos.add(plateau[x][y].perso);
+						}
+					if(joueur==2){
+						if(plateau[x][y].perso.coffre)e2.tresor=true;//s'il possède le coffre
+							e2.equipageAuRepos.add(plateau[x][y].perso);
+						}
+					plateau[x][y].perso=null;	
 				}
+				if(plateau[x2][y2].listeelements.get(0).compareTo(new Element(2))){//si contient un rocher
+					plateau[x][y].perso.energie-=5;
+					if(plateau[x2][y2].listeelements.size()>1){
+						if(plateau[x2][y2].listeelements.get(1).compareTo(new Element(3))){//rocher couvre le coffre
+							if(plateau[x][y].perso.clé){//le joueur a la clé
+								plateau[x2][y2].listeelements.remove(1);
+								plateau[x][y].perso.coffre=true;
+							}else{//le joueur n'a pas la clé
+								recupererCoordonneesCoffre(x2, y2, joueur);
+							}
+					
+					
+						}
+						else if(plateau[x2][y2].listeelements.get(1).compareTo(new Element(4))){ //rocher couvre la clé
+							plateau[x2][y2].listeelements.remove(1);
+							plateau[x][y].perso.clé=true;
+						}
+						
+					}else{ //si le rocher ne couvre rien
+				
+					}
+					if(plateau[x][y].perso.energie<=0)personnageMeurt(x, y);
+				}
+				
 			}
 		}
-		
 	}
 	
 

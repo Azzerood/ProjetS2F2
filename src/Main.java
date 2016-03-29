@@ -19,9 +19,11 @@ public class Main {
 		    	Partie p=new Partie(); 
 		    	p.initialiserPartie();
 		    	p.s.i.plateau[6][1].perso=new Explorateur(true); // ajoute un personnage pour les test.
+		    	p.s.i.e1.setNbpersonnages(1);
 		    	p.s.i.plateau[6][8].perso=new Voleur(false); // ajoute un personnage pour les test.
+		    	p.s.i.e2.setNbpersonnages(1);
 		    	p.lancerPartie();
-		    	Menu();	
+		    		
 		    }else{
 		    	if(rang==1){Tuto();}	
 		    	else{

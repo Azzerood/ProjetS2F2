@@ -130,19 +130,27 @@ public class Partie {
 		s.i.deplacerPersonnage(persoChoisi[0],persoChoisi[1],caseChoisi[0],caseChoisi[1],joueur);
 	
 	}
+	public void recuperationNavire(){
+		s.i.e1.recuperationNavire();
+		s.i.e2.recuperationNavire();
+	}
+	
 	public void lancerPartie(){
 		do{
+			recuperationNavire();
 			tour(1);
 			tour(2);
 		}while(!s.i.fini());
+		s.close();
 		afficherVainqueur();
 	}
 	public void afficherVainqueur(){
-		if(s.i.e1.tresor){
-			s.println("Joueur 1 a gagné!");
-		}
-		if(s.i.e2.tresor){
-			s.println("Joueur 2 a gagné!");
+		
+		if(s.i.e1.tresor || s.i.e2.plusDePersonnage()){
+			JOptionPane.showMessageDialog (null, "Joueur 1 a gagné!", "Fin de partie", JOptionPane.INFORMATION_MESSAGE);
+		}else
+		if(s.i.e2.tresor || s.i.e1.plusDePersonnage()){
+			JOptionPane.showMessageDialog (null, "Joueur 2 a gagné!", "Fin de partie", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }
