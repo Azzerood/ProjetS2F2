@@ -126,7 +126,7 @@ public class Partie {
 		do{
 			s.println("Joueur "+joueur+" :");
 			caseChoisi=choisirCase();
-		}while(!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1],explorateur,joueur) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1],voleur));
+		}while(!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1],explorateur,voleur,joueur) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1],voleur));
 		s.i.deplacerPersonnage(persoChoisi[0],persoChoisi[1],caseChoisi[0],caseChoisi[1],joueur);
 	
 	}

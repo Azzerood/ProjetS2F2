@@ -205,16 +205,19 @@ public class Ile {
 		if(nbtours==max)return false;
 		else return true;
 	}
-	public boolean deplacementPossible(int x,int y,boolean explorateur,int joueur){
+	public boolean deplacementPossible(int x,int y,boolean explorateur,boolean voleur,int joueur){
 		
 		if(!explorateur){
+			if(voleur){
+				if(plateau[x][y].perso!=null && plateau[x][y].perso.equipe!=joueur )return true;
+			}
+			
 			if(plateau[x][y].listeelements.isEmpty()){
 				if(plateau[x][y].perso==null)return true;
-			}
-			else{
-			if(joueur==1 && plateau[x][y].listeelements.get(0).compareTo(new Element(0)))return true;
-			if(joueur==2 && plateau[x][y].listeelements.get(0).compareTo(new Element(1))) return true;
-			return false;
+			}else{
+				if(joueur==1 && plateau[x][y].listeelements.get(0).compareTo(new Element(0)))return true;
+				if(joueur==2 && plateau[x][y].listeelements.get(0).compareTo(new Element(1))) return true;
+				return false;
 			}
 		}else{
 			if(plateau[x][y].listeelements.isEmpty() || plateau[x][y].listeelements.get(0).compareTo(new Element(2)) && plateau[x][y].perso==null)return true;
@@ -316,15 +319,29 @@ public class Ile {
 			if(joueur==2 && !e2.equipageAuRepos.isEmpty()){plateau[x2][y2].perso=e2.equipageAuRepos.get(0);e2.equipageAuRepos.remove(0);}
 		}
 		else{//si un personnage est selectionné
-		if(plateau[x2][y2].estVide()){ //si l'endroit ciblé est vide
+		 if(plateau[x2][y2].estVide()){ //si l'endroit ciblé est vide
 				plateau[x][y].perso.energie-=1;
 				plateau[x2][y2].perso=plateau[x][y].perso;
 				plateau[x][y].perso=null;
 				if(plateau[x2][y2].perso.energie<=0)personnageMeurt(x2, y2);
 				
-		}else{
-			
-				if(plateau[x2][y2].listeelements.get(0).compareTo(new Element(0)) || plateau[x2][y2].listeelements.get(0).compareTo(new Element(1))){ //si le navre est ciblé
+		 }else{
+			 	if(plateau[x][y].perso instanceof Voleur && plateau[x2][y2].perso!=null){ //si le perso choisi est un voleur
+			 		
+			 			plateau[x][y].perso.energie-=10;
+			 			if(plateau[x2][y2].perso.coffre){
+			 				System.out.println("tentative de vol");
+			 				Random Rand=new Random();
+			 				int s=Rand.nextInt(10);
+			 				if(s>=9){
+			 					System.out.println("vol réussi");
+			 					plateau[x2][y2].perso.coffre=false;
+			 					plateau[x][y].perso.coffre=true;
+			 				}
+			 			}
+			 		
+			 	}
+			 	else if(plateau[x2][y2].listeelements.get(0).compareTo(new Element(0)) || plateau[x2][y2].listeelements.get(0).compareTo(new Element(1))){ //si le navre est ciblé
 					plateau[x][y].perso.energie-=1;
 					if(joueur==1){
 						if(plateau[x][y].perso.coffre)e1.tresor=true; //s'il possède le coffre
@@ -336,7 +353,7 @@ public class Ile {
 						}
 					plateau[x][y].perso=null;	
 				}
-				if(plateau[x2][y2].listeelements.get(0).compareTo(new Element(2))){//si contient un rocher
+				else if(plateau[x2][y2].listeelements.get(0).compareTo(new Element(2))){//si contient un rocher
 					plateau[x][y].perso.energie-=5;
 					if(plateau[x2][y2].listeelements.size()>1){
 						if(plateau[x2][y2].listeelements.get(1).compareTo(new Element(3))){//rocher couvre le coffre

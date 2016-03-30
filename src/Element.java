@@ -29,8 +29,9 @@ public class Element {
 		return " ";
 	}
 public boolean estNavireDe(int joueur){
-		if(ID==0 || ID==1)return true;
-		else return false;
+		if(ID==0 && joueur==1)return true;
+		if(ID==1 && joueur==2)return true;
+		return false;
 	}
 	public static void main(String[] args){
 		
