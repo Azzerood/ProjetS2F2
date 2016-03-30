@@ -1,7 +1,7 @@
 
 
 	public class Personnage {
-		int energie=1000;
+		int energie=100;
 		int equipe;
 		String symbole;
 		boolean clé=false;
