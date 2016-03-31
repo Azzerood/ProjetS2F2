@@ -39,6 +39,7 @@ public class Main {
 	public static void Tuto() throws InterruptedException{
 		String[] images={"img/tuto1.png","img/tuto2.png","img/tuto3.png","img/tuto4.png","img/tuto5.png","img/tuto6.png","img/tuto7.png",};
 		SuperPlateau s=new SuperPlateau(images,1);
+		s.setPreferedSize(820, 650);
 		int[][] tab=new int[1][1];
 		tab[0][0]=1;
 		s.setJeu(tab);

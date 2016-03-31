@@ -120,7 +120,7 @@ public class Plateau {
 		window.addKeyListener(new Key()) ;
 		currentEvent = null ;
 		window.setLocation(0, 0);
-		window.setPreferredSize(new Dimension(820,650));
+		
 	}
 	/**
 	 * Méthode permettant de placer les éléments sur le plateau. Le tableau doit être  
@@ -255,6 +255,9 @@ public class Plateau {
 		}
 		window.getContentPane().setPreferredSize(dim) ;
 		window.pack() ;
+	}
+	public void setPreferedSize(int largeur,int longueur){
+		window.setPreferredSize(new Dimension(largeur,longueur));
 	}
 	
 }

@@ -51,6 +51,10 @@ public class SuperPlateau {
 	public void close() {
 		test.close();
 	}
+	public void setPreferedSize(int largeur,int longueur){
+		this.test.setPreferedSize(largeur, longueur);
+		
+	}
 }
 	
 
