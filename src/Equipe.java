@@ -28,7 +28,7 @@ public class Equipe {
 	
 	public void recuperationNavire(){
 		for(Personnage p : equipageAuRepos){
-			p.energie+=10;
+			p.setEnergie(p.getEnergie()+10);
 		}
 	}
 	

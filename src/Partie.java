@@ -42,7 +42,7 @@ public class Partie {
 	}
 	
 	private boolean selectionnable(int x, int y ,int joueur){
-		if(s.i.plateau[x][y].perso!=null  && s.i.plateau[x][y].perso.equipe==joueur )return true;
+		if(s.i.plateau[x][y].perso!=null  && s.i.plateau[x][y].perso.getEquipe()==joueur )return true;
 		if(s.i.plateau[x][y].estNavireDe(joueur))return true;
 		return false;
 	}

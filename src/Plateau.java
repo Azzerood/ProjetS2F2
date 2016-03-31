@@ -103,7 +103,7 @@ public class Plateau {
 		window.setLayout(new BorderLayout());
 		// La fermeture de la fenetre ne fait que la cacher. 
 		// cf Javadoc setDefaultCloseOperation
-		window.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		//window.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
 		// Ajout des deux composants à la fenetre
 		window.getContentPane().add(graphic, BorderLayout.NORTH);
@@ -120,6 +120,7 @@ public class Plateau {
 		window.addKeyListener(new Key()) ;
 		currentEvent = null ;
 		window.setLocation(0, 0);
+		window.setPreferredSize(new Dimension(820,650));
 	}
 	/**
 	 * Méthode permettant de placer les éléments sur le plateau. Le tableau doit être  

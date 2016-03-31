@@ -1,3 +1,5 @@
+import java.awt.event.InputEvent;
+
 import javax.swing.JOptionPane;
 
 public class Main {
@@ -41,16 +43,19 @@ public class Main {
 		tab[0][0]=1;
 		s.setJeu(tab);
 		s.affichage();
-		Thread.sleep(6000) ;
+		s.waitEvent();
 		tab[0][0]=2;
 		s.setJeu(tab);
 		s.affichage();
-		Thread.sleep(10000) ;
+		s.waitEvent();
 		tab[0][0]=3;
 		s.setJeu(tab);
 		s.affichage();
-		Thread.sleep(10000) ;
-		
+		s.waitEvent();
+		tab[0][0]=4;
+		s.setJeu(tab);
+		s.affichage();
+		s.waitEvent();
 		s.close();
 		
 		

@@ -209,7 +209,7 @@ public class Ile {
 		
 		if(!explorateur){
 			if(voleur){
-				if(plateau[x][y].perso!=null && plateau[x][y].perso.equipe!=joueur )return true;
+				if(plateau[x][y].perso!=null && plateau[x][y].perso.getEquipe()!=joueur )return true;
 			}
 			
 			if(plateau[x][y].listeelements.isEmpty()){
@@ -306,7 +306,7 @@ public class Ile {
 				plateau[x][y].listeelements.add(new Element(4));//pose la clé sur le sol
 			}
 		}
-		if(plateau[x][y].perso.equipe==1)e1.setNbpersonnages(e1.getNbpersonnages() - 1);
+		if(plateau[x][y].perso.getEquipe()==1)e1.setNbpersonnages(e1.getNbpersonnages() - 1);
 		else e2.setNbpersonnages(e2.getNbpersonnages() - 1);
 		plateau[x][y].perso=null;
 		
@@ -320,15 +320,15 @@ public class Ile {
 		}
 		else{//si un personnage est selectionné
 		 if(plateau[x2][y2].estVide()){ //si l'endroit ciblé est vide
-				plateau[x][y].perso.energie-=1;
+				plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-1);
 				plateau[x2][y2].perso=plateau[x][y].perso;
 				plateau[x][y].perso=null;
-				if(plateau[x2][y2].perso.energie<=0)personnageMeurt(x2, y2);
+				if(plateau[x2][y2].perso.getEnergie()<=0)personnageMeurt(x2, y2);
 				
 		 }else{
 			 	if(plateau[x][y].perso instanceof Voleur && plateau[x2][y2].perso!=null){ //si le perso choisi est un voleur
-			 		
-			 			plateau[x][y].perso.energie-=10;
+			 			
+			 			plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-10);
 			 			if(plateau[x2][y2].perso.coffre){
 			 				System.out.println("tentative de vol");
 			 				Random Rand=new Random();
@@ -339,10 +339,10 @@ public class Ile {
 			 					plateau[x][y].perso.coffre=true;
 			 				}
 			 			}
-			 		
+			 			if(plateau[x][y].perso.getEnergie()<=0)personnageMeurt(x, y);
 			 	}
 			 	else if(plateau[x2][y2].listeelements.get(0).compareTo(new Element(0)) || plateau[x2][y2].listeelements.get(0).compareTo(new Element(1))){ //si le navre est ciblé
-					plateau[x][y].perso.energie-=1;
+					plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-1);
 					if(joueur==1){
 						if(plateau[x][y].perso.coffre)e1.tresor=true; //s'il possède le coffre
 							e1.equipageAuRepos.add(plateau[x][y].perso);
@@ -354,7 +354,7 @@ public class Ile {
 					plateau[x][y].perso=null;	
 				}
 				else if(plateau[x2][y2].listeelements.get(0).compareTo(new Element(2))){//si contient un rocher
-					plateau[x][y].perso.energie-=5;
+					plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-5);
 					if(plateau[x2][y2].listeelements.size()>1){
 						if(plateau[x2][y2].listeelements.get(1).compareTo(new Element(3))){//rocher couvre le coffre
 							if(plateau[x][y].perso.clé){//le joueur a la clé
@@ -372,13 +372,16 @@ public class Ile {
 						}
 						
 					}else{ //si le rocher ne couvre rien
-				
+						
 					}
-					if(plateau[x][y].perso.energie<=0)personnageMeurt(x, y);
+					if(plateau[x][y].perso.getEnergie()<=0)personnageMeurt(x, y);
+					
 				}
-				
+			 	
 			}
+		 
 		}
+		
 	}
 	
 

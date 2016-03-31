@@ -30,6 +30,9 @@ public class SuperPlateau {
 	public InputEvent waitEvent() {
 		return test.waitEvent();
 	}
+	public InputEvent waitEvent(int timeout){
+		return test.waitEvent(timeout);
+	}
 	public int getX(MouseEvent event) {
 		return test.getX(event) ; 
 	}

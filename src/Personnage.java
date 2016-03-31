@@ -1,8 +1,8 @@
 
 
 	public class Personnage {
-		int energie=100;
-		int equipe;
+		private int energie=100;
+		private int equipe;
 		String symbole;
 		boolean clé=false;
 		boolean coffre=false;
@@ -13,6 +13,16 @@
 		}else{
 		this.equipe=2;
 		}
+	}
+	
+	public int getEnergie(){
+		return energie;
+	}
+	public void setEnergie(int e){
+		energie=e;
+	}
+	public int getEquipe(){
+		return equipe;
 	}
 	public String toString(){
 		if (equipe==1){
