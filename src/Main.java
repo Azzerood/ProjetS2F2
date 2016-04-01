@@ -1,5 +1,6 @@
 import java.awt.event.InputEvent;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Main {
@@ -36,32 +37,31 @@ public class Main {
 		   }while(rang<choix.length-1);
 		   
 	}
+	
 	public static void Tuto() throws InterruptedException{
 		String[] images={"img/tuto1.png","img/tuto2.png","img/tuto3.png","img/tuto4.png","img/tuto5.png","img/tuto6.png","img/tuto7.png",};
 		SuperPlateau s=new SuperPlateau(images,1);
 		s.setPreferedSize(820, 650);
 		int[][] tab=new int[1][1];
-		tab[0][0]=1;
+		int nb=1;
+		int nbimages=4;
+		do{
+		tab[0][0]=nb;
 		s.setJeu(tab);
 		s.affichage();
-		s.waitEvent();
-		tab[0][0]=2;
-		s.setJeu(tab);
-		s.affichage();
-		s.waitEvent();
-		tab[0][0]=3;
-		s.setJeu(tab);
-		s.affichage();
-		s.waitEvent();
-		tab[0][0]=4;
-		s.setJeu(tab);
-		s.affichage();
-		s.waitEvent();
+		InputEvent e=s.waitEvent();
+		if(e.getModifiers()==4){ nb=nb-1;
+		if(nb<1)nb=1;
+		}
+		else nb=nb+1;
+		}while(nb<=nbimages);
+		
+		
 		s.close();
 		
 		
 	}
-	public static void main(String[] args) throws InterruptedException { //EN PHASE DE CONSTRUCTION 
+	public static void main(String[] args) throws InterruptedException {  
 		Menu();
 	}
 

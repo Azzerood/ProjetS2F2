@@ -79,6 +79,7 @@ public class Partie {
 		s.setIle(i); 
 		i.placerLesNavires();
 		i.placerEau();
+		i.placerLesEquipages();
 		i.placerCoffre();
 		i.placerClé();
 		Rochers=i.placerRocher(pourcentage);

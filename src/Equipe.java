@@ -7,7 +7,15 @@ public class Equipe {
 	ArrayList<Personnage> equipage=new ArrayList<Personnage>();
 	ArrayList<Personnage> equipageAuRepos=new ArrayList<Personnage>();//aka c'est le navire
 	
-	
+	private void composerEquipe1(){ //à réaliser par Yann et Arthur
+		
+	}
+	private void composerEquipe2(){ //à réaliser par Yann et Arthur
+		
+	}
+	public void composerLesEquipe(){ //à réaliser par Yann et Arthur
+		
+	}
 	
 	public boolean plusDePersonnage(){
 	if(getNbpersonnages()<=0 && equipageAuRepos.isEmpty())return true;

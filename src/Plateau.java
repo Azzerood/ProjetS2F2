@@ -1,6 +1,7 @@
  
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -95,11 +96,12 @@ public class Plateau {
 		window = new JFrame() ;
 		graphic = new GraphicPane(gif, taille) ;
 		console = null ;
-		
+		window.pack();
+		window.setLocationRelativeTo(null);
 
 		// Caractéristiques initiales pour la fenetre.
 		window.setTitle("Plateau de jeu ("+taille+"X"+taille+")");
-		window.setLocationRelativeTo(null);
+		
 		window.setLayout(new BorderLayout());
 		// La fermeture de la fenetre ne fait que la cacher. 
 		// cf Javadoc setDefaultCloseOperation
@@ -119,7 +121,8 @@ public class Plateau {
 		graphic.addMouseListener(new Mouse());
 		window.addKeyListener(new Key()) ;
 		currentEvent = null ;
-		window.setLocation(0, 0);
+		window.pack();
+		window.setLocationRelativeTo(null);
 		
 	}
 	/**
@@ -210,7 +213,7 @@ public class Plateau {
 	/**
 	 * Provoque la destruction du plateau. 
 	 * L'arrêt du programme est conditionné par la fermeture de tous les plateaux ouverts.
-	 */
+	 **/
 	public void close() {
 		window.dispose();
 	}
@@ -258,6 +261,9 @@ public class Plateau {
 	}
 	public void setPreferedSize(int largeur,int longueur){
 		window.setPreferredSize(new Dimension(largeur,longueur));
+		
 	}
+	
+	
 	
 }
