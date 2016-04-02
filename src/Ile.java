@@ -2,8 +2,8 @@ import java.util.Random;
 
 public class Ile {
 	Parcelle[][] plateau; //plateau
-	Equipe e1=new Equipe();
-	Equipe e2=new Equipe();
+	Equipe e1=new Equipe(1);
+	Equipe e2=new Equipe(2);
 	/**
 	 * @param d
 	 */
@@ -28,14 +28,64 @@ public class Ile {
 		
 		
 	}
-	private void placerEquipage1(){//à réaliser par Yann et Arthur
+	
+	/**
+	 *  Remplie la liste de personnage des deux équipes
+	 */
+	public void composerLesEquipe(){ 
+		e1.composerEquipe();
+		e2.composerEquipe();
+	}
+	private void placerEquipage1(){
+		int x1=0,y1=0;
+		
+		for(int l=0;l<plateau.length;l++){
+			for(int c=0;c<plateau.length;c++){
+				if(!plateau[l][c].listeelements.isEmpty()){
+					if(plateau[l][c].listeelements.get(0).compareTo(new Element(0))){ //si la case contient le navire1 
+						x1=l;y1=c;
+					}
+					
+				}
+			}
+		}
+		
+		if(plateau[x1-1][y1].listeelements.isEmpty() && plateau[x1-1][y1].perso==null && !e1.equipageAuRepos.isEmpty()){plateau[x1-1][y1].perso=e1.equipageAuRepos.get(0);e1.poserPersonnage(0);}
+		if(plateau[x1+1][y1].listeelements.isEmpty() && plateau[x1+1][y1].perso==null && !e1.equipageAuRepos.isEmpty()){plateau[x1+1][y1].perso=e1.equipageAuRepos.get(0);e1.poserPersonnage(0);}
+		if(plateau[x1][y1-1].listeelements.isEmpty() && plateau[x1][y1-1].perso==null && !e1.equipageAuRepos.isEmpty()){plateau[x1][y1-1].perso=e1.equipageAuRepos.get(0);e1.poserPersonnage(0);}
+		if(plateau[x1][y1+1].listeelements.isEmpty() && plateau[x1][y1+1].perso==null && !e1.equipageAuRepos.isEmpty()){plateau[x1][y1+1].perso=e1.equipageAuRepos.get(0);e1.poserPersonnage(0);}
 		
 	}
-	private void placerEquipage2(){//à réaliser par Yann et Arthur
+	private void placerEquipage2(){
+		int x1=0,y1=0;
+
+		
+		
+		
+		for(int l=0;l<plateau.length;l++){
+			for(int c=0;c<plateau.length;c++){
+				if(!plateau[l][c].listeelements.isEmpty()){
+					if(plateau[l][c].listeelements.get(0).compareTo(new Element(1))){ //si la case contient le navire2
+						x1=l;y1=c;
+					}
+					
+				}
+			}
+		}
+		
+		if(plateau[x1-1][y1].listeelements.isEmpty() && plateau[x1-1][y1].perso==null && !e2.equipageAuRepos.isEmpty()){plateau[x1-1][y1].perso=e2.equipageAuRepos.get(0);e2.poserPersonnage(0);}
+		if(plateau[x1+1][y1].listeelements.isEmpty() && plateau[x1+1][y1].perso==null && !e2.equipageAuRepos.isEmpty()){plateau[x1+1][y1].perso=e2.equipageAuRepos.get(0);e2.poserPersonnage(0);}
+		if(plateau[x1][y1-1].listeelements.isEmpty() && plateau[x1][y1-1].perso==null && !e2.equipageAuRepos.isEmpty()){plateau[x1][y1-1].perso=e2.equipageAuRepos.get(0);e2.poserPersonnage(0);}
+		if(plateau[x1][y1+1].listeelements.isEmpty() && plateau[x1][y1+1].perso==null && !e2.equipageAuRepos.isEmpty()){plateau[x1][y1+1].perso=e2.equipageAuRepos.get(0);e2.poserPersonnage(0);}
 		
 	}
+	
+	/**
+	 *  Place sur l'île les personnage de l'équipe 1 et 2
+	 */
 	public void placerLesEquipages(){//à réaliser par Yann et Arthur
-		
+		placerEquipage1();
+		placerEquipage2();
 	}
 	/**
 	 * place les navires des deux équipes à des positions fixées
@@ -49,7 +99,7 @@ public class Ile {
 	/**
 	 * @param x
 	 * @param y
-	 * @return retourne vrai si les cases autoursS (haut, bas,gauche,droite) des navires sont vides .
+	 * @return retourne vrai si les cases autours (haut, bas, gauche, droite) des navires sont vides .
 	 */
 	public boolean accostagepossible(int x,int y){
 		boolean bloque=false;
@@ -185,10 +235,7 @@ public class Ile {
 		}
 	}
 	 
-	/**
-	 * place des rochers sur x% de la map.
-	 * @param pourcentage
-	 */
+	
 	private void placeRocher(double pourcentage){ //
 		clearRocher();
 		Random r = new Random();
@@ -203,7 +250,10 @@ public class Ile {
 		}
 		
 	}
-	
+	/**
+	 * place des rochers sur x% de la map.
+	 * @param pourcentage
+	 */
 	public boolean placerRocher(double pourcentage){
 		int nbtours=0;
 		int max=100; 
@@ -214,13 +264,21 @@ public class Ile {
 		if(nbtours==max)return false;
 		else return true;
 	}
+	/**
+	 * @param x
+	 * @param y
+	 * @param explorateur
+	 * @param voleur
+	 * @param joueur
+	 * @return Retourne vrai si le personnage en x,y peut intéragir avec la parcelle aux coordonnées x2,y2
+	 */
 	public boolean deplacementPossible(int x,int y,boolean explorateur,boolean voleur,int joueur){
 		
 		if(!explorateur){
 			if(voleur){
-				if(plateau[x][y].perso!=null ){
-					if(plateau[x][y].perso instanceof Explorateur)return true;
-				}
+				if(plateau[x][y].perso!=null )return true;
+					
+				
 			}
 			
 			if(plateau[x][y].listeelements.isEmpty()){
@@ -293,12 +351,21 @@ public class Ile {
 		}
 		return resultat;
 	}
+	/**
+	 * @return Retourn vrai si l'un des joueurs a gagné ou perdu
+	 */
 	public boolean fini(){
 		if(e1.tresor || e2.tresor)return true;
 		if(e1.plusDePersonnage() || e2.plusDePersonnage())return true;
 		else return false;
 	}
 	
+	/**
+	 * @param x
+	 * @param y
+	 * @param joueur
+	 *  Permet au joueur de récupérer les coordonnées du coffre
+	 */
 	public void recupererCoordonneesCoffre(int x,int y,int joueur){
 		if(joueur==1){
 			e1.positionCoffre[0]=x;
@@ -324,6 +391,14 @@ public class Ile {
 		
 	}
 
+	/**
+	 * @param x
+	 * @param y
+	 * @param x2
+	 * @param y2
+	 * @param joueur
+	 * Fait intéragir le personnage a la case x,y avec la case x2,y2
+	 */
 	public void deplacerPersonnage(int x, int y , int x2, int y2,int joueur){
 		if(!plateau[x][y].listeelements.isEmpty()&& plateau[x][y].estNavireDe(joueur)){ //si le navire est sélectionné
 			if(joueur==1 && !e1.equipageAuRepos.isEmpty()){plateau[x2][y2].perso=e1.equipageAuRepos.get(0);e1.equipageAuRepos.remove(0);}
@@ -364,7 +439,7 @@ public class Ile {
 			 				}
 		 				
 			 			}
-			 		}else{
+			 		}else{ //si le joueur choisi est un allié
 			 			if(plateau[x][y].perso.coffre){ // si le voleur possède le trésor
 			 					System.out.println("donne le trésor");
 			 					plateau[x2][y2].perso.coffre=true;
@@ -380,7 +455,7 @@ public class Ile {
 			 		}
 			 			if(plateau[x][y].perso.getEnergie()<=0)personnageMeurt(x, y);
 			 	}
-			 	else if(plateau[x2][y2].listeelements.get(0).compareTo(new Element(0)) || plateau[x2][y2].listeelements.get(0).compareTo(new Element(1))){ //si le navre est ciblé
+			 	else if(plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(0)) || plateau[x2][y2].listeelements.get(0).compareTo(new Element(1))){ //si le navre est ciblé
 					plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-1);
 					if(joueur==1){
 						if(plateau[x][y].perso.coffre)e1.tresor=true; //s'il possède le coffre
@@ -392,7 +467,7 @@ public class Ile {
 						}
 					plateau[x][y].perso=null;	
 				}
-				else if(plateau[x2][y2].listeelements.get(0).compareTo(new Element(2))){//si contient un rocher
+				else if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(2))){//si contient un rocher
 					plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-5);
 					if(plateau[x2][y2].listeelements.size()>1){
 						if(plateau[x2][y2].listeelements.get(1).compareTo(new Element(3))){//rocher couvre le coffre
@@ -406,7 +481,7 @@ public class Ile {
 					
 					
 						}
-						else if(plateau[x2][y2].listeelements.get(1).compareTo(new Element(4))){ //rocher couvre la clé
+						else if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(1).compareTo(new Element(4))){ //rocher couvre la clé
 							plateau[x2][y2].listeelements.remove(1);
 							plateau[x][y].perso.clé=true;
 						}

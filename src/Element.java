@@ -28,6 +28,10 @@ public class Element {
 		if(ID==6)return "E";//Eau
 		return " ";
 	}
+/**
+ * @param joueur
+ * @return Retourne vrai si l'élèment est le navire du joueur
+ */
 public boolean estNavireDe(int joueur){
 		if(ID==0 && joueur==1)return true;
 		if(ID==1 && joueur==2)return true;

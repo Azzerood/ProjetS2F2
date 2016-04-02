@@ -5,6 +5,6 @@ public class Explorateur extends Personnage {
 		super(equipe1);
 		symbole="e";
 	}
-
+	
 	
 }

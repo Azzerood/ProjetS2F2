@@ -67,6 +67,9 @@ public class Partie {
 		}
 		return false;
 	}
+	/**
+	 *   Créer une île selon les paramètre de l'utilisateur et y place les divers élèments nécessaires pour jouer
+	 */
 	public void initialiserPartie(){
 		boolean Rochers=false;
 		Ile i;
@@ -79,6 +82,7 @@ public class Partie {
 		s.setIle(i); 
 		i.placerLesNavires();
 		i.placerEau();
+		i.composerLesEquipe();
 		i.placerLesEquipages();
 		i.placerCoffre();
 		i.placerClé();
@@ -91,6 +95,9 @@ public class Partie {
 		s.setJeu();
 		s.affichage();
 	}
+	/**
+	 * @return retourne les coordonnées du personnage choisi par l'utilisateur
+	 */
 	public int[] choisirPersonnage(){
 		int[] coordonnées=new int[2];
 		s.println("Choissisez un personnage");
@@ -102,6 +109,9 @@ public class Partie {
 		return coordonnées;
 		
 	}
+	/**
+	 * @return retourne les coordonnées de la case choisi par l'utilisateur
+	 */
 	public int[] choisirCase(){
 		int[] coordonnées=new int[2];
 		s.println("Choissisez où aller");
@@ -112,6 +122,10 @@ public class Partie {
 		coordonnées[1]=y;
 		return coordonnées;
 	}
+	/**
+	 * Le joueur effectue toutes les actions possibles au cours d'un tour.
+	 * @param joueur
+	 */
 	public void tour(int joueur){
 		s.refresh();
 		boolean explorateur=false;
@@ -131,11 +145,17 @@ public class Partie {
 		s.i.deplacerPersonnage(persoChoisi[0],persoChoisi[1],caseChoisi[0],caseChoisi[1],joueur);
 	
 	}
+	/**
+	 * Permet aux personnages dans les navires de récupérer de l'énergie
+	 */
 	public void recuperationNavire(){
 		s.i.e1.recuperationNavire();
 		s.i.e2.recuperationNavire();
 	}
 	
+	/**
+	 *  Chaque joueur joue son tour tant qu'aucun des deux n'a gagné
+	 */
 	public void lancerPartie(){
 		do{
 			recuperationNavire();
@@ -145,6 +165,9 @@ public class Partie {
 		s.close();
 		afficherVainqueur();
 	}
+	/**
+	 *  Affiche le vainqueur de la partie
+	 */
 	public void afficherVainqueur(){
 		
 		if(s.i.e1.tresor || s.i.e2.plusDePersonnage()){

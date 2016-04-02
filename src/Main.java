@@ -5,6 +5,10 @@ import javax.swing.JOptionPane;
 
 public class Main {
 	
+	/**
+	 * Affiche un menu à l'utilisateur pour qu'il choisisse que faire
+	 * @throws InterruptedException
+	 */
 	public static void Menu() throws InterruptedException{
 		 String[] choix = {"Lancer une partie","Guide" ,"Quitter"};
 		    JOptionPane jop = new JOptionPane();
@@ -21,10 +25,6 @@ public class Main {
 		    if(rang==0){
 		    	Partie p=new Partie(); 
 		    	p.initialiserPartie();
-		    	p.s.i.plateau[6][1].perso=new Explorateur(true); // ajoute un personnage pour les test.
-		    	p.s.i.e1.setNbpersonnages(1);
-		    	p.s.i.plateau[6][8].perso=new Voleur(false); // ajoute un personnage pour les test.
-		    	p.s.i.e2.setNbpersonnages(1);
 		    	p.lancerPartie();
 		    		
 		    }else{
@@ -38,6 +38,10 @@ public class Main {
 		   
 	}
 	
+	/**
+	 * Affiche les règles du jeu sous forme d'images qui défilent (au clique)
+	 * @throws InterruptedException
+	 */
 	public static void Tuto() throws InterruptedException{
 		String[] images={"img/tuto1.png","img/tuto2.png","img/tuto3.png","img/tuto4.png","img/tuto5.png","img/tuto6.png","img/tuto7.png",};
 		SuperPlateau s=new SuperPlateau(images,1);

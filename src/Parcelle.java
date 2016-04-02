@@ -61,10 +61,17 @@ public class Parcelle {
 		listeelements.add(new Element(3));
 	}
 	
+	/**
+	 * @return Retoune vrai si la parcelle est vide
+	 */
 	public boolean estVide(){
 		return(listeelements.isEmpty() && perso== null);
 	}
 	
+	/**
+	 * @param joueur
+	 * @return Retourne vrai si la parcelle contient le navire du joueur
+	 */
 	public boolean estNavireDe(int joueur){
 		if(!listeelements.isEmpty()){
 			if(listeelements.get(0).estNavireDe(joueur))return true;
