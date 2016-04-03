@@ -277,7 +277,8 @@ public class Ile {
 	 * @return Retourne vrai si le personnage en x,y peut intéragir avec la parcelle aux coordonnées x2,y2
 	 */
 	public boolean deplacementPossible(int x,int y,boolean explorateur,boolean voleur,int joueur){
-		
+		if(!plateau[x][y].listeelements.isEmpty() && plateau[x][y].listeelements.get(0).compareTo(new Element(4)))return true;
+		if(!plateau[x][y].listeelements.isEmpty() && plateau[x][y].listeelements.get(0).compareTo(new Element(5)))return true;
 		if(!explorateur){
 			if(voleur){
 				if(plateau[x][y].perso!=null )return true;
@@ -293,7 +294,7 @@ public class Ile {
 				return false;
 			}
 		}else{
-			if(plateau[x][y].listeelements.isEmpty() || plateau[x][y].listeelements.get(0).compareTo(new Element(2)) && plateau[x][y].perso==null)return true;
+			if(plateau[x][y].listeelements.isEmpty() || plateau[x][y].listeelements.get(0).compareTo(new Element(2)) || plateau[x][y].listeelements.get(0).compareTo(new Element(3)) && plateau[x][y].perso==null)return true;
 			if(joueur==1 && !plateau[x][y].listeelements.isEmpty() && plateau[x][y].listeelements.get(0).compareTo(new Element(0)))return true;
 			if(joueur==2 && !plateau[x][y].listeelements.isEmpty() && plateau[x][y].listeelements.get(0).compareTo(new Element(1))) return true;
 		}
@@ -343,10 +344,12 @@ public class Ile {
 					if(plateau[l][c].listeelements.get(0).compareTo(new Element(2)))resultat[c][l]=2;//rocher plateau[l][c].listeelements.contains(new Element(2))
 					if(plateau[l][c].listeelements.get(0).compareTo(new Element(0)))resultat[c][l]=3;//navire equipe1
 					if(plateau[l][c].listeelements.get(0).compareTo(new Element(1)))resultat[c][l]=4;//navire equipe2
-					if(plateau[l][c].listeelements.get(0).compareTo(new Element(6)))resultat[c][l]=7;//eau
+					if(plateau[l][c].listeelements.get(0).compareTo(new Element(5)))resultat[c][l]=12;//trésor
 					if(plateau[l][c].listeelements.get(0).compareTo(new Element(4)))resultat[c][l]=6;//clé
-					if(plateau[l][c].listeelements.get(0).compareTo(new Element(5)))resultat[c][l]=5;//clé
-					if(plateau[l][c].listeelements.size()>1){
+					if(plateau[l][c].listeelements.get(0).compareTo(new Element(3)))resultat[c][l]=5;//coffre
+					if(plateau[l][c].listeelements.get(0).compareTo(new Element(6)))resultat[c][l]=7;//eau
+					
+					if(plateau[l][c].listeelements.size()>1){ //permet de voir ou est situé le coffre et la clé meme s'ils sont recouverts par un rocher (pour vérifier, à retirer dans la version finale)
 						if(plateau[l][c].listeelements.get(1).compareTo(new Element(3)))resultat[c][l]=5;//coffre
 						if(plateau[l][c].listeelements.get(1).compareTo(new Element(4)))resultat[c][l]=6;//clé
 					}
@@ -386,6 +389,10 @@ public class Ile {
 				plateau[x][y].listeelements.add(new Element(5));//pose le trésor sur le sol
 			}else{
 				plateau[x][y].listeelements.add(new Element(4));//pose la clé sur le sol
+			}
+		}else{
+			if(plateau[x][y].perso.coffre){
+				plateau[x][y].listeelements.add(new Element(5));//pose le trésor sur le sol
 			}
 		}
 		if(plateau[x][y].perso.getEquipe()==1)e1.setNbpersonnages(e1.getNbpersonnages() - 1);
@@ -456,7 +463,17 @@ public class Ile {
 				if(plateau[x2][y2].perso.getEnergie()<=0)personnageMeurt(x2, y2);
 				
 		 }else{
-			 	if(plateau[x][y].perso instanceof Voleur && plateau[x2][y2].perso!=null){ //si le perso choisi est un voleur
+			 if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(4)) || !plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(5)) ){
+			 if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(4))){ //si contient la clé
+				 plateau[x][y].perso.clé=true;
+				 plateau[x2][y2].listeelements.remove(0);
+			 }
+			 if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(5))){ //si contient trésor
+				 plateau[x][y].perso.coffre=true;
+				 plateau[x2][y2].listeelements.remove(0);
+			}
+		 }
+		 else 	if(plateau[x][y].perso instanceof Voleur && plateau[x2][y2].perso!=null){ //si le perso choisi est un voleur
 			 			
 			 			plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-10);
 			 		if(plateau[x2][y2].perso.getEquipe()!=joueur){ //s'il cible un personnage ennemie
@@ -521,6 +538,7 @@ public class Ile {
 								plateau[x][y].perso.clé=false;//il perd donc la clé
 							}else{//le joueur n'a pas la clé
 								recupererCoordonneesCoffre(x2, y2, joueur);
+								plateau[x][y].listeelements.remove(0);
 							}
 					
 					
