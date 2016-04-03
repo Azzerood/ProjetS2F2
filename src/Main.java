@@ -119,7 +119,6 @@ public class Main {
 		i.placerCoffre();
 		i.placerClé();
 		i.composerLesEquipe();
-		i.placerLesEquipages();
 		Rochers=i.placerRocher(pourcentage);
 		if(!Rochers){
 			s.test.close();
