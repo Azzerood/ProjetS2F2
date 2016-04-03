@@ -6,6 +6,9 @@
 		String symbole;
 		boolean clé=false;
 		boolean coffre=false;
+		String nom;
+		private static int nbPersonnages;
+		private int numperso;
 		
 	
 	public Personnage(boolean equipe1){
@@ -14,6 +17,8 @@
 		}else{
 		this.equipe=2;
 		}
+	nbPersonnages++;
+	numperso=nbPersonnages;
 	}
 	
 	/**
@@ -43,6 +48,12 @@
 			return symbole.toUpperCase();
 		}else return symbole.toLowerCase();
 	
+	}
+	/**
+	 * @return Retourne une  brève description du personnage
+	 */
+	public String description(){
+		return numperso+") "+nom+" - "+getClass();
 	}
 
 	

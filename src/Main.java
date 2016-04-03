@@ -136,7 +136,8 @@ public class Main {
 		do{
 			p.tour(1);
 			p.tour(2);
-		}while(s.i.e1.equipageAuRepos.isEmpty() && s.i.e2.equipageAuRepos.isEmpty());
+		}while(!s.i.e1.equipageAuRepos.isEmpty() && !s.i.e2.equipageAuRepos.isEmpty());
+		p.s.refresh();
 	}
 	
 	/**

@@ -1,5 +1,9 @@
 import java.util.Random;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 public class Ile {
 	Parcelle[][] plateau; //plateau
 	Equipe e1=new Equipe(1);
@@ -390,6 +394,45 @@ public class Ile {
 		
 		
 	}
+	
+	private int choisirPersonnageDansNavire(int joueur){
+		String[] choix;
+		if(joueur==1){
+			choix=new String[e1.equipageAuRepos.size()];
+			for(int idx=0;idx<e1.equipageAuRepos.size();idx++){
+				choix[idx]=e1.equipageAuRepos.get(idx).description();
+			}
+			
+		}else{
+			choix=new String[e2.equipageAuRepos.size()];
+			choix=new String[e2.equipageAuRepos.size()];
+			for(int idx=0;idx<e2.equipageAuRepos.size();idx++){
+				choix[idx]=e2.equipageAuRepos.get(idx).description();
+			}
+		}
+		int idxPerso=0;
+		if(choix.length>0){
+		   Object Perso = JOptionPane.showInputDialog(null, 
+		      "Veuillez choisir quel personnage débarquer",
+		      "Débarquer un personnage",
+		      JOptionPane.QUESTION_MESSAGE,
+		      null,
+		      choix,
+		      choix[choix.length-1]);
+		   
+		   if(joueur==1){
+			   for(int idx=0;idx<e1.equipageAuRepos.size();idx++){
+					if(e1.equipageAuRepos.get(idx).description().equals(Perso));idxPerso=idx;
+				}
+			   
+		   }else{
+			   for(int idx=0;idx<e2.equipageAuRepos.size();idx++){
+					if(e2.equipageAuRepos.get(idx).description().equals(Perso));idxPerso=idx;
+				}
+		   }
+		}
+		return idxPerso;
+	}
 
 	/**
 	 * @param x
@@ -401,8 +444,9 @@ public class Ile {
 	 */
 	public void deplacerPersonnage(int x, int y , int x2, int y2,int joueur){
 		if(!plateau[x][y].listeelements.isEmpty()&& plateau[x][y].estNavireDe(joueur)){ //si le navire est sélectionné
-			if(joueur==1 && !e1.equipageAuRepos.isEmpty()){plateau[x2][y2].perso=e1.equipageAuRepos.get(0);e1.equipageAuRepos.remove(0);}
-			if(joueur==2 && !e2.equipageAuRepos.isEmpty()){plateau[x2][y2].perso=e2.equipageAuRepos.get(0);e2.equipageAuRepos.remove(0);}
+			int idx=choisirPersonnageDansNavire(joueur);
+			if(joueur==1 && !e1.equipageAuRepos.isEmpty()){plateau[x2][y2].perso=e1.equipageAuRepos.get(idx);e1.equipageAuRepos.remove(idx);}
+			if(joueur==2 && !e2.equipageAuRepos.isEmpty()){plateau[x2][y2].perso=e2.equipageAuRepos.get(idx);e2.equipageAuRepos.remove(idx);}
 		}
 		else{//si un personnage est selectionné
 		 if(plateau[x2][y2].estVide()){ //si l'endroit ciblé est vide
@@ -415,7 +459,7 @@ public class Ile {
 			 	if(plateau[x][y].perso instanceof Voleur && plateau[x2][y2].perso!=null){ //si le perso choisi est un voleur
 			 			
 			 			plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-10);
-			 		if(plateau[x2][y2].perso.getEquipe()!=joueur){
+			 		if(plateau[x2][y2].perso.getEquipe()!=joueur){ //s'il cible un personnage ennemie
 			 			if(plateau[x2][y2].perso.coffre){
 			 				System.out.println("tentative de vol");
 			 				Random Rand=new Random();
@@ -455,7 +499,7 @@ public class Ile {
 			 		}
 			 			if(plateau[x][y].perso.getEnergie()<=0)personnageMeurt(x, y);
 			 	}
-			 	else if(plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(0)) || plateau[x2][y2].listeelements.get(0).compareTo(new Element(1))){ //si le navre est ciblé
+			 	else if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(0)) || plateau[x2][y2].listeelements.get(0).compareTo(new Element(1))){ //si le navre est ciblé
 					plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-1);
 					if(joueur==1){
 						if(plateau[x][y].perso.coffre)e1.tresor=true; //s'il possède le coffre
