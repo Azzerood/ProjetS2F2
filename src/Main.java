@@ -10,7 +10,7 @@ public class Main {
 	 * @throws InterruptedException
 	 */
 	public static void Menu() throws InterruptedException{
-		 String[] choix = {"Lancer une partie","Guide" ,"Quitter"};
+		 String[] choix = {"Lancer une partie","Guide" ,"Sandbox" ,"Quitter"};
 		    JOptionPane jop = new JOptionPane();
 		   int rang;
 		   do{ 
@@ -21,7 +21,7 @@ public class Main {
 		      JOptionPane.QUESTION_MESSAGE,
 		      null,
 		      choix,
-		      choix[1]);
+		      choix[2]);
 		    if(rang==0){
 		    	Partie p=new Partie(); 
 		    	p.initialiserPartie();
@@ -30,12 +30,108 @@ public class Main {
 		    }else{
 		    	if(rang==1){Tuto();}	
 		    	else{
-		    		
+		    		if(rang==2){Test();}
 		    	}
 		    
 		    }
 		   }while(rang<choix.length-1);
 		   
+	}
+	
+	/**
+	 * @throws InterruptedException
+	 * Affiche un menu pour que l'utilisateur choissise quelle fonctionnalité il shouhaite tester
+	 */
+	public static void Test()throws InterruptedException{
+		String[] choix = {"Déplacement","Placement des personnages","Quitter"};
+	    JOptionPane jop = new JOptionPane();
+	   int rang;
+	   do{ 
+	   rang = jop.showOptionDialog(null, 
+	      "Que souhaitez vous faire?",
+	      "Menu Principal",
+	      JOptionPane.YES_NO_CANCEL_OPTION,
+	      JOptionPane.QUESTION_MESSAGE,
+	      null,
+	      choix,
+	      choix[1]);
+	    if(rang==0){
+	    	testerDeplacement();
+	    		
+	    }else{
+	    	if(rang==1){testerPlacement();}	
+	    	else{
+	    		
+	    	}
+	    
+	    }
+	   }while(rang<choix.length-1);
+	   
+	}
+	
+	public static void testerDeplacement(){
+		boolean Rochers;
+		Partie p=new Partie();
+		Ile i;
+		SuperPlateau s;
+		do{
+		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png"};
+		int taille=10;
+		int pourcentage=2;
+		i=new Ile(taille);
+		s=new SuperPlateau(images, taille,true);
+		s.setIle(i);
+		p.s=s;
+		i.placerLesNavires();
+		i.placerEau();
+		i.placerCoffre();
+		i.placerClé();
+		i.composerLesEquipe();
+		i.placerLesEquipages();
+		Rochers=i.placerRocher(pourcentage);
+		if(!Rochers){
+			s.test.close();
+		}
+		}while(!Rochers);
+		s.setJeu();
+		s.affichage();
+		JOptionPane.showMessageDialog (null, "Cliquez sur un personnage allié puis une parcelle pour vous déplacer/intéragir avec la parcelle", "Déplacement des personnages", JOptionPane.INFORMATION_MESSAGE);
+		do{
+			p.tour(1);
+			p.tour(2);
+		}while(!p.s.i.fini());
+	}
+	public static void testerPlacement(){
+		boolean Rochers;
+		Partie p=new Partie();
+		Ile i;
+		SuperPlateau s;
+		do{
+		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png"};
+		int taille=10;
+		int pourcentage=2;
+		i=new Ile(taille);
+		s=new SuperPlateau(images, taille,true);
+		s.setIle(i);
+		p.s=s;
+		i.placerLesNavires();
+		i.placerEau();
+		i.placerCoffre();
+		i.placerClé();
+		i.composerLesEquipe();
+		i.placerLesEquipages();
+		Rochers=i.placerRocher(pourcentage);
+		if(!Rochers){
+			s.test.close();
+		}
+		}while(!Rochers);
+		s.setJeu();
+		s.affichage();
+		JOptionPane.showMessageDialog (null, "Cliquez sur le navire puis une parcelle vide pour placer votre équipage", "Placement des personnages", JOptionPane.INFORMATION_MESSAGE);
+		do{
+			p.tour(1);
+			p.tour(2);
+		}while(s.i.e1.equipageAuRepos.isEmpty() && s.i.e2.equipageAuRepos.isEmpty());
 	}
 	
 	/**
