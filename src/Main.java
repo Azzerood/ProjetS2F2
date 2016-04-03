@@ -48,8 +48,8 @@ public class Main {
 	   int rang;
 	   do{ 
 	   rang = jop.showOptionDialog(null, 
-	      "Que souhaitez vous faire?",
-	      "Menu Principal",
+	      "Quelle fonctionnalité souhaitez vous tester ?",
+	      "Menu des tests",
 	      JOptionPane.YES_NO_CANCEL_OPTION,
 	      JOptionPane.QUESTION_MESSAGE,
 	      null,
@@ -69,6 +69,9 @@ public class Main {
 	   
 	}
 	
+	/**
+	 * Affiche un plateau pour tester le déplacement des personnages
+	 */
 	public static void testerDeplacement(){
 		boolean Rochers;
 		Partie p=new Partie();
@@ -76,7 +79,7 @@ public class Main {
 		SuperPlateau s;
 		do{
 		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png"};
-		int taille=10;
+		int taille=8;
 		int pourcentage=2;
 		i=new Ile(taille);
 		s=new SuperPlateau(images, taille,true);
@@ -101,6 +104,9 @@ public class Main {
 			p.tour(2);
 		}while(!p.s.i.fini());
 	}
+	/**
+	 * Affiche un plateau de jeu pour tester le Placement des personnages depuis le navire
+	 */
 	public static void testerPlacement(){
 		boolean Rochers;
 		Partie p=new Partie();
