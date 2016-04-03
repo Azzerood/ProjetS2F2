@@ -169,13 +169,16 @@ public class Partie {
 	 *  Affiche le vainqueur de la partie
 	 */
 	public void afficherVainqueur(){
-		
+		boolean gagnant=false;
 		if(s.i.e1.tresor || s.i.e2.plusDePersonnage()){
 			JOptionPane.showMessageDialog (null, "Joueur 1 a gagné!", "Fin de partie", JOptionPane.INFORMATION_MESSAGE);
+			gagnant=true;
 		}else
 		if(s.i.e2.tresor || s.i.e1.plusDePersonnage()){
 			JOptionPane.showMessageDialog (null, "Joueur 2 a gagné!", "Fin de partie", JOptionPane.INFORMATION_MESSAGE);
+			gagnant=true;
 		}
+		if(!gagnant)JOptionPane.showMessageDialog (null, "Match nul", "Fin de partie", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
 
