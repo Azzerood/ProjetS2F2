@@ -9,7 +9,7 @@ public class Main {
 	 * Affiche un menu à l'utilisateur pour qu'il choisisse que faire
 	 * @throws InterruptedException
 	 */
-	public static void Menu() throws InterruptedException{
+	public static void menu() throws InterruptedException{
 		 String[] choix = {"Lancer une partie","Guide" ,"Sandbox" ,"Quitter"};
 		    JOptionPane jop = new JOptionPane();
 		   int rang;
@@ -28,9 +28,9 @@ public class Main {
 		    	p.lancerPartie();
 		    		
 		    }else{
-		    	if(rang==1){Tuto();}	
+		    	if(rang==1){tuto();}	
 		    	else{
-		    		if(rang==2){Test();}
+		    		if(rang==2){menuTest();}
 		    	}
 		    
 		    }
@@ -42,7 +42,7 @@ public class Main {
 	 * @throws InterruptedException
 	 * Affiche un menu pour que l'utilisateur choissise quelle fonctionnalité il shouhaite tester
 	 */
-	public static void Test()throws InterruptedException{
+	public static void menuTest()throws InterruptedException{
 		String[] choix = {"Déplacement","Placement des personnages","Quitter"};
 	    JOptionPane jop = new JOptionPane();
 	   int rang;
@@ -144,7 +144,7 @@ public class Main {
 	 * Affiche les règles du jeu sous forme d'images qui défilent (au clique)
 	 * @throws InterruptedException
 	 */
-	public static void Tuto() throws InterruptedException{
+	public static void tuto() throws InterruptedException{
 		String[] images={"img/tuto1.png","img/tuto2.png","img/tuto3.png","img/tuto4.png","img/tuto5.png","img/tuto6.png","img/tuto7.png",};
 		SuperPlateau s=new SuperPlateau(images,1);
 		s.setPreferedSize(820, 650);
@@ -168,7 +168,7 @@ public class Main {
 		
 	}
 	public static void main(String[] args) throws InterruptedException {  
-		Menu();
+		menu();
 	}
 
 }
