@@ -1,6 +1,6 @@
+import java.util.Random;
 
-
-	public class Personnage {
+public class Personnage {
 		private int energie=100;
 		private int equipe;
 		String symbole;
@@ -19,6 +19,10 @@
 		}
 	nbPersonnages++;
 	numperso=nbPersonnages;
+	String[] noms={"Jean","Pierre","Paul","Bob","Kevin","Julien","Thierry","Sylvain","Caroline","Sylvie","Marie","Lucie","Billy","Jimmy","Thomas","Sarah","Anna","Céline","Fannie","Jacques"};
+	Random rand=new Random();
+	int x =rand.nextInt(20);
+	nom=noms[x];
 	}
 	
 	/**
