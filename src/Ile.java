@@ -336,10 +336,10 @@ public class Ile {
 						if(plateau[l][c].perso.toString().equals("e"))resultat[c][l]=9; //explorateur equipe2
 						if(plateau[l][c].perso.toString().equals("V"))resultat[c][l]=10; //voleur equipe1
 						if(plateau[l][c].perso.toString().equals("v"))resultat[c][l]=11; //voleur equipe2
-						if(plateau[l][c].perso.toString().equals("P"))resultat[c][l]=12;
-						if(plateau[l][c].perso.toString().equals("p"))resultat[c][l]=13;
-						if(plateau[l][c].perso.toString().equals("G"))resultat[c][l]=14;
-						if(plateau[l][c].perso.toString().equals("g"))resultat[c][l]=15;
+						if(plateau[l][c].perso.toString().equals("P"))resultat[c][l]=12; //piegeur equipe 1
+						if(plateau[l][c].perso.toString().equals("p"))resultat[c][l]=13;//piegeur equipe 2
+						if(plateau[l][c].perso.toString().equals("G"))resultat[c][l]=14; //guerrier equipe1
+						if(plateau[l][c].perso.toString().equals("g"))resultat[c][l]=15; //guerrier equipe2
 					}
 					else resultat[c][l]=1;//sol
 				}
@@ -348,7 +348,7 @@ public class Ile {
 					if(plateau[l][c].listeelements.get(0).compareTo(new Element(2)))resultat[c][l]=2;//rocher plateau[l][c].listeelements.contains(new Element(2))
 					if(plateau[l][c].listeelements.get(0).compareTo(new Element(0)))resultat[c][l]=3;//navire equipe1
 					if(plateau[l][c].listeelements.get(0).compareTo(new Element(1)))resultat[c][l]=4;//navire equipe2
-					if(plateau[l][c].listeelements.get(0).compareTo(new Element(5)))resultat[c][l]=12;//trésor
+					if(plateau[l][c].listeelements.get(0).compareTo(new Element(5)))resultat[c][l]=16;//trésor
 					if(plateau[l][c].listeelements.get(0).compareTo(new Element(4)))resultat[c][l]=6;//clé
 					if(plateau[l][c].listeelements.get(0).compareTo(new Element(3)))resultat[c][l]=5;//coffre
 					if(plateau[l][c].listeelements.get(0).compareTo(new Element(6)))resultat[c][l]=7;//eau
