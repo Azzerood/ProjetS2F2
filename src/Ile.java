@@ -276,16 +276,17 @@ public class Ile {
 	 * @param joueur
 	 * @return Retourne vrai si le personnage en x,y peut intéragir avec la parcelle aux coordonnées x2,y2
 	 */
-	public boolean deplacementPossible(int x,int y,boolean explorateur,boolean voleur,int joueur){
+	public boolean deplacementPossible(int x,int y,boolean explorateur,boolean voleur,boolean guerrier,int joueur){
 		if(!plateau[x][y].listeelements.isEmpty() && plateau[x][y].listeelements.get(0).compareTo(new Element(4)))return true;
 		if(!plateau[x][y].listeelements.isEmpty() && plateau[x][y].listeelements.get(0).compareTo(new Element(5)))return true;
 		if(!explorateur){
 			if(voleur){
 				if(plateau[x][y].perso!=null )return true;
-					
 				
 			}
-			
+			if(guerrier){
+				if(plateau[x][y].perso!=null && plateau[x][y].perso.getEquipe()!=joueur )return true;
+			}
 			if(plateau[x][y].listeelements.isEmpty()){
 				if(plateau[x][y].perso==null)return true;
 			}else{
@@ -467,7 +468,16 @@ public class Ile {
 				if(plateau[x2][y2].perso.getEnergie()<=0)personnageMeurt(x2, y2);
 				
 		 }else{
-			 if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(4)) || !plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(5)) ){
+			 
+			 if(plateau[x][y].perso instanceof Guerrier && plateau[x2][y2].perso!=null){
+				 plateau[x2][y2].perso.setEnergie(plateau[x2][y2].perso.getEnergie()-100);//le personnage ciblé perd de l'énergie (attaqué par le guerrier)
+				 plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-5); //coute 5 d'energie
+				 if(plateau[x][y].perso.getEnergie()<=0)personnageMeurt(x, y);
+				 if(plateau[x2][y2].perso.getEnergie()<=0)personnageMeurt(x2, y2);
+				 
+			 }
+			 
+			 else if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(4)) || !plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(5)) ){
 			 if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(4))){ //si contient la clé
 				 plateau[x][y].perso.clé=true;
 				 plateau[x2][y2].listeelements.remove(0);
@@ -477,6 +487,8 @@ public class Ile {
 				 plateau[x2][y2].listeelements.remove(0);
 			}
 		 }
+			 
+			 
 		 else 	if(plateau[x][y].perso instanceof Voleur && plateau[x2][y2].perso!=null){ //si le perso choisi est un voleur
 			 			
 			 			plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-10);
@@ -505,6 +517,8 @@ public class Ile {
 		 				
 			 			}
 			 		}else{ //si le joueur choisi est un allié
+			 			
+			 			
 			 			if(plateau[x][y].perso.coffre){ // si le personnage possède le trésor
 			 					System.out.println("donne le trésor");
 			 					plateau[x2][y2].perso.coffre=true;

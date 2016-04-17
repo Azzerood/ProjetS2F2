@@ -43,7 +43,7 @@ public class Main {
 	 * Affiche un menu pour que l'utilisateur choissise quelle fonctionnalité il shouhaite tester
 	 */
 	public static void menuTest()throws InterruptedException{
-		String[] choix = {"Déplacement","Placement des personnages","Quitter"};
+		String[] choix = {"Déplacement","Placement des personnages","Composition des équipes","Quitter"};
 	    JOptionPane jop = new JOptionPane();
 	   int rang;
 	   do{ 
@@ -61,12 +61,32 @@ public class Main {
 	    }else{
 	    	if(rang==1){testerPlacement();}	
 	    	else{
-	    		
+	    		if(rang==2){testerCompositionDesEquipes();}
+	    		else{
+	    			
+	    		}
 	    	}
 	    
 	    }
 	   }while(rang<choix.length-1);
 	   
+	}
+	
+	
+	/**
+	 *  Affiche un menu pour que l'utilisateur puisse tester la composition des équipages
+	 */
+	public static void testerCompositionDesEquipes(){
+		Partie p = new Partie();
+		boolean Rochers=false;
+		Ile i;
+		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png"};
+		i=new Ile(10);
+		p.s=new SuperPlateau(images, 10,true);
+		p.s.setIle(i); 
+		p.s.close();
+		p.composerEquipe(1); //le joueur 1 compose son equipage
+		System.out.println(p.s.i.e1.equipageAuRepos.toString());
 	}
 	
 	/**

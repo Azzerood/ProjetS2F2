@@ -68,7 +68,7 @@ public class Partie {
 		return false;
 	}
 	
-	private void composerEquipe(int joueur){
+	public void composerEquipe(int joueur){
 		int tailleEquipe=5;
 		for(int cpt=0;cpt<tailleEquipe;cpt++){
 			String[] choix = {"Explorateur","Guerrier","Piégeur","Voleur"};
@@ -174,6 +174,7 @@ public class Partie {
 		s.refresh();
 		boolean explorateur=false;
 		boolean voleur=false;
+		boolean guerrier=false;
 		int[] persoChoisi;
 		int[] caseChoisi;
 		do{
@@ -182,10 +183,11 @@ public class Partie {
 		}while(!selectionnable(persoChoisi[0], persoChoisi[1], joueur));
 		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Explorateur)explorateur=true;
 		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Voleur)voleur=true;
+		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Guerrier)guerrier=true;
 		do{
 			s.println("Joueur "+joueur+" :");
 			caseChoisi=choisirCase();
-		}while(!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1],explorateur,voleur,joueur) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1],voleur));
+		}while(!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1],explorateur,voleur,guerrier,joueur) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1],voleur));
 		s.i.deplacerPersonnage(persoChoisi[0],persoChoisi[1],caseChoisi[0],caseChoisi[1],joueur);
 	
 	}
