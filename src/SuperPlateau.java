@@ -49,6 +49,10 @@ public class SuperPlateau {
 		setJeu();
 		affichage();
 	}
+	public void refresh(int[][]tab){
+		setJeu(tab);
+		affichage();
+	}
 	public void close() {
 		test.close();
 	}

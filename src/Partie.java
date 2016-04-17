@@ -171,7 +171,8 @@ public class Partie {
 	 * @param joueur
 	 */
 	public void tour(int joueur){
-		s.refresh();
+		int[][] vision=s.i.getPlateau(joueur);
+		s.refresh(vision);
 		boolean explorateur=false;
 		boolean voleur=false;
 		boolean guerrier=false;

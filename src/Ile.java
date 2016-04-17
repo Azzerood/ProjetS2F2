@@ -363,6 +363,43 @@ public class Ile {
 		}
 		return resultat;
 	}
+	
+	public int[][] getPlateau(int joueur){
+		int[][]resultat=new int[this.plateau.length][this.plateau[0].length];
+		int[][]ile=getPlateau();
+		for(int l=0;l<plateau.length;l++){  
+			for(int c=0;c<plateau[0].length;c++){
+				resultat[l][c]=1;  //on initialise toutes les cases du tableau pour qu'elles affichent du sable
+			}
+		}
+		for(int l=0;l<plateau.length;l++){
+			for(int c=0;c<plateau[0].length;c++){
+				
+				if(plateau[l][c].perso!=null && plateau[l][c].perso.getEquipe()==joueur){ // s'il y a un personnage du joueur sur une case
+					resultat[c-1][l-1]=ile[c-1][l-1];   //alors on affiche toutes les case autour de lui
+					resultat[c-1][l]=ile[c-1][l];
+					resultat[c-1][l+1]=ile[c-1][l+1];
+					resultat[c][l-1]=ile[c][l-1];
+					resultat[c][l]=ile[c][l];
+					resultat[c][l+1]=ile[c][l+1];
+					resultat[c+1][l-1]=ile[c+1][l-1];
+					resultat[c+1][l]=ile[c+1][l];
+					resultat[c+1][l+1]=ile[c+1][l+1];
+				}else{
+					if(!plateau[l][c].listeelements.isEmpty() ){ //si la case n'est pas vide
+						if( plateau[l][c].listeelements.get(0).compareTo(new Element(0)) ||  plateau[l][c].listeelements.get(0).compareTo(new Element(1)) || plateau[l][c].listeelements.get(0).compareTo(new Element(6)) ){// et qu'elle contient un navire ou de l'eau
+							resultat[c][l]=ile[c][l]; //Alors on l'affiche
+						}
+					}
+				}
+			}
+		}
+		
+		return resultat;
+	}
+	
+	
+	
 	/**
 	 * @return Retourn vrai si l'un des joueurs a gagné ou perdu
 	 */
@@ -468,27 +505,26 @@ public class Ile {
 				if(plateau[x2][y2].perso.getEnergie()<=0)personnageMeurt(x2, y2);
 				
 		 }else{
-			 
 			 if(plateau[x][y].perso instanceof Guerrier && plateau[x2][y2].perso!=null){
 				 plateau[x2][y2].perso.setEnergie(plateau[x2][y2].perso.getEnergie()-100);//le personnage ciblé perd de l'énergie (attaqué par le guerrier)
 				 plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-5); //coute 5 d'energie
 				 if(plateau[x][y].perso.getEnergie()<=0)personnageMeurt(x, y);
 				 if(plateau[x2][y2].perso.getEnergie()<=0)personnageMeurt(x2, y2);
 				 
-			 }
+			 }else{
+			
+				 if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(4)) || !plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(5)) ){
+					 if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(4))){ //si contient la clé
+						 plateau[x][y].perso.clé=true;
+						 plateau[x2][y2].listeelements.remove(0);
+					 }
+					 if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(5))){ //si contient trésor
+						 plateau[x][y].perso.coffre=true;
+						 plateau[x2][y2].listeelements.remove(0);
+					 }
+				 }
 			 
-			 else if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(4)) || !plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(5)) ){
-			 if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(4))){ //si contient la clé
-				 plateau[x][y].perso.clé=true;
-				 plateau[x2][y2].listeelements.remove(0);
-			 }
-			 if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(5))){ //si contient trésor
-				 plateau[x][y].perso.coffre=true;
-				 plateau[x2][y2].listeelements.remove(0);
-			}
-		 }
-			 
-			 
+			  
 		 else 	if(plateau[x][y].perso instanceof Voleur && plateau[x2][y2].perso!=null){ //si le perso choisi est un voleur
 			 			
 			 			plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-10);
@@ -556,7 +592,7 @@ public class Ile {
 								plateau[x][y].perso.clé=false;//il perd donc la clé
 							}else{//le joueur n'a pas la clé
 								recupererCoordonneesCoffre(x2, y2, joueur);
-								plateau[x][y].listeelements.remove(0);
+								
 							}
 					
 					
@@ -572,7 +608,7 @@ public class Ile {
 					if(plateau[x][y].perso.getEnergie()<=0)personnageMeurt(x, y);
 					
 				}
-			 	
+			 }	
 			}
 		 
 		}
