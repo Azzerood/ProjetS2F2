@@ -492,7 +492,7 @@ public class Ile {
 			 					
 			 				}
 			 			}
-			 			if(plateau[x2][y2].perso.clé){ // si le voleur possède la clé
+			 			if(plateau[x2][y2].perso.clé){ // si le personnage possède la clé
 			 				System.out.println("tentative de vol");
 			 				Random Rand=new Random();
 			 				int s=Rand.nextInt(10);
@@ -505,7 +505,7 @@ public class Ile {
 		 				
 			 			}
 			 		}else{ //si le joueur choisi est un allié
-			 			if(plateau[x][y].perso.coffre){ // si le voleur possède le trésor
+			 			if(plateau[x][y].perso.coffre){ // si le personnage possède le trésor
 			 					System.out.println("donne le trésor");
 			 					plateau[x2][y2].perso.coffre=true;
 			 					plateau[x][y].perso.coffre=false;
