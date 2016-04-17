@@ -18,12 +18,16 @@ public class Equipe {
 		if(numero==1){
 			equipageAuRepos.add(new Explorateur(true));
 			equipageAuRepos.add(new Voleur(true));
+			equipageAuRepos.add(new Guerrier(true));
+			equipageAuRepos.add(new Piegeur(true));
 			
 		}else{
 			equipageAuRepos.add(new Explorateur(false));
 			equipageAuRepos.add(new Voleur(false));
+			equipageAuRepos.add(new Guerrier(false));
+			equipageAuRepos.add(new Piegeur(false));
 		}
-		setNbpersonnages(2);
+		setNbpersonnages(4);
 	}
 	/**
 	 * @param idx

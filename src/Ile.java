@@ -336,6 +336,10 @@ public class Ile {
 						if(plateau[l][c].perso.toString().equals("e"))resultat[c][l]=9; //explorateur equipe2
 						if(plateau[l][c].perso.toString().equals("V"))resultat[c][l]=10; //voleur equipe1
 						if(plateau[l][c].perso.toString().equals("v"))resultat[c][l]=11; //voleur equipe2
+						if(plateau[l][c].perso.toString().equals("P"))resultat[c][l]=12;
+						if(plateau[l][c].perso.toString().equals("p"))resultat[c][l]=13;
+						if(plateau[l][c].perso.toString().equals("G"))resultat[c][l]=14;
+						if(plateau[l][c].perso.toString().equals("g"))resultat[c][l]=15;
 					}
 					else resultat[c][l]=1;//sol
 				}

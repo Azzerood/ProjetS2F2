@@ -67,6 +67,9 @@ public class Partie {
 		}
 		return false;
 	}
+	
+	
+	
 	/**
 	 *   Créer une île selon les paramètre de l'utilisateur et y place les divers élèments nécessaires pour jouer
 	 */
