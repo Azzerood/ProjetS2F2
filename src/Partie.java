@@ -68,7 +68,47 @@ public class Partie {
 		return false;
 	}
 	
-	
+	private void composerEquipe(int joueur){
+		int tailleEquipe=5;
+		for(int cpt=0;cpt<tailleEquipe;cpt++){
+			String[] choix = {"Explorateur","Guerrier","Piégeur","Voleur"};
+		    JOptionPane jop = new JOptionPane();
+		   int rang;
+		   do{ 
+		   rang = jop.showOptionDialog(null, 
+		      "Quel personnage souhaitez vous ajouter à votre équipage ? ("+(tailleEquipe-cpt)+" places restantes)",
+		      "Compisition de l'équipage "+joueur,
+		      JOptionPane.YES_NO_CANCEL_OPTION,
+		      JOptionPane.QUESTION_MESSAGE,
+		      null,
+		      choix,
+		      choix[1]);
+		    if(rang==0){
+		    	if(joueur==1)s.i.e1.equipageAuRepos.add(new Explorateur(true));
+		    	else s.i.e2.equipageAuRepos.add(new Explorateur(false));
+		    		
+		    }else{
+		    	if(rang==1){
+		    		if(joueur==1)s.i.e1.equipageAuRepos.add(new Guerrier(true));
+			    	else s.i.e2.equipageAuRepos.add(new Guerrier(false));
+		    	}	
+		    	else{
+		    		if(rang==2){
+		    			if(joueur==1)s.i.e1.equipageAuRepos.add(new Piegeur(true));
+				    	else s.i.e2.equipageAuRepos.add(new Piegeur(false));
+		    		}
+		    		else{
+		    			if(rang==3){
+		    				if(joueur==1)s.i.e1.equipageAuRepos.add(new Voleur(true));
+					    	else s.i.e2.equipageAuRepos.add(new Voleur(false));
+		    			}
+		    		}
+		    	}
+		    
+		    }
+		   }while(rang<0 && rang>choix.length);
+		}
+	}
 	
 	/**
 	 *   Créer une île selon les paramètre de l'utilisateur et y place les divers élèments nécessaires pour jouer
@@ -85,7 +125,8 @@ public class Partie {
 		s.setIle(i); 
 		i.placerLesNavires();
 		i.placerEau();
-		i.composerLesEquipe();
+		composerEquipe(1); //le joueur 1 compose son equipage
+		composerEquipe(2); // le joueur 2 compose son equipage
 		i.placerLesEquipages();
 		i.placerCoffre();
 		i.placerClé();
