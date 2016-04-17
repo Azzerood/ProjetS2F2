@@ -74,5 +74,12 @@ public class Equipe {
 			p.setEnergie(p.getEnergie()+10);
 		}
 	}
+	public void recuperationPiege(){
+		for(Personnage p : equipageAuRepos){
+			if(p.getPiegé()>0){
+				p.setPiegé(p.getPiegé()-1);
+			}
+		}
+	}
 	
 }

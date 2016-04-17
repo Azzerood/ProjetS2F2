@@ -9,6 +9,7 @@ public class Personnage {
 		String nom;
 		private static int nbPersonnages;
 		private int numperso;
+		private int piegé;
 		
 	
 	public Personnage(boolean equipe1){
@@ -58,6 +59,14 @@ public class Personnage {
 	 */
 	public String description(){
 		return numperso+") "+nom+" - "+getClass();
+	}
+
+	public int getPiegé() {
+		return piegé;
+	}
+
+	public void setPiegé(int piegé) {
+		this.piegé = piegé;
 	}
 
 	

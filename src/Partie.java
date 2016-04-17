@@ -199,7 +199,10 @@ public class Partie {
 		s.i.e1.recuperationNavire();
 		s.i.e2.recuperationNavire();
 	}
-	
+	public void recuperationPiege(){
+		s.i.e1.recuperationPiege();
+		s.i.e2.recuperationPiege();
+	}
 	/**
 	 *  Chaque joueur joue son tour tant qu'aucun des deux n'a gagné
 	 */

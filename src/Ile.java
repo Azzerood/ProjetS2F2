@@ -498,6 +498,8 @@ public class Ile {
 			if(joueur==2 && !e2.equipageAuRepos.isEmpty()){plateau[x2][y2].perso=e2.equipageAuRepos.get(idx);e2.equipageAuRepos.remove(idx);}
 		}
 		else{//si un personnage est selectionné
+			if(plateau[x][y].perso.getPiegé()<=0){
+			
 		 if(plateau[x2][y2].estVide()){ //si l'endroit ciblé est vide
 				plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-1);
 				plateau[x2][y2].perso=plateau[x][y].perso;
@@ -610,7 +612,7 @@ public class Ile {
 				}
 			 }	
 			}
-		 
+			}
 		}
 		
 	}
