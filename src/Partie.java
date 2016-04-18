@@ -49,7 +49,7 @@ public class Partie {
 	/**
 	 * 
 	 */
-	private boolean sontAdjacent(int x, int y, int x2, int y2,boolean voleur){
+	private boolean sontAdjacent(int x, int y, int x2, int y2,boolean voleur,boolean guerrier){
 		if(x==x2){
 			if(y2==y-1)return true;
 			if(y2==y+1)return true;
@@ -58,7 +58,7 @@ public class Partie {
 			if(x2==x-1)return true;
 			if(x2==x+1)return true;
 		}
-		if(voleur){
+		if(voleur || guerrier){
 			if(y2==y-1 && x2==x-1) return true;
 			if(y2==y-1 && x2==x+1) return true;
 			if(y2==y+1 && x2==x-1) return true;
@@ -68,6 +68,10 @@ public class Partie {
 		return false;
 	}
 	
+	/**
+	 * Affiche un menu pour que l'utilisateur compose son équipage
+	 * @param joueur
+	 */
 	public void composerEquipe(int joueur){
 		int tailleEquipe=5;
 		for(int cpt=0;cpt<tailleEquipe;cpt++){
@@ -166,6 +170,27 @@ public class Partie {
 		coordonnées[1]=y;
 		return coordonnées;
 	}
+	
+	/**
+	 * @return retourne vrai si l'utilisateur souhaite confirmer son choix de déplacement
+	
+	 */
+	public boolean valider(){
+		boolean resultat= false;
+		int rang;
+		String[]choix={"valider","recommencer"};
+		JOptionPane jop;
+		rang = JOptionPane.showOptionDialog(null, 
+			      "Fin du tour.",
+			      "Confirmation du tour",
+			      JOptionPane.YES_NO_CANCEL_OPTION,
+			      JOptionPane.QUESTION_MESSAGE,
+			      null,
+			      choix,
+			      choix[1]);
+		if(rang==0)resultat=true;
+		return resultat;
+	}
 	/**
 	 * Le joueur effectue toutes les actions possibles au cours d'un tour.
 	 * @param joueur
@@ -173,11 +198,16 @@ public class Partie {
 	public void tour(int joueur){
 		int[][] vision=s.i.getPlateau(joueur);
 		s.refresh(vision);
-		boolean explorateur=false;
-		boolean voleur=false;
-		boolean guerrier=false;
+		boolean valide=false;
+		int nbessai;
 		int[] persoChoisi;
 		int[] caseChoisi;
+		do{
+			nbessai=0;
+			boolean explorateur=false;
+			boolean voleur=false;
+			boolean guerrier=false;
+		
 		do{
 			s.println("Joueur "+joueur+" :");
 			persoChoisi=choisirPersonnage();
@@ -188,9 +218,12 @@ public class Partie {
 		do{
 			s.println("Joueur "+joueur+" :");
 			caseChoisi=choisirCase();
-		}while(!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1],explorateur,voleur,guerrier,joueur) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1],voleur));
+			nbessai+=1;
+		}while((!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1],explorateur,voleur,guerrier,joueur) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1],voleur,guerrier))&& nbessai<5);
+		if(nbessai<5)valide=valider();
+		}while(!valide);
 		s.i.deplacerPersonnage(persoChoisi[0],persoChoisi[1],caseChoisi[0],caseChoisi[1],joueur);
-	
+		
 	}
 	/**
 	 * Permet aux personnages dans les navires de récupérer de l'énergie

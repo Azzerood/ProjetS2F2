@@ -364,6 +364,10 @@ public class Ile {
 		return resultat;
 	}
 	
+	/**
+	 * @param joueur
+	 * @return retourne l'ile sous forme d'un tableau de nombres et n'affiche que les éléments visibles par le joueur "joueur"
+	 */
 	public int[][] getPlateau(int joueur){
 		int[][]resultat=new int[this.plateau.length][this.plateau[0].length];
 		int[][]ile=getPlateau();
@@ -394,7 +398,15 @@ public class Ile {
 				}
 			}
 		}
-		
+		if(joueur==1){
+			if(e1.positionCoffre[0]!=0 && e1.positionCoffre[1]!=0){
+				resultat[e1.positionCoffre[1]][e1.positionCoffre[0]]=5;
+			}
+		}else{
+			if(e2.positionCoffre[0]!=0 && e2.positionCoffre[1]!=0){
+				resultat[e2.positionCoffre[1]][e2.positionCoffre[0]]=5;
+			}
+		}
 		return resultat;
 	}
 	
@@ -508,8 +520,8 @@ public class Ile {
 				
 		 }else{
 			 if(plateau[x][y].perso instanceof Guerrier && plateau[x2][y2].perso!=null){
-				 plateau[x2][y2].perso.setEnergie(plateau[x2][y2].perso.getEnergie()-100);//le personnage ciblé perd de l'énergie (attaqué par le guerrier)
-				 plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-5); //coute 5 d'energie
+				 plateau[x2][y2].perso.setEnergie(plateau[x2][y2].perso.getEnergie()-50);//le personnage ciblé perd de l'énergie (attaqué par le guerrier)
+				 plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-10); //coute 10 d'energie
 				 if(plateau[x][y].perso.getEnergie()<=0)personnageMeurt(x, y);
 				 if(plateau[x2][y2].perso.getEnergie()<=0)personnageMeurt(x2, y2);
 				 
