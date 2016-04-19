@@ -4,6 +4,8 @@ public class Parcelle {
 	ArrayList<Element> listeelements=new ArrayList<Element>();
 	boolean accessible;
 	Personnage perso;
+	boolean piegee1;
+	boolean piegee2;
 	/**
 	 * 
 	 */
@@ -25,6 +27,12 @@ public class Parcelle {
 		if(listeelements!=null && !listeelements.isEmpty()) return listeelements.get(0).toString(); //l'alternative permet d'éviter toute erreur causée par l'éventuel manque d'un element.
 		if(perso!=null) return perso.toString();
 		else return " ";
+	}
+	public void setPiege1(boolean actif){
+		piegee1=actif;
+	}
+	public void setPiege2(boolean actif){
+		piegee2=actif;
 	}
 	
 	

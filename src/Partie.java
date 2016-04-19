@@ -121,7 +121,7 @@ public class Partie {
 		boolean Rochers=false;
 		Ile i;
 		do{ 
-		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png"};
+		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png","img/ppiege1.png","img/ppiege2.png","img/ppiegeactif.png"};
 		int taille=définirTailleIle();
 		int pourcentage=definirProportionRocher();
 		i=new Ile(taille);
@@ -170,6 +170,16 @@ public class Partie {
 		coordonnées[1]=y;
 		return coordonnées;
 	}
+	/**
+	 * @param x
+	 * @param y
+	 * affiche dans la console l'inventaire du personnage aux coordonnées(x,y)
+	 */
+	public void afficherInventaire(int x,int y){
+		s.println("-----------------------");
+		s.println(s.i.afficherInventaire(x, y));
+		s.println("-----------------------");
+	}
 	
 	/**
 	 * @return retourne vrai si l'utilisateur souhaite confirmer son choix de déplacement
@@ -181,8 +191,8 @@ public class Partie {
 		String[]choix={"valider","recommencer"};
 		JOptionPane jop;
 		rang = JOptionPane.showOptionDialog(null, 
-			      "Fin du tour.",
-			      "Confirmation du tour",
+			      "Souhaitez vous confirmer cette action ?",
+			      "Confirmation de l'action",
 			      JOptionPane.YES_NO_CANCEL_OPTION,
 			      JOptionPane.QUESTION_MESSAGE,
 			      null,
@@ -207,6 +217,7 @@ public class Partie {
 			boolean explorateur=false;
 			boolean voleur=false;
 			boolean guerrier=false;
+			boolean personnage=false;
 		
 		do{
 			s.println("Joueur "+joueur+" :");
@@ -215,6 +226,8 @@ public class Partie {
 		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Explorateur)explorateur=true;
 		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Voleur)voleur=true;
 		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Guerrier)guerrier=true;
+		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Personnage)personnage=true;
+		if(personnage)afficherInventaire(persoChoisi[0], persoChoisi[1]);
 		do{
 			s.println("Joueur "+joueur+" :");
 			caseChoisi=choisirCase();
@@ -233,14 +246,14 @@ public class Partie {
 		s.i.e2.recuperationNavire();
 	}
 	public void recuperationPiege(){
-		s.i.e1.recuperationPiege();
-		s.i.e2.recuperationPiege();
+		s.i.recuperationPiege();
 	}
 	/**
 	 *  Chaque joueur joue son tour tant qu'aucun des deux n'a gagné
 	 */
 	public void lancerPartie(){
 		do{
+			recuperationPiege();
 			recuperationNavire();
 			tour(1);
 			tour(2);

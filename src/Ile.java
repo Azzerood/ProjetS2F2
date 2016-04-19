@@ -379,25 +379,43 @@ public class Ile {
 		for(int l=0;l<plateau.length;l++){
 			for(int c=0;c<plateau[0].length;c++){
 				
-				if(plateau[l][c].perso!=null && plateau[l][c].perso.getEquipe()==joueur){ // s'il y a un personnage du joueur sur une case
-					resultat[c-1][l-1]=ile[c-1][l-1];   //alors on affiche toutes les case autour de lui
-					resultat[c-1][l]=ile[c-1][l];
-					resultat[c-1][l+1]=ile[c-1][l+1];
-					resultat[c][l-1]=ile[c][l-1];
-					resultat[c][l]=ile[c][l];
-					resultat[c][l+1]=ile[c][l+1];
-					resultat[c+1][l-1]=ile[c+1][l-1];
-					resultat[c+1][l]=ile[c+1][l];
-					resultat[c+1][l+1]=ile[c+1][l+1];
+				if(plateau[l][c].perso!=null ){ // s'il y a un personnage du joueur sur une case
+					if(plateau[l][c].perso.getEquipe()==joueur){
+						resultat[c-1][l-1]=ile[c-1][l-1];   //alors on affiche toutes les case autour de lui
+						resultat[c-1][l]=ile[c-1][l];
+						resultat[c-1][l+1]=ile[c-1][l+1];
+						resultat[c][l-1]=ile[c][l-1];
+						resultat[c][l]=ile[c][l];
+						resultat[c][l+1]=ile[c][l+1];
+						resultat[c+1][l-1]=ile[c+1][l-1];
+						resultat[c+1][l]=ile[c+1][l];
+						resultat[c+1][l+1]=ile[c+1][l+1];
+					}
 				}else{
 					if(!plateau[l][c].listeelements.isEmpty() ){ //si la case n'est pas vide
 						if( plateau[l][c].listeelements.get(0).compareTo(new Element(0)) ||  plateau[l][c].listeelements.get(0).compareTo(new Element(1)) || plateau[l][c].listeelements.get(0).compareTo(new Element(6)) ){// et qu'elle contient un navire ou de l'eau
 							resultat[c][l]=ile[c][l]; //Alors on l'affiche
 						}
+						
 					}
 				}
 			}
 		}
+		for(int l=0;l<plateau.length;l++){  
+			for(int c=0;c<plateau[0].length;c++){
+				if(joueur==1){//si c'est le joueur1 et que la case comporte un piege du joueur1, on l'affiche
+					if( plateau[l][c].piegee1)resultat[c][l]=17;
+				}
+				if(joueur==2 ){//si c'est le joueur2 et que la case comporte un piege du joueur2, on l'affiche
+					if(plateau[l][c].piegee2)resultat[c][l]=18;
+				}
+				if((plateau[l][c].piegee1 || plateau[l][c].piegee2) && plateau[l][c].perso!=null){ //si un personnage est pris au piege dans le piege
+					resultat[c][l]=19;
+				}
+			}
+		}
+		
+		
 		if(joueur==1){
 			if(e1.positionCoffre[0]!=0 && e1.positionCoffre[1]!=0){
 				resultat[e1.positionCoffre[1]][e1.positionCoffre[0]]=5;
@@ -436,6 +454,16 @@ public class Ile {
 			e2.positionCoffre[1]=y;
 		}
 	}
+	
+	/**
+	 * @param x
+	 * @param y
+	 * @return Retourne une chaine de caractère qui décrit l'inventaire du personnage en (x,y)
+	 */
+	public String afficherInventaire(int x,int y){
+		return plateau[x][y].perso.afficherInventaire();
+	}
+	
 	private void personnageMeurt(int x, int y){
 		if(plateau[x][y].perso.clé){
 			if(plateau[x][y].perso.coffre){
@@ -454,6 +482,18 @@ public class Ile {
 		plateau[x][y].perso=null;
 		
 		
+	}
+	
+	public void recuperationPiege(){
+		for(int l=0;l<plateau.length;l++){
+			for(int c=0;c<plateau[0].length;c++){
+				if(plateau[l][c].perso!=null){
+					if(plateau[l][c].perso.getPiegé()>0){
+					 plateau[l][c].perso.setPiegé(plateau[l][c].perso.getPiegé()-1);
+					}
+				}
+			}
+		}
 	}
 	
 	private int choisirPersonnageDansNavire(int joueur){
@@ -495,6 +535,25 @@ public class Ile {
 		return idxPerso;
 	}
 
+	public boolean afficherMenuPiegeur(){
+		boolean resultat= false;
+		int rang;
+		String[]choix={"Se déplacer","Poser un piège"};
+		JOptionPane jop;
+		rang = JOptionPane.showOptionDialog(null, 
+			      "Que faire?",
+			      "Piégeur",
+			      JOptionPane.YES_NO_CANCEL_OPTION,
+			      JOptionPane.QUESTION_MESSAGE,
+			      null,
+			      choix,
+			      choix[1]);
+		if(rang!=0)resultat=true;
+		return resultat;
+		
+		
+		
+	}
 	/**
 	 * @param x
 	 * @param y
@@ -513,12 +572,42 @@ public class Ile {
 			if(plateau[x][y].perso.getPiegé()<=0){
 			
 		 if(plateau[x2][y2].estVide()){ //si l'endroit ciblé est vide
-				plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-1);
-				plateau[x2][y2].perso=plateau[x][y].perso;
-				plateau[x][y].perso=null;
-				if(plateau[x2][y2].perso.getEnergie()<=0)personnageMeurt(x2, y2);
+			 if(plateau[x2][y2].piegee1 || plateau[x2][y2].piegee2){//piege un personnage s'il marche sur un piege et ne peut plus rien faire
+				 plateau[x][y].perso.setPiegé(5);
+				 plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-1);
+				 plateau[x2][y2].perso=plateau[x][y].perso;
+				 plateau[x][y].perso=null;
+				 
+			 }
+			 else{
+				 if(plateau[x][y].perso instanceof Piegeur){
+					 boolean poserPiege=afficherMenuPiegeur();
+					 if(poserPiege){
+						
+						 plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-10);
+						 if(joueur==1) {plateau[x2][y2].setPiege1(true);}
+						 else {plateau[x2][y2].setPiege2(true);}
+					
+						 if(plateau[x][y].perso.getEnergie()<=0)personnageMeurt(x, y);
+					 }else{
+						plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-1);
+						plateau[x2][y2].perso=plateau[x][y].perso;
+						plateau[x][y].perso=null;
+						if(plateau[x2][y2].perso.getEnergie()<=0)personnageMeurt(x2, y2);
+					 }
+				 
+				 
+				 }else{
+					 plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-1);
+					 plateau[x2][y2].perso=plateau[x][y].perso;
+					 plateau[x][y].perso=null;
+					 if(plateau[x2][y2].perso.getEnergie()<=0)personnageMeurt(x2, y2);
+				 }
 				
+			 }	
 		 }else{
+			 
+			 
 			 if(plateau[x][y].perso instanceof Guerrier && plateau[x2][y2].perso!=null){
 				 plateau[x2][y2].perso.setEnergie(plateau[x2][y2].perso.getEnergie()-50);//le personnage ciblé perd de l'énergie (attaqué par le guerrier)
 				 plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-10); //coute 10 d'energie

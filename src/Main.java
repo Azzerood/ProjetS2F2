@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Main {
-	
+	static String[] imagesjeu={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png","img/ppiege1.png","img/ppiege2.png","img/ppiegeactif.png"};
 	/**
 	 * Affiche un menu à l'utilisateur pour qu'il choisisse que faire
 	 * @throws InterruptedException
@@ -80,7 +80,7 @@ public class Main {
 		Partie p = new Partie();
 		boolean Rochers=false;
 		Ile i;
-		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png"};
+		String[] images=imagesjeu;
 		i=new Ile(10);
 		p.s=new SuperPlateau(images, 10,true);
 		p.s.setIle(i); 
@@ -98,7 +98,7 @@ public class Main {
 		Ile i;
 		SuperPlateau s;
 		do{
-		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png"};
+		String[] images=imagesjeu;
 		int taille=8;
 		int pourcentage=2;
 		i=new Ile(taille);
@@ -120,6 +120,8 @@ public class Main {
 		s.affichage();
 		JOptionPane.showMessageDialog (null, "Cliquez sur un personnage allié puis une parcelle pour vous déplacer/intéragir avec la parcelle", "Déplacement des personnages", JOptionPane.INFORMATION_MESSAGE);
 		do{
+			p.recuperationPiege();
+			p.recuperationNavire();
 			p.tour(1);
 			p.tour(2);
 		}while(!p.s.i.fini());
@@ -133,7 +135,7 @@ public class Main {
 		Ile i;
 		SuperPlateau s;
 		do{
-		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png"};
+		String[] images=imagesjeu;
 		int taille=10;
 		int pourcentage=2;
 		i=new Ile(taille);

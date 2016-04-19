@@ -68,6 +68,14 @@ public class Personnage {
 	public void setPiegé(int piegé) {
 		this.piegé = piegé;
 	}
-
+	
+	public String afficherInventaire(){
+		String resultat;
+		resultat="Inventaire de "+nom+"\n"+"Energie: "+energie+"\n";
+		if(piegé>0)resultat+="Piégé pendant "+piegé+" tours \n";
+		if(clé)resultat+="Possède la clé \n";
+		if(coffre)resultat+="Possède le trésor \n";
+		return resultat;
+	}
 	
 }
