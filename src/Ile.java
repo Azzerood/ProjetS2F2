@@ -489,6 +489,9 @@ public class Ile {
 		
 	}
 	
+	/**
+	 *  Retire 1 au nombre de tours restants piégé à tous les personnages actuellement dans un piege
+	 */
 	public void recuperationPiege(){
 		for(int l=0;l<plateau.length;l++){
 			for(int c=0;c<plateau[0].length;c++){
@@ -545,6 +548,9 @@ public class Ile {
 		return idxPerso;
 	}
 
+	/**
+	 * @return Retourne vrai si l'utilisateur soutaire se déplacer et faux s'il veut poser un piege
+	 */
 	public boolean afficherMenuPiegeur(){
 		boolean resultat= false;
 		int rang;
@@ -734,6 +740,15 @@ public class Ile {
 	}
 	
 	
+	/**
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @param joueur
+	 * @param casePrecedente
+	 * @return retourne les coordonnées du voisin de la case (x1,y1) qui propose le chemin le plus court vers la case (x2,y2)
+	 */
 	public int[] getBetterVoisin(int x1,int y1,int x2,int y2,int joueur,int[] casePrecedente){
 		int[] meilleurVoisin=new int[2];
 		int cost1=10000;

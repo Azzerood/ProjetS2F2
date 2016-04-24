@@ -87,12 +87,19 @@ public class Parcelle {
 		}
 		return false;
 	}
+	/**
+	 * @param joueur
+	 * @return Retourne vrai si la parcelle contient un personnage du joueur de numéro (joueur)
+	 */
 	public boolean contientAllié(int joueur){
 		if(perso!=null && perso.getEquipe()==joueur)return true;
 		return false;
 	}
 	
 	
+	/**
+	 * @return Retourne vrai si la parcelle contient la clé
+	 */
 	public boolean contientClé(){
 		if(!listeelements.isEmpty()){
 			if(listeelements.size()>1){
@@ -107,6 +114,9 @@ public class Parcelle {
 		}
 		return false;
 	}
+	/**
+	 * @return Retourne vrai si la case contient le coffre ou le trésor
+	 */
 	public boolean contientTrésor(){
 		if(!listeelements.isEmpty()){
 			if(listeelements.size()>1){
