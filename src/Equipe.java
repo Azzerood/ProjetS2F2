@@ -5,7 +5,9 @@ public class Equipe {
 	boolean tresor=false;
 	int[] positionCoffre=new int[2];
 	public int nbpersonnages;
+	boolean[][] casesvisites;
 	ArrayList<Personnage> equipageAuRepos=new ArrayList<Personnage>();// c'est le navire
+	int stratégie;//pour l'IA, définie la stratégie à adopter en fonction de la composition de l'équipe
 	
 	public Equipe(int num){
 		numero=num;

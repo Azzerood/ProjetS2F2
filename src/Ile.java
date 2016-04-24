@@ -13,9 +13,13 @@ public class Ile {
 	 */
 	Ile(int d){
 		plateau=new Parcelle[d][d];
+		e1.casesvisites=new boolean[d][d];
+		e2.casesvisites=new boolean[d][d];
 		for(int l=0;l<plateau.length;l++){
 			for(int c=0;c<plateau[0].length;c++){
 				plateau[l][c]=new Parcelle();
+				e1.casesvisites[l][c]=false;
+				e2.casesvisites[l][c]=false;
 			}
 		}
 	}
@@ -238,6 +242,7 @@ public class Ile {
 			}
 		}
 	}
+	
 	 
 	
 	private void placeRocher(double pourcentage){ //
@@ -523,15 +528,20 @@ public class Ile {
 		   
 		   if(joueur==1){
 			   for(int idx=0;idx<e1.equipageAuRepos.size();idx++){
-					if(e1.equipageAuRepos.get(idx).description().equals(Perso));idxPerso=idx;
+					if(e1.equipageAuRepos.get(idx).description().equals(Perso)){
+						idxPerso=idx;
+						}
 				}
 			   
 		   }else{
 			   for(int idx=0;idx<e2.equipageAuRepos.size();idx++){
-					if(e2.equipageAuRepos.get(idx).description().equals(Perso));idxPerso=idx;
+					if(e2.equipageAuRepos.get(idx).description().equals(Perso)){
+						idxPerso=idx;
+					}
 				}
 		   }
 		}
+		
 		return idxPerso;
 	}
 
@@ -718,6 +728,58 @@ public class Ile {
 		
 	}
 	
-
+	
+	private int getCost(int x1,int y1,int x2,int y2){
+		return Math.abs(x1-x2)+Math.abs(y1-y2);
+	}
+	
+	
+	public int[] getBetterVoisin(int x1,int y1,int x2,int y2,int joueur,int[] casePrecedente){
+		int[] meilleurVoisin=new int[2];
+		int cost1=10000;
+		int cost2=10000;
+		int cost3=10000;
+		int cost4=10000;
+		int costmin=10000;
+		int xp=casePrecedente[0];
+		int yp=casePrecedente[1];
+		
+		if( (plateau[x1-1][y1].estVide() || (x1-1==x2 && y1==y2) )  ){ //&& (xp!=x1-1 && yp!=y1)
+			cost1=getCost(x1-1, y1, x2, y2);
+			costmin=cost1;
+			meilleurVoisin[0]=x1-1;
+			meilleurVoisin[1]=y1;
+			
+		}
+		if( (plateau[x1+1][y1].estVide() || (x1+1==x2 && y1==y2) )  ){ //&& (xp!=x1+1 && yp!=y1)
+			cost2=getCost(x1+1, y1, x2, y2);
+			if(costmin>cost2){
+				costmin=cost2;
+				meilleurVoisin[0]=x1+1;
+				meilleurVoisin[1]=y1;
+			}
+		}
+		if( (plateau[x1][y1-1].estVide() || (x1==x2 && y1-1==y2))  ){ //&& (xp!=x1 && yp!=y1-1)
+			cost3=getCost(x1, y1-1, x2, y2);
+			if(costmin>cost3){
+				costmin=cost3;
+				meilleurVoisin[0]=x1;
+				meilleurVoisin[1]=y1-1;
+			}
+		}
+		if( (plateau[x1][y1+1].estVide() || (x1==x2 && y1+1==y2) )  ){ //&& (xp!=x1 && yp!=y1+1)
+			cost4=getCost(x1, y1+1, x2, y2);
+			if(costmin>cost4){
+				costmin=3;
+				meilleurVoisin[0]=x1;
+				meilleurVoisin[1]=y1+1;
+			}
+		}
+		
+		
+		
+		return meilleurVoisin;
+	}
+ 
 }
 

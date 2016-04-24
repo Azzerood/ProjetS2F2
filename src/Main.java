@@ -23,9 +23,7 @@ public class Main {
 		      choix,
 		      choix[2]);
 		    if(rang==0){
-		    	Partie p=new Partie(); 
-		    	p.initialiserPartie();
-		    	p.lancerPartie();
+		    	MenuLancerPartie();
 		    		
 		    }else{
 		    	if(rang==1){tuto();}	
@@ -36,6 +34,39 @@ public class Main {
 		    }
 		   }while(rang<choix.length-1);
 		   
+	}
+	private static void MenuLancerPartie() throws InterruptedException{
+		String[] choix = {"joueur contre IA" ,"joueur contre IA" ,"IA contre IA"};
+	    JOptionPane jop = new JOptionPane();
+	   int rang;
+	   rang = jop.showOptionDialog(null, 
+	      "Choissisez des joueurs",
+	      "Lancer une partie",
+	      JOptionPane.YES_NO_CANCEL_OPTION,
+	      JOptionPane.QUESTION_MESSAGE,
+	      null,
+	      choix,
+	      choix[2]);
+	    if(rang==0){
+	    	Partie p=new Partie(); 
+	    	p.initialiserPartieJvsJ();
+	    	p.lancerPartieJvsJ();
+	    		
+	    }else{
+	    	if(rang==1){
+	    		Partie p=new Partie(); 
+	        	p.initialiserPartieJvsIA();
+	        	p.lancerPartieJvsIA();}	
+	    	else{
+	    		if(rang==2){
+	    			Partie p=new Partie(); 
+		        	p.initialiserPartieIAvsIA();
+		        	p.lancerPartieIAvsIA()	;}
+	    	}
+	    
+	    }
+	   
+		
 	}
 	
 	/**
@@ -91,8 +122,9 @@ public class Main {
 	
 	/**
 	 * Affiche un plateau pour tester le déplacement des personnages
+	 * @throws InterruptedException 
 	 */
-	public static void testerDeplacement(){
+	public static void testerDeplacement() throws InterruptedException{
 		boolean Rochers;
 		Partie p=new Partie();
 		Ile i;
@@ -123,7 +155,9 @@ public class Main {
 			p.recuperationPiege();
 			p.recuperationNavire();
 			p.tour(1);
+			Thread.sleep(2000);
 			p.tour(2);
+			Thread.sleep(2000);
 		}while(!p.s.i.fini());
 	}
 	/**
@@ -189,6 +223,9 @@ public class Main {
 		
 		
 	}
+	
+	
+	
 	public static void main(String[] args) throws InterruptedException {  
 		menu();
 	}

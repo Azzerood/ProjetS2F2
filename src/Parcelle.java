@@ -87,6 +87,40 @@ public class Parcelle {
 		}
 		return false;
 	}
+	public boolean contientAllié(int joueur){
+		if(perso!=null && perso.getEquipe()==joueur)return true;
+		return false;
+	}
+	
+	
+	public boolean contientClé(){
+		if(!listeelements.isEmpty()){
+			if(listeelements.size()>1){
+				if(listeelements.get(1).compareTo(new Element(4))){
+					return true;
+				}
+			}else{
+				if(listeelements.get(0).compareTo(new Element(4))){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	public boolean contientTrésor(){
+		if(!listeelements.isEmpty()){
+			if(listeelements.size()>1){
+				if(listeelements.get(1).compareTo(new Element(3))){
+					return true;
+				}
+			}else{
+				if(listeelements.get(0).compareTo(new Element(3)) || listeelements.get(0).compareTo(new Element(5))){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	
 	
 	public static void main(String[]args){

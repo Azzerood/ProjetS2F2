@@ -10,6 +10,7 @@ public class Personnage {
 		private static int nbPersonnages;
 		private int numperso;
 		private int piegé;
+		private int[] casePrecedente;
 		
 	
 	public Personnage(boolean equipe1){
@@ -24,6 +25,7 @@ public class Personnage {
 	Random rand=new Random();
 	int x =rand.nextInt(20);
 	nom=noms[x];
+	casePrecedente=new int[]{0,0};
 	}
 	
 	/**
@@ -76,6 +78,14 @@ public class Personnage {
 		if(clé)resultat+="Possède la clé \n";
 		if(coffre)resultat+="Possède le trésor \n";
 		return resultat;
+	}
+
+	public int[] getCasePrecedente() {
+		return casePrecedente;
+	}
+
+	public void setCasePrecedente(int[] casePrecedente) {
+		this.casePrecedente = casePrecedente;
 	}
 	
 }
