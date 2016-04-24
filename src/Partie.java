@@ -268,7 +268,7 @@ public class Partie {
 	 * @param joueur
 	 * @return Retourne les coordonées du personnage choisi par l'IA s'il adopte la stratégie 1
 	 */
-	public int[] ChoisirPersoIaS1(int joueur){
+	private int[] ChoisirPersoIaS1(int joueur){
 		int[] caseChoisi =new int[2];
 		boolean trouve=false;
 		int indiceClé=0;
@@ -365,7 +365,7 @@ public class Partie {
 	 * @param joueur
 	 * @return Retourne les coordonées  de la case choisi par l'IA s'il utilise la stratégie 1
 	 */
-	public int[] ChoisirCaseIaS1(int[] PersoChoisi,int joueur){
+	private int[] ChoisirCaseIaS1(int[] PersoChoisi,int joueur){
 		int[] caseChoisi =new int[2];
 		boolean choisi=false;
 		int[]clé=new int[2];
@@ -445,7 +445,7 @@ public class Partie {
 		return caseChoisi;
 	}
 	
-	public int[] ChoisirPersoIaS2(int joueur){ //à définir
+	private int[] ChoisirPersoIaS2(int joueur){ //à définir
 		return new int[]{10,10};
 	}
 	/**

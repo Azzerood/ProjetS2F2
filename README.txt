@@ -16,4 +16,6 @@ POUR ACCEDER A LA MAQUETTE DU PROJET:
 *Ouvrir MAQUETTE_PROJET_F2.odp
 
 POUR ACCEDER AU COMPTE-RENDU:
-*Ouvrir CompteRenduChefProjet.pdf
+*Ouvrir "Objectifs et Distribution des taches.pdf"
+*Ouvrir "Bilan intermediaire.pdf"
+*Ouvrir "Bilan final.pdf"
