@@ -98,7 +98,7 @@ public class Personnage {
 	}
 
 	/**
-	 * @param casePrecedente
+	 * @param newCasePrecedente
 	 * Fixe les coordonnées de la case précedente du personnage à newCasePrecedente
 	 */
 	public void setCasePrecedente(int[] newCasePrecedente) {

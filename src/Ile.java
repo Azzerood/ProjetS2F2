@@ -735,7 +735,7 @@ public class Ile {
 	}
 	
 	
-	private int getCost(int x1,int y1,int x2,int y2){
+	private int getCost(int x1,int y1,int x2,int y2){ //à améliorer: peut buggué car ne prend pas en compte le fait que le cout heuristic ne prend pas en compte les éventuels obstacles à contourner.
 		return Math.abs(x1-x2)+Math.abs(y1-y2);
 	}
 	
