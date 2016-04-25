@@ -517,7 +517,7 @@ public class Partie {
 	public void tourIA(int joueur) throws InterruptedException{
 		int[][] vision=s.i.getPlateau(joueur);
 		s.refresh(vision);
-		Thread.sleep(1000);
+		Thread.sleep(500);
 		int[] persoChoisi={0,0};
 		int[] caseChoisi={0,0};
 		if(joueur==1){

@@ -295,7 +295,7 @@ public class Ile {
 			if(plateau[x][y].listeelements.isEmpty()){
 				if(plateau[x][y].perso==null)return true;
 			}else{
-				if(joueur==1 && plateau[x][y].listeelements.get(0).compareTo(new Element(0)))return true;
+				if (contientLeNavire1EtLeJoueurEst1(x, y, joueur))return true;
 				if(joueur==2 && plateau[x][y].listeelements.get(0).compareTo(new Element(1))) return true;
 				return false;
 			}
@@ -304,6 +304,10 @@ public class Ile {
 			if(joueur==1 && !plateau[x][y].listeelements.isEmpty() && plateau[x][y].listeelements.get(0).compareTo(new Element(0)))return true;
 			if(joueur==2 && !plateau[x][y].listeelements.isEmpty() && plateau[x][y].listeelements.get(0).compareTo(new Element(1))) return true;
 		}
+		return false;
+	}
+	private boolean contientLeNavire1EtLeJoueurEst1(int x, int y, int joueur) {
+		if(joueur==1 && plateau[x][y].listeelements.get(0).compareTo(new Element(0)))return true;
 		return false;
 	}
 	

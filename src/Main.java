@@ -36,7 +36,7 @@ public class Main {
 		   
 	}
 	private static void MenuLancerPartie() throws InterruptedException{
-		String[] choix = {"joueur contre IA" ,"joueur contre IA" ,"IA contre IA"};
+		String[] choix = {"joueur contre joueur" ,"joueur contre IA" ,"IA contre IA"};
 	    JOptionPane jop = new JOptionPane();
 	   int rang;
 	   rang = jop.showOptionDialog(null, 
