@@ -162,6 +162,7 @@ public class Partie {
 		i=new Ile(taille);
 		s=new SuperPlateau(images, taille,true);
 		s.setIle(i); 
+		i.addPlateau(s);
 		i.placerLesNavires();
 		i.placerEau();
 		composerEquipe(1); //le joueur 1 compose son equipage
@@ -191,6 +192,7 @@ public class Partie {
 		i=new Ile(taille);
 		s=new SuperPlateau(images, taille,true);
 		s.setIle(i); 
+		i.addPlateau(s);
 		i.placerLesNavires();
 		i.placerEau();
 		composerEquipe(1); //le joueur 1 compose son equipage
@@ -220,6 +222,7 @@ public class Partie {
 		i=new Ile(taille);
 		s=new SuperPlateau(images, taille,true);
 		s.setIle(i); 
+		i.addPlateau(s);
 		i.placerLesNavires();
 		i.placerEau();
 		composerEquipeIA(1); //le joueur 1 compose son equipage
@@ -264,7 +267,11 @@ public class Partie {
 		coordonnées[1]=y;
 		return coordonnées;
 	}
-	public int[] ChoisirPersoIaS1(int joueur){
+	/**
+	 * @param joueur
+	 * @return Retourne les coordonées du personnage choisi par l'IA s'il adopte la stratégie 1
+	 */
+	private int[] ChoisirPersoIaS1(int joueur){
 		int[] caseChoisi =new int[2];
 		boolean trouve=false;
 		int indiceClé=0;
@@ -356,7 +363,12 @@ public class Partie {
 		caseChoisi[1]=meilleurIndice%s.i.plateau.length;
 		return caseChoisi;
 	}
-	public int[] ChoisirCaseIaS1(int[] PersoChoisi,int joueur){
+	/**
+	 * @param PersoChoisi
+	 * @param joueur
+	 * @return Retourne les coordonées  de la case choisi par l'IA s'il utilise la stratégie 1
+	 */
+	private int[] ChoisirCaseIaS1(int[] PersoChoisi,int joueur){
 		int[] caseChoisi =new int[2];
 		boolean choisi=false;
 		int[]clé=new int[2];
@@ -436,7 +448,7 @@ public class Partie {
 		return caseChoisi;
 	}
 	
-	public int[] ChoisirPersoIaS2(int joueur){
+	private int[] ChoisirPersoIaS2(int joueur){ //à définir
 		return new int[]{10,10};
 	}
 	/**

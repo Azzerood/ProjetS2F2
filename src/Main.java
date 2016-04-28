@@ -115,6 +115,7 @@ public class Main {
 		i=new Ile(10);
 		p.s=new SuperPlateau(images, 10,true);
 		p.s.setIle(i); 
+		p.s.i.addPlateau(p.s);
 		p.s.close();
 		p.composerEquipe(1); //le joueur 1 compose son equipage
 		System.out.println(p.s.i.e1.equipageAuRepos.toString());
@@ -136,6 +137,7 @@ public class Main {
 		i=new Ile(taille);
 		s=new SuperPlateau(images, taille,true);
 		s.setIle(i);
+		p.s.i.addPlateau(s);
 		p.s=s;
 		i.placerLesNavires();
 		i.placerEau();
@@ -175,6 +177,7 @@ public class Main {
 		i=new Ile(taille);
 		s=new SuperPlateau(images, taille,true);
 		s.setIle(i);
+		p.s.i.addPlateau(s);
 		p.s=s;
 		i.placerLesNavires();
 		i.placerEau();

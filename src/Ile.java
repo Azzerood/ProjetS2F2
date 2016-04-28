@@ -8,6 +8,7 @@ public class Ile {
 	Parcelle[][] plateau; //plateau
 	Equipe e1=new Equipe(1);
 	Equipe e2=new Equipe(2);
+	SuperPlateau s;
 	/**
 	 * @param d
 	 */
@@ -35,6 +36,9 @@ public class Ile {
 		}
 		
 		
+	}
+	public  void addPlateau(SuperPlateau plateau){
+		s=plateau;
 	}
 	
 	/**
@@ -493,6 +497,9 @@ public class Ile {
 		
 	}
 	
+	/**
+	 *  Retire 1 au nombre de tours restants piégé à tous les personnages actuellement dans un piege
+	 */
 	public void recuperationPiege(){
 		for(int l=0;l<plateau.length;l++){
 			for(int c=0;c<plateau[0].length;c++){
@@ -549,6 +556,9 @@ public class Ile {
 		return idxPerso;
 	}
 
+	/**
+	 * @return Retourne vrai si l'utilisateur soutaire se déplacer et faux s'il veut poser un piege
+	 */
 	public boolean afficherMenuPiegeur(){
 		boolean resultat= false;
 		int rang;
@@ -588,6 +598,7 @@ public class Ile {
 		 if(plateau[x2][y2].estVide()){ //si l'endroit ciblé est vide
 			 if(plateau[x2][y2].piegee1 || plateau[x2][y2].piegee2){//piege un personnage s'il marche sur un piege et ne peut plus rien faire
 				 plateau[x][y].perso.setPiegé(5);
+				 s.println(plateau[x][y].perso.nom+" a marché sur un piege et est bloqué pendant 5tours.");
 				 plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-1);
 				 plateau[x2][y2].perso=plateau[x][y].perso;
 				 plateau[x][y].perso=null;
@@ -597,17 +608,26 @@ public class Ile {
 				 if(plateau[x][y].perso instanceof Piegeur){
 					 boolean poserPiege=afficherMenuPiegeur();
 					 if(poserPiege){
-						
+						 s.println(plateau[x][y].perso.nom+" a posé un piège et perd 10 points d'énergie");
 						 plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-10);
 						 if(joueur==1) {plateau[x2][y2].setPiege1(true);}
 						 else {plateau[x2][y2].setPiege2(true);}
 					
-						 if(plateau[x][y].perso.getEnergie()<=0)personnageMeurt(x, y);
+						 if(plateau[x][y].perso.getEnergie()<=0){
+							 personnageMeurt(x, y);
+							 s.println(plateau[x][y].perso.nom+" n'a plus d'energie et est mort");
+							 
+						 }
+						 
 					 }else{
 						plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-1);
 						plateau[x2][y2].perso=plateau[x][y].perso;
 						plateau[x][y].perso=null;
-						if(plateau[x2][y2].perso.getEnergie()<=0)personnageMeurt(x2, y2);
+						if(plateau[x2][y2].perso.getEnergie()<=0){
+							personnageMeurt(x2, y2);
+							s.println(plateau[x2][y2].perso.nom+" n'a plus d'energie et est mort");
+						}
+						
 					 }
 				 
 				 
@@ -615,7 +635,10 @@ public class Ile {
 					 plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-1);
 					 plateau[x2][y2].perso=plateau[x][y].perso;
 					 plateau[x][y].perso=null;
-					 if(plateau[x2][y2].perso.getEnergie()<=0)personnageMeurt(x2, y2);
+					 if(plateau[x2][y2].perso.getEnergie()<=0){
+						 personnageMeurt(x2, y2);
+						 s.println(plateau[x2][y2].perso.nom+" n'a plus d'energie et est mort");
+					 }
 				 }
 				
 			 }	
@@ -623,11 +646,18 @@ public class Ile {
 			 
 			 
 			 if(plateau[x][y].perso instanceof Guerrier && plateau[x2][y2].perso!=null){
+				 s.println(plateau[x][y].perso.nom+" attaque un personnage adversaire est perd 10 points d'énergie");
 				 plateau[x2][y2].perso.setEnergie(plateau[x2][y2].perso.getEnergie()-50);//le personnage ciblé perd de l'énergie (attaqué par le guerrier)
+				 s.println(plateau[x2][y2].perso.nom+" s'est fait attaqué et a perdu 50 points d'energie");
 				 plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-10); //coute 10 d'energie
-				 if(plateau[x][y].perso.getEnergie()<=0)personnageMeurt(x, y);
-				 if(plateau[x2][y2].perso.getEnergie()<=0)personnageMeurt(x2, y2);
-				 
+				 if(plateau[x][y].perso.getEnergie()<=0){
+					 personnageMeurt(x, y);
+					 s.println(plateau[x][y].perso.nom+" n'a plus d'energie et est mort");
+				 }
+				 if(plateau[x2][y2].perso.getEnergie()<=0){
+					 personnageMeurt(x2, y2);
+					 s.println(plateau[x2][y2].perso.nom+" n'a plus d'energie et est mort");
+				 }
 			 }else{
 			
 				 if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(4)) || !plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(5)) ){
@@ -647,22 +677,22 @@ public class Ile {
 			 			plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-10);
 			 		if(plateau[x2][y2].perso.getEquipe()!=joueur){ //s'il cible un personnage ennemie
 			 			if(plateau[x2][y2].perso.coffre){
-			 				System.out.println("tentative de vol");
+			 				s.println(plateau[x][y]+"tente de voler "+plateau[x2][y2].perso.nom+" et perd 10 points d'energie");
 			 				Random Rand=new Random();
-			 				int s=Rand.nextInt(10);
-			 				if(s>=9){
-			 					System.out.println("vol réussi");
+			 				int rand=Rand.nextInt(10);
+			 				if(rand>=9){
+			 					s.println("vol réussi");
 			 					plateau[x2][y2].perso.coffre=false;
 			 					plateau[x][y].perso.coffre=true;
 			 					
 			 				}
 			 			}
 			 			if(plateau[x2][y2].perso.clé){ // si le personnage possède la clé
-			 				System.out.println("tentative de vol");
+			 				s.println(plateau[x][y]+"tente de voler "+plateau[x2][y2].perso.nom+" et perd 10 points d'energie");
 			 				Random Rand=new Random();
-			 				int s=Rand.nextInt(10);
-			 				if(s>=9){
-			 					System.out.println("vol réussi");
+			 				int rand=Rand.nextInt(10);
+			 				if(rand>=9){
+			 					s.println("vol réussi");
 			 					plateau[x2][y2].perso.clé=false;
 			 					plateau[x][y].perso.clé=true;
 			 					
@@ -673,19 +703,22 @@ public class Ile {
 			 			
 			 			
 			 			if(plateau[x][y].perso.coffre){ // si le personnage possède le trésor
-			 					System.out.println("donne le trésor");
+			 					s.println(plateau[x][y]+"donne le trésor à "+plateau[x2][y2].perso.nom+" et perd 10 points d'energie");
 			 					plateau[x2][y2].perso.coffre=true;
 			 					plateau[x][y].perso.coffre=false;
 			 				
 			 			}
 			 			if(plateau[x][y].perso.clé){ // si le voleur possède la clé
-		 					System.out.println("donne la clé");
+		 					System.out.println(plateau[x][y]+"donne la clé à "+plateau[x2][y2].perso.nom+" et perd 10 points d'energie");
 		 					plateau[x2][y2].perso.clé=true;
 		 					plateau[x][y].perso.clé=false;
 		 				
 			 			}
 			 		}
-			 			if(plateau[x][y].perso.getEnergie()<=0)personnageMeurt(x, y);
+			 			if(plateau[x][y].perso.getEnergie()<=0){
+			 				personnageMeurt(x, y);
+			 				s.println(plateau[x][y].perso.nom+" n'a plus d'energie et est mort");
+			 			}
 			 	}
 			 	else if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(0)) || plateau[x2][y2].listeelements.get(0).compareTo(new Element(1))){ //si le navre est ciblé
 					plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-1);
@@ -700,21 +733,25 @@ public class Ile {
 					plateau[x][y].perso=null;	
 				}
 				else if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(2))){//si contient un rocher
+					s.println(plateau[x][y].perso.nom+" soulève un rocher et perd 5 points d'energie");
 					plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-5);
 					if(plateau[x2][y2].listeelements.size()>1){
 						if(plateau[x2][y2].listeelements.get(1).compareTo(new Element(3))){//rocher couvre le coffre
 							if(plateau[x][y].perso.clé){//le joueur a la clé
+								s.println("Il trouve le coffre et le prend.");
 								plateau[x2][y2].listeelements.remove(1);
 								plateau[x][y].perso.coffre=true;//le joueur récupère le trésor
 								plateau[x][y].perso.clé=false;//il perd donc la clé
 							}else{//le joueur n'a pas la clé
 								recupererCoordonneesCoffre(x2, y2, joueur);
+								s.println("Il trouve le coffre mais ne possède pas la clé pour l'ouvrir.");
 								
 							}
 					
 					
 						}
 						else if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(1).compareTo(new Element(4))){ //rocher couvre la clé
+							s.println("Il trouve la clé et la prend");
 							plateau[x2][y2].listeelements.remove(1);
 							plateau[x][y].perso.clé=true;
 						}
@@ -722,7 +759,10 @@ public class Ile {
 					}else{ //si le rocher ne couvre rien
 						
 					}
-					if(plateau[x][y].perso.getEnergie()<=0)personnageMeurt(x, y);
+					if(plateau[x][y].perso.getEnergie()<=0){
+						personnageMeurt(x, y);
+						s.println(plateau[x][y].perso.nom+" n'a plus d'energie et est mort");
+					}
 					
 				}
 			 }	
@@ -733,11 +773,20 @@ public class Ile {
 	}
 	
 	
-	private int getCost(int x1,int y1,int x2,int y2){
+	private int getCost(int x1,int y1,int x2,int y2){ //à améliorer: peut buggué car ne prend pas en compte le fait que le cout heuristic ne prend pas en compte les éventuels obstacles à contourner.
 		return Math.abs(x1-x2)+Math.abs(y1-y2);
 	}
 	
 	
+	/**
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @param joueur
+	 * @param casePrecedente
+	 * @return retourne les coordonnées du voisin de la case (x1,y1) qui propose le chemin le plus court vers la case (x2,y2)
+	 */
 	public int[] getBetterVoisin(int x1,int y1,int x2,int y2,int joueur,int[] casePrecedente){
 		int[] meilleurVoisin=new int[2];
 		int cost1=10000;

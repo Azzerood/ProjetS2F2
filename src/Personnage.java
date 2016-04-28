@@ -63,14 +63,24 @@ public class Personnage {
 		return numperso+") "+nom+" - "+getClass();
 	}
 
+	/**
+	 * @return retourne la valeur de piegé
+	 */
 	public int getPiegé() {
 		return piegé;
 	}
 
-	public void setPiegé(int piegé) {
-		this.piegé = piegé;
+	/**
+	 * @param nbtours
+	 * Fixe la  valeur de (piegé) du personnage à nbtours
+	 */
+	public void setPiegé(int nbtours) {
+		this.piegé = nbtours;
 	}
 	
+	/**
+	 * @return Retourne une chaîne de caractère qui contient l'inventaire et l'énergie du personnage
+	 */
 	public String afficherInventaire(){
 		String resultat;
 		resultat="Inventaire de "+nom+"\n"+"Energie: "+energie+"\n";
@@ -80,12 +90,19 @@ public class Personnage {
 		return resultat;
 	}
 
+	/**
+	 * @return Retourne les coordonnées de la derniere case ou se situait le personnage
+	 */
 	public int[] getCasePrecedente() {
 		return casePrecedente;
 	}
 
-	public void setCasePrecedente(int[] casePrecedente) {
-		this.casePrecedente = casePrecedente;
+	/**
+	 * @param newCasePrecedente
+	 * Fixe les coordonnées de la case précedente du personnage à newCasePrecedente
+	 */
+	public void setCasePrecedente(int[] newCasePrecedente) {
+		this.casePrecedente = newCasePrecedente;
 	}
 	
 }
