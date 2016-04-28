@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 public class Partie {
 	SuperPlateau s;
-	
+	String[] imagesjeu={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png","img/ppiege1.png","img/ppiege2.png","img/ppiegeactif.png","img/pbrouillard.PNG"};
 	private int définirTailleIle(){
 		boolean isnombre=false;
 		String t;
@@ -156,7 +156,7 @@ public class Partie {
 		boolean Rochers=false;
 		Ile i;
 		do{ 
-		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png","img/ppiege1.png","img/ppiege2.png","img/ppiegeactif.png"};
+		String[] images=imagesjeu;
 		int taille=définirTailleIle();
 		int pourcentage=definirProportionRocher();
 		i=new Ile(taille);
@@ -185,7 +185,7 @@ public class Partie {
 		boolean Rochers=false;
 		Ile i;
 		do{ 
-		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png","img/ppiege1.png","img/ppiege2.png","img/ppiegeactif.png"};
+		String[] images=imagesjeu;
 		int taille=définirTailleIle();
 		int pourcentage=definirProportionRocher();
 		i=new Ile(taille);
@@ -214,7 +214,7 @@ public class Partie {
 		boolean Rochers=false;
 		Ile i;
 		do{ 
-		String[] images={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png","img/ppiege1.png","img/ppiege2.png","img/ppiegeactif.png"};
+		String[] images=imagesjeu;
 		int taille=définirTailleIle();
 		int pourcentage=definirProportionRocher();
 		i=new Ile(taille);

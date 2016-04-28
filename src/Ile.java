@@ -382,7 +382,7 @@ public class Ile {
 		int[][]ile=getPlateau();
 		for(int l=0;l<plateau.length;l++){  
 			for(int c=0;c<plateau[0].length;c++){
-				resultat[l][c]=1;  //on initialise toutes les cases du tableau pour qu'elles affichent du sable
+				resultat[l][c]=20;  //on initialise toutes les cases du tableau pour qu'elles affichent du sable
 			}
 		}
 		for(int l=0;l<plateau.length;l++){

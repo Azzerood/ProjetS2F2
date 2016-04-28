@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Main {
-	static String[] imagesjeu={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png","img/ppiege1.png","img/ppiege2.png","img/ppiegeactif.png"};
+	static String[] imagesjeu={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png","img/ppiege1.png","img/ppiege2.png","img/ppiegeactif.png","img/pbrouillard.PNG"};
 	/**
 	 * Affiche un menu à l'utilisateur pour qu'il choisisse que faire
 	 * @throws InterruptedException
