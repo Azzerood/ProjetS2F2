@@ -124,7 +124,7 @@ public class Main {
 	 * Affiche un plateau pour tester le déplacement des personnages
 	 * @throws InterruptedException 
 	 */
-	public static void testerDeplacement() throws InterruptedException{
+	public static void testerDeplacement() throws InterruptedException{ 
 		boolean Rochers;
 		Partie p=new Partie();
 		Ile i;
