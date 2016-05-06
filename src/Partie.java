@@ -486,8 +486,10 @@ public class Partie {
 	 * Le joueur effectue toutes les actions possibles au cours d'un tour.
 	 * @param joueur
 	 */
-	public void tour(int joueur){
-		int[][] vision=s.i.getPlateau(joueur);
+	public void tour(int joueur,boolean godMod){
+		int[][] vision;
+		if(godMod){vision=s.i.getPlateau(godMod);}
+		else{vision=s.i.getPlateau(joueur);}
 		s.refresh(vision);
 		//boolean valide=false;
 		int nbessai;
@@ -518,7 +520,8 @@ public class Partie {
 		//if(nbessai<5)valide=valider();
 		}while(nbessai>=5);
 		s.i.deplacerPersonnage(persoChoisi[0],persoChoisi[1],caseChoisi[0],caseChoisi[1],joueur);
-		vision=s.i.getPlateau(joueur);
+		if(godMod){vision=s.i.getPlateau(godMod);}
+		else{vision=s.i.getPlateau(joueur);}
 		s.refresh(vision);
 	}
 	/**
@@ -581,10 +584,12 @@ public class Partie {
 		do{
 			recuperationPiege();
 			recuperationNavire();
-			tour(1);
+			tour(1,false);
 			Thread.sleep(2000);
-			tour(2);
-			Thread.sleep(2000);
+			if(!s.i.fini()){
+				tour(2,false);
+				Thread.sleep(2000);
+			}
 		}while(!s.i.fini());
 		s.close();
 		afficherVainqueur();
@@ -597,10 +602,12 @@ public class Partie {
 		do{
 			recuperationPiege();
 			recuperationNavire();
-			tour(1);
+			tour(1,false);
 			Thread.sleep(2000);
-			tourIA(2);
+				if(!s.i.fini()){
+					tourIA(2);
 			Thread.sleep(2000);
+			}
 		}while(!s.i.fini());
 		s.close();
 		afficherVainqueur();
@@ -616,8 +623,10 @@ public class Partie {
 			recuperationNavire();
 			tourIA(1);
 			Thread.sleep(2000);
-			tourIA(2);
-			Thread.sleep(2000);
+			if(!s.i.fini()){
+				tourIA(2);
+				Thread.sleep(2000);
+			}
 		}while(!s.i.fini() && nbtours<100); //limite à 100 coups le temps d'une partie
 		s.close();
 		afficherVainqueur();

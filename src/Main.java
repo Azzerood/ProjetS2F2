@@ -156,11 +156,12 @@ public class Main {
 		do{
 			p.recuperationPiege();
 			p.recuperationNavire();
-			p.tour(1);
+			p.tour(1,true);
 			//Thread.sleep(2000);
 			//p.tour(2);
 			//Thread.sleep(2000);
 		}while(!p.s.i.fini());
+		p.s.close();
 	}
 	/**
 	 * Affiche un plateau de jeu pour tester le Placement des personnages depuis le navire
@@ -194,12 +195,12 @@ public class Main {
 		s.affichage();
 		JOptionPane.showMessageDialog (null, "Cliquez sur le navire puis une parcelle vide pour placer votre équipage", "Placement des personnages", JOptionPane.INFORMATION_MESSAGE);
 		do{
-			p.tour(1);
+			p.tour(1,true);
 			Thread.sleep(2000);
-			p.tour(2);
-			Thread.sleep(2000);
+			
 		}while(!s.i.e1.equipageAuRepos.isEmpty() && !s.i.e2.equipageAuRepos.isEmpty());
 		p.s.refresh();
+		p.s.close();
 	}
 	
 	/**

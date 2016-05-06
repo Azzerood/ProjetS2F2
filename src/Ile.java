@@ -340,7 +340,7 @@ public class Ile {
 	/**
 	 * retourne l'ile sous forme d'un tableau de chiffre pour la classe Superplateau.
 	 */
-	public int[][] getPlateau(){ 
+	public int[][] getPlateau(boolean godMod){ 
 		int[][]resultat=new int[this.plateau.length][this.plateau[0].length];
 		for(int l=0;l<plateau.length;l++){
 			for(int c=0;c<plateau[0].length;c++){
@@ -367,10 +367,17 @@ public class Ile {
 					if(plateau[l][c].listeelements.get(0).compareTo(new Element(3)))resultat[c][l]=5;//coffre
 					if(plateau[l][c].listeelements.get(0).compareTo(new Element(6)))resultat[c][l]=7;//eau
 					
-					if(plateau[l][c].listeelements.size()>1){ //permet de voir ou est situé le coffre et la clé meme s'ils sont recouverts par un rocher (pour vérifier, à retirer dans la version finale)
-						if(plateau[l][c].listeelements.get(1).compareTo(new Element(3)))resultat[c][l]=5;//coffre
-						if(plateau[l][c].listeelements.get(1).compareTo(new Element(4)))resultat[c][l]=6;//clé
+					if(godMod){
+						if(plateau[l][c].listeelements.size()>1){ //permet de voir ou est situé le coffre et la clé meme s'ils sont recouverts par un rocher (pour vérifier, à retirer dans la version finale)
+							if(plateau[l][c].listeelements.get(1).compareTo(new Element(3)))resultat[c][l]=5;//coffre
+							if(plateau[l][c].listeelements.get(1).compareTo(new Element(4)))resultat[c][l]=6;//clé
+						}
 					}
+				}
+				if( plateau[l][c].piegee1)resultat[c][l]=17;
+				if(plateau[l][c].piegee2)resultat[c][l]=18;
+				if((plateau[l][c].piegee1 || plateau[l][c].piegee2) && plateau[l][c].perso!=null){ //si un personnage est pris au piege dans le piege
+					resultat[c][l]=19;
 				}
 			}
 		}
@@ -383,7 +390,7 @@ public class Ile {
 	 */
 	public int[][] getPlateau(int joueur){
 		int[][]resultat=new int[this.plateau.length][this.plateau[0].length];
-		int[][]ile=getPlateau();
+		int[][]ile=getPlateau(false);
 		for(int l=0;l<plateau.length;l++){  
 			for(int c=0;c<plateau[0].length;c++){
 				resultat[l][c]=20;  //on initialise toutes les cases du tableau pour qu'elles affichent du sable
@@ -614,8 +621,9 @@ public class Ile {
 						 else {plateau[x2][y2].setPiege2(true);}
 					
 						 if(plateau[x][y].perso.getEnergie()<=0){
-							 personnageMeurt(x, y);
 							 s.println(plateau[x][y].perso.nom+" n'a plus d'energie et est mort");
+							 personnageMeurt(x, y);
+							
 							 
 						 }
 						 
@@ -624,8 +632,9 @@ public class Ile {
 						plateau[x2][y2].perso=plateau[x][y].perso;
 						plateau[x][y].perso=null;
 						if(plateau[x2][y2].perso.getEnergie()<=0){
-							personnageMeurt(x2, y2);
 							s.println(plateau[x2][y2].perso.nom+" n'a plus d'energie et est mort");
+							personnageMeurt(x2, y2);
+							
 						}
 						
 					 }
@@ -636,8 +645,9 @@ public class Ile {
 					 plateau[x2][y2].perso=plateau[x][y].perso;
 					 plateau[x][y].perso=null;
 					 if(plateau[x2][y2].perso.getEnergie()<=0){
-						 personnageMeurt(x2, y2);
 						 s.println(plateau[x2][y2].perso.nom+" n'a plus d'energie et est mort");
+						 personnageMeurt(x2, y2);
+						
 					 }
 				 }
 				
@@ -651,12 +661,14 @@ public class Ile {
 				 s.println(plateau[x2][y2].perso.nom+" s'est fait attaqué et a perdu 50 points d'energie");
 				 plateau[x][y].perso.setEnergie(plateau[x][y].perso.getEnergie()-10); //coute 10 d'energie
 				 if(plateau[x][y].perso.getEnergie()<=0){
-					 personnageMeurt(x, y);
 					 s.println(plateau[x][y].perso.nom+" n'a plus d'energie et est mort");
+					 personnageMeurt(x, y);
+					 
 				 }
 				 if(plateau[x2][y2].perso.getEnergie()<=0){
-					 personnageMeurt(x2, y2);
 					 s.println(plateau[x2][y2].perso.nom+" n'a plus d'energie et est mort");
+					 personnageMeurt(x2, y2);
+					
 				 }
 			 }else{
 			
@@ -716,8 +728,9 @@ public class Ile {
 			 			}
 			 		}
 			 			if(plateau[x][y].perso.getEnergie()<=0){
-			 				personnageMeurt(x, y);
 			 				s.println(plateau[x][y].perso.nom+" n'a plus d'energie et est mort");
+			 				personnageMeurt(x, y);
+			 				
 			 			}
 			 	}
 			 	else if(!plateau[x2][y2].listeelements.isEmpty() && plateau[x2][y2].listeelements.get(0).compareTo(new Element(0)) || plateau[x2][y2].listeelements.get(0).compareTo(new Element(1))){ //si le navre est ciblé
@@ -760,8 +773,9 @@ public class Ile {
 						
 					}
 					if(plateau[x][y].perso.getEnergie()<=0){
-						personnageMeurt(x, y);
 						s.println(plateau[x][y].perso.nom+" n'a plus d'energie et est mort");
+						personnageMeurt(x, y);
+						
 					}
 					
 				}

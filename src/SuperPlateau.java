@@ -18,7 +18,7 @@ public class SuperPlateau {
 		this.test.setJeu(tab);
 	}
 	public void setJeu() {
-		this.test.setJeu(i.getPlateau());
+		this.test.setJeu(i.getPlateau(true));
 	}
 	
 	public void affichage(){
