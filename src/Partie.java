@@ -489,7 +489,7 @@ public class Partie {
 	public void tour(int joueur){
 		int[][] vision=s.i.getPlateau(joueur);
 		s.refresh(vision);
-		boolean valide=false;
+		//boolean valide=false;
 		int nbessai;
 		int[] persoChoisi;
 		int[] caseChoisi;
@@ -515,8 +515,8 @@ public class Partie {
 			caseChoisi=choisirCase();
 			nbessai+=1;
 		}while((!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1],explorateur,voleur,guerrier,joueur) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1],voleur,guerrier))&& nbessai<5);
-		if(nbessai<5)valide=valider();
-		}while(!valide);
+		//if(nbessai<5)valide=valider();
+		}while(nbessai>=5);
 		s.i.deplacerPersonnage(persoChoisi[0],persoChoisi[1],caseChoisi[0],caseChoisi[1],joueur);
 		vision=s.i.getPlateau(joueur);
 		s.refresh(vision);

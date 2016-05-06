@@ -137,8 +137,8 @@ public class Main {
 		i=new Ile(taille);
 		s=new SuperPlateau(images, taille,true);
 		s.setIle(i);
-		p.s.i.addPlateau(s);
 		p.s=s;
+		p.s.i.addPlateau(s);
 		i.placerLesNavires();
 		i.placerEau();
 		i.placerCoffre();
@@ -157,15 +157,16 @@ public class Main {
 			p.recuperationPiege();
 			p.recuperationNavire();
 			p.tour(1);
-			Thread.sleep(2000);
-			p.tour(2);
-			Thread.sleep(2000);
+			//Thread.sleep(2000);
+			//p.tour(2);
+			//Thread.sleep(2000);
 		}while(!p.s.i.fini());
 	}
 	/**
 	 * Affiche un plateau de jeu pour tester le Placement des personnages depuis le navire
+	 * @throws InterruptedException 
 	 */
-	public static void testerPlacement(){
+	public static void testerPlacement() throws InterruptedException{
 		boolean Rochers;
 		Partie p=new Partie();
 		Ile i;
@@ -177,8 +178,8 @@ public class Main {
 		i=new Ile(taille);
 		s=new SuperPlateau(images, taille,true);
 		s.setIle(i);
-		p.s.i.addPlateau(s);
 		p.s=s;
+		p.s.i.addPlateau(s);
 		i.placerLesNavires();
 		i.placerEau();
 		i.placerCoffre();
@@ -194,7 +195,9 @@ public class Main {
 		JOptionPane.showMessageDialog (null, "Cliquez sur le navire puis une parcelle vide pour placer votre équipage", "Placement des personnages", JOptionPane.INFORMATION_MESSAGE);
 		do{
 			p.tour(1);
+			Thread.sleep(2000);
 			p.tour(2);
+			Thread.sleep(2000);
 		}while(!s.i.e1.equipageAuRepos.isEmpty() && !s.i.e2.equipageAuRepos.isEmpty());
 		p.s.refresh();
 	}
