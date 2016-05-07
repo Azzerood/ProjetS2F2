@@ -2,7 +2,10 @@ import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.util.Random;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Partie {
 	SuperPlateau s;
@@ -12,12 +15,24 @@ public class Partie {
 		String t;
 		int taille=10;
 		do{
-		t= JOptionPane.showInputDialog("Définissez la taille de l'ile [min:10]");
-		if(t.matches("[0-9]+")){
-			taille=Integer.parseInt(t);
-			if(taille>=10)
-			isnombre=true;
-		}
+			String[] options = {"OK"};
+			JPanel panel = new JPanel();
+			JLabel lbl = new JLabel("Définissez la taille de l'ile [min: 10]");
+			JTextField txt = new JTextField(10);
+			panel.add(lbl);
+			panel.add(txt);
+			int selectedOption = JOptionPane.showOptionDialog(null, panel, "Configuration des rochers", JOptionPane.NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options , options[0]);
+			System.out.println(selectedOption);
+			if(selectedOption == 0){
+		    String text = txt.getText();
+		    System.out.println(text);
+		    if(text.matches("[0-9]+")){
+		    	taille=Integer.parseInt(text);
+		    	if(taille>=10){
+		    		isnombre=true;
+		    	}
+			}
+			}
 		}while(!isnombre);
 		return taille;
 	}
@@ -27,18 +42,34 @@ public class Partie {
 		int pourcentage=10;
 		do{
 			int max=30;
-		t= JOptionPane.showInputDialog("Définissez le pourcentage de rochers [0-"+max+"]");
-		if(t.matches("[0-9]+")){
-			pourcentage=Integer.parseInt(t);
-			if(pourcentage<=max)isnombre=true;
-			
+			String[] options = {"OK"};
+			JPanel panel = new JPanel();
+			JLabel lbl = new JLabel("Définissez le pourcentage de rochers [0-"+max+"]");
+			JTextField txt = new JTextField(10);
+			panel.add(lbl);
+			panel.add(txt);
+			int selectedOption = JOptionPane.showOptionDialog(null, panel, "Configuration des rochers", JOptionPane.NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options , options[0]);
+		//t= JOptionPane.showOptionDialog("Définissez le pourcentage de rochers [0-"+max+"]");
+		if(selectedOption == 0)
+		{
+		    String text = txt.getText();
+		    System.out.println(text);
+		    if(text.matches("[0-9]+")){
+		    	pourcentage=Integer.parseInt(text);
+		    	if(pourcentage<=max){isnombre=true;}
+		    }
 		}
+		//if(t.matches("[0-9]+")){
+			//pourcentage=Integer.parseInt(t);
+		//	if(pourcentage<=max)isnombre=true;
+			
+		//}
 		}while(!isnombre);
 		return pourcentage ;
 	}
 	private void erreurRocher(){
 		JOptionPane Taille=new JOptionPane();
-		JOptionPane.showMessageDialog(Taille, "Nous n'avons pas pu configurer l'ile. Recommencez", "Error", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(Taille, "Désolé Capitaine, nous n'avons pas repéré une telle île sur nos cartes. Nous pouvons chercher à nouveau.", "Nous avons un problème Capitaine !", JOptionPane.ERROR_MESSAGE);
 	}
 	
 	private boolean selectionnable(int x, int y ,int joueur){
@@ -162,6 +193,7 @@ public class Partie {
 		i=new Ile(taille);
 		s=new SuperPlateau(images, taille,true);
 		s.setIle(i); 
+		s.close(); // ferme la fenetre du plateau le temps de composer les equipes
 		i.addPlateau(s);
 		i.placerLesNavires();
 		i.placerEau();
@@ -178,6 +210,7 @@ public class Partie {
 		}while(!Rochers);
 		s.setJeu();
 		s.affichage();
+		
 	}
 	/**
 	 *   Créer une île selon les paramètre de l'utilisateur et y place les divers élèments nécessaires pour jouer (J vs IA)
@@ -191,6 +224,7 @@ public class Partie {
 		int pourcentage=definirProportionRocher();
 		i=new Ile(taille);
 		s=new SuperPlateau(images, taille,true);
+		s.close();
 		s.setIle(i); 
 		i.addPlateau(s);
 		i.placerLesNavires();
@@ -428,19 +462,19 @@ public class Partie {
 		}//fin deuxieme boucle for
 		if(pclé){//si la clé est sur le terrain on va la chercher
 
-			caseChoisi=s.i.getBetterVoisin(PersoChoisi[0],PersoChoisi[1],clé[0], clé[1],joueur,casePrecedente);
+			caseChoisi=s.i.getMeilleurVoisin(PersoChoisi[0],PersoChoisi[1],clé[0], clé[1],joueur,casePrecedente);
 			
 			
 		}else{//si la clé n'est pas sur la carte => on va chercher le coffre
 			if(pcoffre){
 
-			caseChoisi=s.i.getBetterVoisin(PersoChoisi[0],PersoChoisi[1],coffre[0], coffre[1],joueur,casePrecedente);
+			caseChoisi=s.i.getMeilleurVoisin(PersoChoisi[0],PersoChoisi[1],coffre[0], coffre[1],joueur,casePrecedente);
 			
 			}else{//s'il n'y a ni la clé ni le coffre
 				if(s.i.plateau[PersoChoisi[0]][PersoChoisi[1]].perso.coffre){//si le personnage a le trésor 
-				caseChoisi=s.i.getBetterVoisin(PersoChoisi[0],PersoChoisi[1],navire[0], navire[1],joueur,casePrecedente); //il va au navire
+				caseChoisi=s.i.getMeilleurVoisin(PersoChoisi[0],PersoChoisi[1],navire[0], navire[1],joueur,casePrecedente); //il va au navire
 				}else{//sinon
-					caseChoisi=s.i.getBetterVoisin(PersoChoisi[0],PersoChoisi[1],PersoChoisi[0],PersoChoisi[1],joueur,casePrecedente);	//il reste sur place car il sait qu'il a perdu.
+					caseChoisi=s.i.getMeilleurVoisin(PersoChoisi[0],PersoChoisi[1],PersoChoisi[0],PersoChoisi[1],joueur,casePrecedente);	//il reste sur place car il sait qu'il a perdu.
 				}
 			}
 		}

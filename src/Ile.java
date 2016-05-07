@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.DefaultListModel;
@@ -787,8 +788,10 @@ public class Ile {
 	}
 	
 	
-	private int getCost(int x1,int y1,int x2,int y2){ //à améliorer: peut buggué car ne prend pas en compte le fait que le cout heuristic ne prend pas en compte les éventuels obstacles à contourner.
-		return Math.abs(x1-x2)+Math.abs(y1-y2);
+	private float getCost(int x0,int y0,int x1,int y1,int x2,int y2){ 
+		float fCost=Math.abs(x1-x2)+Math.abs(y1-y2); //distance entre la case et la destination souhaitée
+		float gCost=Math.abs(x1-x0)+Math.abs(y1-y0); // distance entre le point de départ et la case
+		return gCost+fCost;
 	}
 	
 	
@@ -801,25 +804,86 @@ public class Ile {
 	 * @param casePrecedente
 	 * @return retourne les coordonnées du voisin de la case (x1,y1) qui propose le chemin le plus court vers la case (x2,y2)
 	 */
-	public int[] getBetterVoisin(int x1,int y1,int x2,int y2,int joueur,int[] casePrecedente){
+	public int[] getMeilleurVoisin(int x1,int y1,int x2,int y2,int joueur,int[] casePrecedente) {
+		Noeud[][] graphe=new Noeud[plateau.length][plateau[0].length];
+		for(int x=0;x<graphe.length;x++){
+			for(int y=0;y<graphe[0].length;y++){
+				graphe[x][y]=new Noeud(x,y);
+			}
+		}
+
+	
+		ArrayList<Noeud> open=new ArrayList<Noeud>();
+		ArrayList<Noeud> closed=new ArrayList<Noeud>();
+		open.add(graphe[x1][y1]);
+		Noeud current = open.get(0);
+		do{	
+			System.out.println("tournons "+current.getX()+","+current.getY());
+			for(Noeud n : open){
+				System.out.println("testons ça "+n.getX()+","+n.getY());
+				if(n.getHeuristic()<current.getHeuristic()){
+					current=n;
+				}
+			}
+			open.remove(current);
+			closed.add(current);
+			if(current.equals(graphe[x2][y2])){ // si la case actuelle est la case recherché
+				return new int[]{closed.get(1).getX(),closed.get(1).getY()};
+			}
+			for(int x=-1;x<2;x++){
+				for(int y=-1;y<2;y++){
+					
+					if((x==0)&& (y==0)){ //n'est pas un voisin mais la case actuelle
+						continue;
+					}
+					if ((x != 0) && (y != 0)) { // ne pas aller voir en diagonal
+						continue;
+					}
+					int xp=x+current.getX();
+					int yp=y+current.getY();
+					if(xp>1 && xp<graphe.length && yp>1 && yp<graphe[0].length ){
+						Noeud voisin=graphe[xp][yp];
+					
+						if(!plateau[xp][yp].estAccessiblePourExplorateur() || closed.contains(voisin) ){
+							continue;
+						}
+						//else{ 
+							if(voisin.getHeuristic()<current.getHeuristic() || !open.contains(voisin)){
+							voisin.setCost(current.getCost()+1);
+							voisin.setHeuristic(getCost(current.getX(), current.getY(), xp, yp, x2, y2));
+							voisin.setPrecedent(current);
+							if(!open.contains(voisin)){
+								open.add(voisin);
+							}
+						//}
+						}
+					}
+				}
+			}
+		}while(!open.isEmpty());
+		//}while(true);
+		return new int[]{closed.get(1).getX(),closed.get(1).getY()};
+		
+	}
+	/* public int[] getBetterVoisin(int x1,int y1,int x2,int y2,int joueur,int[] casePrecedente){
 		int[] meilleurVoisin=new int[2];
-		int cost1=10000;
-		int cost2=10000;
-		int cost3=10000;
-		int cost4=10000;
-		int costmin=10000;
+		float cost1=10000;
+		float cost2=10000;
+		float cost3=10000;
+		float cost4=10000;
+		float costmin=10000;
 		int xp=casePrecedente[0];
 		int yp=casePrecedente[1];
 		
 		if( (plateau[x1-1][y1].estVide() || (x1-1==x2 && y1==y2) )  ){ //&& (xp!=x1-1 && yp!=y1)
-			cost1=getCost(x1-1, y1, x2, y2);
+			cost1=getCost(xp,yp,x1-1, y1, x2, y2);
 			costmin=cost1;
 			meilleurVoisin[0]=x1-1;
 			meilleurVoisin[1]=y1;
 			
 		}
 		if( (plateau[x1+1][y1].estVide() || (x1+1==x2 && y1==y2) )  ){ //&& (xp!=x1+1 && yp!=y1)
-			cost2=getCost(x1+1, y1, x2, y2);
+			cost2=getCost(xp,yp,x1+1, y1, x2, y2);
 			if(costmin>cost2){
 				costmin=cost2;
 				meilleurVoisin[0]=x1+1;
@@ -827,7 +891,7 @@ public class Ile {
 			}
 		}
 		if( (plateau[x1][y1-1].estVide() || (x1==x2 && y1-1==y2))  ){ //&& (xp!=x1 && yp!=y1-1)
-			cost3=getCost(x1, y1-1, x2, y2);
+			cost3=getCost(xp,yp,x1, y1-1, x2, y2);
 			if(costmin>cost3){
 				costmin=cost3;
 				meilleurVoisin[0]=x1;
@@ -835,7 +899,7 @@ public class Ile {
 			}
 		}
 		if( (plateau[x1][y1+1].estVide() || (x1==x2 && y1+1==y2) )  ){ //&& (xp!=x1 && yp!=y1+1)
-			cost4=getCost(x1, y1+1, x2, y2);
+			cost4=getCost(xp,yp,x1, y1+1, x2, y2);
 			if(costmin>cost4){
 				costmin=3;
 				meilleurVoisin[0]=x1;
@@ -846,7 +910,7 @@ public class Ile {
 		
 		
 		return meilleurVoisin;
-	}
+	}*/
  
 }
 

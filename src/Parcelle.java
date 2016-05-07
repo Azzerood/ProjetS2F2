@@ -131,6 +131,10 @@ public class Parcelle {
 		}
 		return false;
 	}
+	public boolean estAccessiblePourExplorateur(){
+		if(contientClé() || contientTrésor() || estVide())return true;
+		return false;
+	}
 	
 	
 	public static void main(String[]args){

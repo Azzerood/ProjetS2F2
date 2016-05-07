@@ -213,13 +213,13 @@ public class Main {
 		s.setPreferedSize(820, 650);
 		int[][] tab=new int[1][1];
 		int nb=1;
-		int nbimages=4;
+		int nbimages=5;
 		do{
 		tab[0][0]=nb;
 		s.setJeu(tab);
 		s.affichage();
 		InputEvent e=s.waitEvent();
-		if(e.getModifiers()==4){ nb=nb-1;
+		if(e.getModifiers()==nbimages){ nb=nb-1;
 		if(nb<1)nb=1;
 		}
 		else nb=nb+1;
