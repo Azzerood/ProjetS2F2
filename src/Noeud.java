@@ -3,6 +3,7 @@ public class Noeud {
 	private int x;
 	private int y;
 	private Noeud precedent;
+	private Noeud successor;
 	private float cost;
 	private float heuristic=10000; //Mathematiquement , devrait être initialise a +l'infini
 	private float profondeur;
@@ -60,6 +61,14 @@ public class Noeud {
 	}
 	public String toString(){
 		return getX()+" "+getY();
+	}
+
+	public Noeud getSuccessor() {
+		return successor;
+	}
+
+	public void setSuccessor(Noeud successor) {
+		this.successor = successor;
 	}
 	
 

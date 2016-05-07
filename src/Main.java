@@ -115,6 +115,7 @@ public class Main {
 		i=new Ile(10);
 		p.s=new SuperPlateau(images, 10,true);
 		p.s.setIle(i); 
+		p.s.setP(p);
 		p.s.i.addPlateau(p.s);
 		p.s.close();
 		p.composerEquipe(1); //le joueur 1 compose son equipage
@@ -136,6 +137,7 @@ public class Main {
 		int pourcentage=2;
 		i=new Ile(taille);
 		s=new SuperPlateau(images, taille,true);
+		s.setP(p);
 		s.setIle(i);
 		p.s=s;
 		p.s.i.addPlateau(s);
@@ -178,6 +180,7 @@ public class Main {
 		int pourcentage=2;
 		i=new Ile(taille);
 		s=new SuperPlateau(images, taille,true);
+		s.setP(p);
 		s.setIle(i);
 		p.s=s;
 		p.s.i.addPlateau(s);

@@ -131,8 +131,8 @@ public class Parcelle {
 		}
 		return false;
 	}
-	public boolean estAccessiblePourExplorateur(){
-		if(contientClé() || contientTrésor() || estVide())return true;
+	public boolean estAccessiblePourExplorateur(int joueur){
+		if(contientClé() || contientTrésor() || estVide() || estNavireDe(joueur))return true;
 		return false;
 	}
 	

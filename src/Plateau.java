@@ -8,7 +8,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * La classe Plateau permet d'afficher un plateau de Jeu carré
@@ -22,6 +24,7 @@ public class Plateau {
 	private JFrame window ;
 	private GraphicPane graphic ;
 	private ConsolePane console ;
+	private Partie p;
 	/**
 	 *  Attribut ou est enregistré un événement observé. Cet attribut est
 	 * initialisé à null au début de la scrutation et rempli par l'événement observé 
@@ -114,6 +117,10 @@ public class Plateau {
 			console = new ConsolePane() ;
 			window.getContentPane().add(console) ;
 		}
+		JPanel zoneBoutons=new JPanel();
+		JButton abandonner=creerBoutonAbandonner();
+		zoneBoutons.add(abandonner);
+		window.add(zoneBoutons,BorderLayout.EAST);
 		resizeFromGraphic() ;
 
 		// Affichage effectif 
@@ -125,6 +132,42 @@ public class Plateau {
 		window.pack();
 		window.setLocationRelativeTo(null);
 		
+	}
+	private JButton creerBoutonAbandonner(){
+		JButton abandonner=new JButton("Abandonner");
+		abandonner.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				p.abandon=true;
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	return abandonner;
 	}
 	/**
 	 * Méthode permettant de placer les éléments sur le plateau. Le tableau doit être  
@@ -263,6 +306,12 @@ public class Plateau {
 	public void setPreferedSize(int largeur,int longueur){
 		window.setPreferredSize(new Dimension(largeur,longueur));
 		
+	}
+	public Partie getP() {
+		return p;
+	}
+	public void setP(Partie p) {
+		this.p = p;
 	}
 	
 	

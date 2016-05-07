@@ -721,7 +721,7 @@ public class Ile {
 			 					plateau[x][y].perso.coffre=false;
 			 				
 			 			}
-			 			if(plateau[x][y].perso.clé){ // si le voleur possède la clé
+			 			if(plateau[x][y].perso.clé){ // si le personnage possède la clé
 		 					System.out.println(plateau[x][y]+"donne la clé à "+plateau[x2][y2].perso.nom+" et perd 10 points d'energie");
 		 					plateau[x2][y2].perso.clé=true;
 		 					plateau[x][y].perso.clé=false;
@@ -752,13 +752,13 @@ public class Ile {
 					if(plateau[x2][y2].listeelements.size()>1){
 						if(plateau[x2][y2].listeelements.get(1).compareTo(new Element(3))){//rocher couvre le coffre
 							if(plateau[x][y].perso.clé){//le joueur a la clé
-								s.println("Il trouve le coffre et le prend.");
+								s.println(plateau[x][y].perso.nom+" trouve le coffre et le prend.");
 								plateau[x2][y2].listeelements.remove(1);
 								plateau[x][y].perso.coffre=true;//le joueur récupère le trésor
 								plateau[x][y].perso.clé=false;//il perd donc la clé
 							}else{//le joueur n'a pas la clé
 								recupererCoordonneesCoffre(x2, y2, joueur);
-								s.println("Il trouve le coffre mais ne possède pas la clé pour l'ouvrir.");
+								s.println(plateau[x][y].perso.nom+" trouve le coffre mais ne possède pas la clé pour l'ouvrir.");
 								
 							}
 					
@@ -816,11 +816,12 @@ public class Ile {
 		ArrayList<Noeud> open=new ArrayList<Noeud>();
 		ArrayList<Noeud> closed=new ArrayList<Noeud>();
 		open.add(graphe[x1][y1]);
-		Noeud current = open.get(0);
+		
 		do{	
+			Noeud current = open.get(0);
 			System.out.println("tournons "+current.getX()+","+current.getY());
 			for(Noeud n : open){
-				System.out.println("testons ça "+n.getX()+","+n.getY());
+				
 				if(n.getHeuristic()<current.getHeuristic()){
 					current=n;
 				}
@@ -844,7 +845,7 @@ public class Ile {
 					if(xp>1 && xp<graphe.length && yp>1 && yp<graphe[0].length ){
 						Noeud voisin=graphe[xp][yp];
 					
-						if(!plateau[xp][yp].estAccessiblePourExplorateur() || closed.contains(voisin) ){
+						if(!plateau[xp][yp].estAccessiblePourExplorateur(joueur) || closed.contains(voisin) ){ // ne pas évaluer les case qui ne sont pas accessible ou celles dont l'évaluation a été effectué de manière définitive
 							continue;
 						}
 						//else{ 

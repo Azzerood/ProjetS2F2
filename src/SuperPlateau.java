@@ -60,6 +60,12 @@ public class SuperPlateau {
 		this.test.setPreferedSize(largeur, longueur);
 		
 	}
+	public Partie getP() {
+		return this.test.getP();
+	}
+	public void setP(Partie p) {
+		this.test.setP(p);
+	}
 	
 }
 	

@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 
 public class Partie {
 	SuperPlateau s;
+	public boolean abandon=false;
 	String[] imagesjeu={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png","img/ppiege1.png","img/ppiege2.png","img/ppiegeactif.png","img/pbrouillard.PNG"};
 	private int définirTailleIle(){
 		boolean isnombre=false;
@@ -22,10 +23,8 @@ public class Partie {
 			panel.add(lbl);
 			panel.add(txt);
 			int selectedOption = JOptionPane.showOptionDialog(null, panel, "Configuration des rochers", JOptionPane.NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options , options[0]);
-			System.out.println(selectedOption);
 			if(selectedOption == 0){
 		    String text = txt.getText();
-		    System.out.println(text);
 		    if(text.matches("[0-9]+")){
 		    	taille=Integer.parseInt(text);
 		    	if(taille>=10){
@@ -53,7 +52,6 @@ public class Partie {
 		if(selectedOption == 0)
 		{
 		    String text = txt.getText();
-		    System.out.println(text);
 		    if(text.matches("[0-9]+")){
 		    	pourcentage=Integer.parseInt(text);
 		    	if(pourcentage<=max){isnombre=true;}
@@ -192,6 +190,7 @@ public class Partie {
 		int pourcentage=definirProportionRocher();
 		i=new Ile(taille);
 		s=new SuperPlateau(images, taille,true);
+		s.setP(this);
 		s.setIle(i); 
 		s.close(); // ferme la fenetre du plateau le temps de composer les equipes
 		i.addPlateau(s);
@@ -225,6 +224,7 @@ public class Partie {
 		i=new Ile(taille);
 		s=new SuperPlateau(images, taille,true);
 		s.close();
+		s.setP(this);
 		s.setIle(i); 
 		i.addPlateau(s);
 		i.placerLesNavires();
@@ -255,6 +255,7 @@ public class Partie {
 		int pourcentage=definirProportionRocher();
 		i=new Ile(taille);
 		s=new SuperPlateau(images, taille,true);
+		s.setP(this);
 		s.setIle(i); 
 		i.addPlateau(s);
 		i.placerLesNavires();
@@ -294,11 +295,13 @@ public class Partie {
 	public int[] choisirCase(){
 		int[] coordonnées=new int[2];
 		s.println("Choissisez où aller");
+		
 		InputEvent event=s.waitEvent();
 		int x=s.getX((MouseEvent) event);
 		int y=s.getY((MouseEvent) event);
 		coordonnées[0]=x;
 		coordonnées[1]=y;
+		
 		return coordonnées;
 	}
 	/**
@@ -474,7 +477,13 @@ public class Partie {
 				if(s.i.plateau[PersoChoisi[0]][PersoChoisi[1]].perso.coffre){//si le personnage a le trésor 
 				caseChoisi=s.i.getMeilleurVoisin(PersoChoisi[0],PersoChoisi[1],navire[0], navire[1],joueur,casePrecedente); //il va au navire
 				}else{//sinon
-					caseChoisi=s.i.getMeilleurVoisin(PersoChoisi[0],PersoChoisi[1],PersoChoisi[0],PersoChoisi[1],joueur,casePrecedente);	//il reste sur place car il sait qu'il a perdu.
+					if(PersoChoisi[0]>2 && s.i.plateau[PersoChoisi[0]-1][PersoChoisi[1]].estVide()){
+					caseChoisi=s.i.getMeilleurVoisin(PersoChoisi[0],PersoChoisi[1],PersoChoisi[0]-1,PersoChoisi[1],joueur,casePrecedente);	//il reste sur place car il sait qu'il a perdu.
+					}else{
+						if(PersoChoisi[0]<s.i.plateau.length-2 && s.i.plateau[PersoChoisi[0]+1][PersoChoisi[1]].estVide()){
+							caseChoisi=s.i.getMeilleurVoisin(PersoChoisi[0],PersoChoisi[1],PersoChoisi[0]+1,PersoChoisi[1],joueur,casePrecedente);
+						}
+					}
 				}
 			}
 		}
@@ -528,7 +537,7 @@ public class Partie {
 		//boolean valide=false;
 		int nbessai;
 		int[] persoChoisi;
-		int[] caseChoisi;
+		int[] caseChoisi = null;
 		do{
 			nbessai=0;
 			boolean explorateur=false;
@@ -540,20 +549,26 @@ public class Partie {
 			s.println("Joueur "+joueur+" :");
 			persoChoisi=choisirPersonnage();
 			//persoChoisi=ChoisirPersoIaS1(joueur);
-		}while(!selectionnable(persoChoisi[0], persoChoisi[1], joueur));
+			
+		}while(!selectionnable(persoChoisi[0], persoChoisi[1], joueur) );
 		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Explorateur)explorateur=true;
 		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Voleur)voleur=true;
 		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Guerrier)guerrier=true;
 		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Personnage)personnage=true;
 		if(personnage)afficherInventaire(persoChoisi[0], persoChoisi[1]);
+		if(!abandon){
 		do{
 			s.println("Joueur "+joueur+" :");
 			caseChoisi=choisirCase();
 			nbessai+=1;
-		}while((!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1],explorateur,voleur,guerrier,joueur) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1],voleur,guerrier))&& nbessai<5);
+			
+		}while((!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1],explorateur,voleur,guerrier,joueur) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1],voleur,guerrier))&& nbessai<5 );
+		}
 		//if(nbessai<5)valide=valider();
-		}while(nbessai>=5);
+		}while(nbessai>=5 );
+		if(!abandon){
 		s.i.deplacerPersonnage(persoChoisi[0],persoChoisi[1],caseChoisi[0],caseChoisi[1],joueur);
+		}
 		if(godMod){vision=s.i.getPlateau(godMod);}
 		else{vision=s.i.getPlateau(joueur);}
 		s.refresh(vision);
@@ -619,12 +634,14 @@ public class Partie {
 			recuperationPiege();
 			recuperationNavire();
 			tour(1,false);
-			Thread.sleep(2000);
-			if(!s.i.fini()){
-				tour(2,false);
+			if(!abandon){
 				Thread.sleep(2000);
+				if(!s.i.fini()){
+					tour(2,false);
+					Thread.sleep(2000);
+				}
 			}
-		}while(!s.i.fini());
+		}while(!s.i.fini() && !abandon);
 		s.close();
 		afficherVainqueur();
 	}
@@ -642,7 +659,7 @@ public class Partie {
 					tourIA(2);
 			Thread.sleep(2000);
 			}
-		}while(!s.i.fini());
+		}while(!s.i.fini()  && !abandon);
 		s.close();
 		afficherVainqueur();
 	}
@@ -661,7 +678,7 @@ public class Partie {
 				tourIA(2);
 				Thread.sleep(2000);
 			}
-		}while(!s.i.fini() && nbtours<100); //limite à 100 coups le temps d'une partie
+		}while(!s.i.fini() && nbtours<100  && !abandon); //limite à 100 coups le temps d'une partie
 		s.close();
 		afficherVainqueur();
 	}
@@ -678,7 +695,8 @@ public class Partie {
 			JOptionPane.showMessageDialog (null, "Joueur 2 a gagné!", "Fin de partie", JOptionPane.INFORMATION_MESSAGE);
 			gagnant=true;
 		}
-		if(!gagnant)JOptionPane.showMessageDialog (null, "Match nul", "Fin de partie", JOptionPane.INFORMATION_MESSAGE);
+		if(abandon)JOptionPane.showMessageDialog (null, "Abandon", "Fin de partie", JOptionPane.INFORMATION_MESSAGE);
+		else	if(!gagnant)JOptionPane.showMessageDialog (null, "Match nul", "Fin de partie", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
 
