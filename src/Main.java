@@ -74,7 +74,7 @@ public class Main {
 	 * Affiche un menu pour que l'utilisateur choissise quelle fonctionnalité il shouhaite tester
 	 */
 	public static void menuTest()throws InterruptedException{
-		String[] choix = {"Déplacement","Placement des personnages","Composition des équipes","Quitter"};
+		String[] choix = {"Déplacement","Placement des personnages","Composition des équipes","IA","Quitter"};
 	    JOptionPane jop = new JOptionPane();
 	   int rang;
 	   do{ 
@@ -94,7 +94,11 @@ public class Main {
 	    	else{
 	    		if(rang==2){testerCompositionDesEquipes();}
 	    		else{
-	    			
+	    			if(rang==3){
+	    				IA();
+	    			}else{
+	    				
+	    			}
 	    		}
 	    	}
 	    
@@ -159,10 +163,15 @@ public class Main {
 			p.recuperationPiege();
 			p.recuperationNavire();
 			p.tour(1,true);
-			//Thread.sleep(2000);
+			if(p.passerTour){
+				s.println("Le joueur 1 passe son tour");
+			}
+			p.passerTour=false;
+			Thread.sleep(1000);
 			//p.tour(2);
 			//Thread.sleep(2000);
-		}while(!p.s.i.fini());
+		}while(!p.s.i.fini() && !p.abandon);
+		p.afficherVainqueur();
 		p.s.close();
 	}
 	/**
@@ -199,9 +208,13 @@ public class Main {
 		JOptionPane.showMessageDialog (null, "Cliquez sur le navire puis une parcelle vide pour placer votre équipage", "Placement des personnages", JOptionPane.INFORMATION_MESSAGE);
 		do{
 			p.tour(1,true);
-			Thread.sleep(2000);
+			Thread.sleep(1000);
+			if(p.passerTour){
+				s.println("Le joueur 1 passe son tour");
+			}
+			p.passerTour=false;
 			
-		}while(!s.i.e1.equipageAuRepos.isEmpty() && !s.i.e2.equipageAuRepos.isEmpty());
+		}while(!s.i.e1.equipageAuRepos.isEmpty() && !s.i.e2.equipageAuRepos.isEmpty() && !p.abandon);
 		p.s.refresh();
 		p.s.close();
 	}
@@ -219,6 +232,8 @@ public class Main {
 		int nbimages=5;
 		do{
 		tab[0][0]=nb;
+		Partie p=new Partie();
+		s.setP(p);
 		s.setJeu(tab);
 		s.affichage();
 		InputEvent e=s.waitEvent();
@@ -233,7 +248,54 @@ public class Main {
 		
 		
 	}
-	
+	/**
+	 * Affiche un plateau de jeu pour tester le déplacement des personnages réalisé par l'IA
+	 * @throws InterruptedException 
+	 */
+	public static void IA() throws InterruptedException{
+		boolean Rochers;
+		Partie p=new Partie();
+		Ile i;
+		SuperPlateau s;
+		do{
+		String[] images=imagesjeu;
+		int taille=10;
+		int pourcentage=2;
+		i=new Ile(taille);
+		s=new SuperPlateau(images, taille,true);
+		s.setP(p);
+		s.setIle(i);
+		p.s=s;
+		p.s.i.addPlateau(s);
+		i.placerLesNavires();
+		i.placerEau();
+		i.placerCoffre();
+		i.placerClé();
+		p.composerEquipeIA(1); //le joueur 1 compose son equipage
+		p.composerEquipeIA(2); // le joueur 2 compose son equipage
+		i.placerLesEquipages();
+		Rochers=i.placerRocher(pourcentage);
+		if(!Rochers){
+			s.test.close();
+		}
+		}while(!Rochers);
+		s.setJeu();
+		s.affichage();
+		
+		do{
+			p.recuperationPiege();
+			p.recuperationNavire();
+			p.tourIA(1,true);
+			if(p.passerTour){
+				s.println("Le joueur 1 passe son tour");
+			}
+			p.passerTour=false;
+			//Thread.sleep(2000);
+			//p.tour(2);
+			//Thread.sleep(2000);
+		}while(!p.s.i.fini() && !p.abandon);
+		p.s.close();
+	}
 	
 	
 	public static void main(String[] args) throws InterruptedException {  

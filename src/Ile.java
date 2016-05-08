@@ -789,9 +789,10 @@ public class Ile {
 	
 	
 	private float getCost(int x0,int y0,int x1,int y1,int x2,int y2){ 
-		float fCost=Math.abs(x1-x2)+Math.abs(y1-y2); //distance entre la case et la destination souhaitée
-		float gCost=Math.abs(x1-x0)+Math.abs(y1-y0); // distance entre le point de départ et la case
-		return gCost+fCost;
+		float hCost=Math.abs(x1-x2)+Math.abs(y1-y2)*14; //distance entre la case et la destination souhaitée (heuristic)
+		float gCost=Math.abs(x1-x0)+Math.abs(y1-y0)*10; // distance entre le point de départ et la case
+		return gCost+hCost;
+		//return  Math.min(Math.abs(x0-x1),Math.abs(y0-y1)) * 10 + Math.abs(Math.abs(x1-x2) - Math.abs(y1-y2)) * 14;
 	}
 	
 	
@@ -829,21 +830,21 @@ public class Ile {
 			open.remove(current);
 			closed.add(current);
 			if(current.equals(graphe[x2][y2])){ // si la case actuelle est la case recherché
-				return new int[]{closed.get(1).getX(),closed.get(1).getY()};
+				return new int[]{closed.get(1).getX(),closed.get(1).getY()}; //on retourne la premiere case que l'on trouvé sur le chemin
 			}
-			for(int x=-1;x<2;x++){
-				for(int y=-1;y<2;y++){
+			for(int x=-1;x<2;x++){ //on parcours les cases de x-1 a x+1 autour du noued actuel
+				for(int y=-1;y<2;y++){ //on parcours les cases de y-1 a y+1 autour du noued actuel
 					
 					if((x==0)&& (y==0)){ //n'est pas un voisin mais la case actuelle
-						continue;
+						continue; //on passe un tour de boucle
 					}
 					if ((x != 0) && (y != 0)) { // ne pas aller voir en diagonal
 						continue;
 					}
 					int xp=x+current.getX();
 					int yp=y+current.getY();
-					if(xp>1 && xp<graphe.length && yp>1 && yp<graphe[0].length ){
-						Noeud voisin=graphe[xp][yp];
+					if(xp>0 && xp<graphe.length && yp>0 && yp<graphe[0].length ){ //limite aux bornes du plateau
+						Noeud voisin=graphe[xp][yp]; //Le noeud voisin devient celui aux coordonnées xp et yp
 					
 						if(!plateau[xp][yp].estAccessiblePourExplorateur(joueur) || closed.contains(voisin) ){ // ne pas évaluer les case qui ne sont pas accessible ou celles dont l'évaluation a été effectué de manière définitive
 							continue;
@@ -851,7 +852,7 @@ public class Ile {
 						//else{ 
 							if(voisin.getHeuristic()<current.getHeuristic() || !open.contains(voisin)){
 							voisin.setCost(current.getCost()+1);
-							voisin.setHeuristic(getCost(current.getX(), current.getY(), xp, yp, x2, y2));
+							voisin.setHeuristic(getCost(x1, y1, xp, yp, x2, y2));
 							voisin.setPrecedent(current);
 							if(!open.contains(voisin)){
 								open.add(voisin);
@@ -861,8 +862,8 @@ public class Ile {
 					}
 				}
 			}
-		}while(!open.isEmpty());
-		//}while(true);
+		//}while(!open.isEmpty());
+		}while(!closed.contains(graphe[x2][y2]));
 		return new int[]{closed.get(1).getX(),closed.get(1).getY()};
 		
 	}

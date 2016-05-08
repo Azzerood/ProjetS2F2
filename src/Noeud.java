@@ -6,7 +6,7 @@ public class Noeud {
 	private Noeud successor;
 	private float cost;
 	private float heuristic=10000; //Mathematiquement , devrait être initialise a +l'infini
-	private float profondeur;
+	private float profondeur; //gcost
 	public Noeud(int x,int y){
 		this.x=x;
 		this.y=y;

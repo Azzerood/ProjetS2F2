@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 public class Partie {
 	SuperPlateau s;
 	public boolean abandon=false;
+	public boolean passerTour=false;
 	String[] imagesjeu={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png","img/ppiege1.png","img/ppiege2.png","img/ppiegeactif.png","img/pbrouillard.PNG"};
 	private int définirTailleIle(){
 		boolean isnombre=false;
@@ -282,10 +283,12 @@ public class Partie {
 		int[] coordonnées=new int[2];
 		s.println("Choissisez un personnage");
 		InputEvent event=s.waitEvent();
+		if(!abandon && !passerTour){
 		int x=s.getX((MouseEvent) event);
 		int y=s.getY((MouseEvent) event);
 		coordonnées[0]=x;
 		coordonnées[1]=y;
+		}
 		return coordonnées;
 		
 	}
@@ -297,11 +300,12 @@ public class Partie {
 		s.println("Choissisez où aller");
 		
 		InputEvent event=s.waitEvent();
+		if(!abandon && !passerTour){
 		int x=s.getX((MouseEvent) event);
 		int y=s.getY((MouseEvent) event);
 		coordonnées[0]=x;
 		coordonnées[1]=y;
-		
+		}
 		return coordonnées;
 	}
 	/**
@@ -550,23 +554,23 @@ public class Partie {
 			persoChoisi=choisirPersonnage();
 			//persoChoisi=ChoisirPersoIaS1(joueur);
 			
-		}while(!selectionnable(persoChoisi[0], persoChoisi[1], joueur) );
+		}while(!selectionnable(persoChoisi[0], persoChoisi[1], joueur) && !abandon && !passerTour);
 		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Explorateur)explorateur=true;
 		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Voleur)voleur=true;
 		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Guerrier)guerrier=true;
 		if(s.i.plateau[persoChoisi[0]][persoChoisi[1]].perso instanceof Personnage)personnage=true;
 		if(personnage)afficherInventaire(persoChoisi[0], persoChoisi[1]);
-		if(!abandon){
+		if(!abandon && !passerTour){
 		do{
 			s.println("Joueur "+joueur+" :");
 			caseChoisi=choisirCase();
 			nbessai+=1;
 			
-		}while((!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1],explorateur,voleur,guerrier,joueur) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1],voleur,guerrier))&& nbessai<5 );
+		}while((!s.i.deplacementPossible(caseChoisi[0],caseChoisi[1],explorateur,voleur,guerrier,joueur) || !sontAdjacent(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1],voleur,guerrier))&& nbessai<5 && !abandon && !passerTour);
 		}
 		//if(nbessai<5)valide=valider();
 		}while(nbessai>=5 );
-		if(!abandon){
+		if(!abandon && !passerTour){
 		s.i.deplacerPersonnage(persoChoisi[0],persoChoisi[1],caseChoisi[0],caseChoisi[1],joueur);
 		}
 		if(godMod){vision=s.i.getPlateau(godMod);}
@@ -578,8 +582,10 @@ public class Partie {
 	 * Effectue un tour pour l'IA 
 	 * @throws InterruptedException 
 	 */
-	public void tourIA(int joueur) throws InterruptedException{
-		int[][] vision=s.i.getPlateau(joueur);
+	public void tourIA(int joueur,boolean godMod) throws InterruptedException{
+		int[][]vision;
+		if(godMod){vision=s.i.getPlateau(godMod);}
+		else{vision=s.i.getPlateau(joueur);}
 		s.refresh(vision);
 		Thread.sleep(500);
 		int[] persoChoisi={0,0};
@@ -612,7 +618,8 @@ public class Partie {
 			
 		}
 		s.i.deplacerPersonnage(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1], joueur);
-		vision=s.i.getPlateau(joueur);
+		if(godMod){vision=s.i.getPlateau(godMod);}
+		else{vision=s.i.getPlateau(joueur);}
 		s.refresh(vision);
 	}
 	/**
@@ -622,6 +629,9 @@ public class Partie {
 		s.i.e1.recuperationNavire();
 		s.i.e2.recuperationNavire();
 	}
+	/**
+	 * Décrémente de 1 le compteur de tours piégé pour les personnages actuellement pris dans un piège
+	 */
 	public void recuperationPiege(){
 		s.i.recuperationPiege();
 	}
@@ -631,14 +641,23 @@ public class Partie {
 	 */
 	public void lancerPartieJvsJ() throws InterruptedException{
 		do{
+			passerTour=false;
 			recuperationPiege();
 			recuperationNavire();
 			tour(1,false);
+			if(passerTour){
+				s.println("Le joueur 1 passe son tour");
+			}
+			passerTour=false;
 			if(!abandon){
 				Thread.sleep(2000);
 				if(!s.i.fini()){
 					tour(2,false);
+					if(passerTour){
+						s.println("Le joueur 2 passe son tour");
+					}
 					Thread.sleep(2000);
+					
 				}
 			}
 		}while(!s.i.fini() && !abandon);
@@ -651,13 +670,22 @@ public class Partie {
 	 */
 	public void lancerPartieJvsIA() throws InterruptedException{
 		do{
+			passerTour=false;
 			recuperationPiege();
 			recuperationNavire();
 			tour(1,false);
+			if(passerTour){
+				s.println("Le joueur 1 passe son tour");
+			}
+			passerTour=false;
 			Thread.sleep(2000);
 				if(!s.i.fini()){
-					tourIA(2);
-			Thread.sleep(2000);
+					tourIA(2,false);
+					if(passerTour){
+						s.println("Le joueur 2 passe son tour");
+					}
+					Thread.sleep(2000);
+					
 			}
 		}while(!s.i.fini()  && !abandon);
 		s.close();
@@ -670,13 +698,22 @@ public class Partie {
 	public void lancerPartieIAvsIA() throws InterruptedException{
 		int nbtours=0;
 		do{
+			passerTour=false;
 			recuperationPiege();
 			recuperationNavire();
-			tourIA(1);
+			tourIA(1,false);
+			if(passerTour){
+				s.println("Le joueur 1 passe son tour");
+			}
+			passerTour=false;
 			Thread.sleep(2000);
 			if(!s.i.fini()){
-				tourIA(2);
+				tourIA(2,false);
+				if(passerTour){
+					s.println("Le joueur 2 passe son tour");
+				}
 				Thread.sleep(2000);
+				
 			}
 		}while(!s.i.fini() && nbtours<100  && !abandon); //limite à 100 coups le temps d'une partie
 		s.close();

@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -119,7 +120,10 @@ public class Plateau {
 		}
 		JPanel zoneBoutons=new JPanel();
 		JButton abandonner=creerBoutonAbandonner();
+		JButton passerTour=creerBoutonPasserTour();
+		zoneBoutons.setLayout(new BoxLayout(zoneBoutons, BoxLayout.Y_AXIS));
 		zoneBoutons.add(abandonner);
+		zoneBoutons.add(passerTour);
 		window.add(zoneBoutons,BorderLayout.EAST);
 		resizeFromGraphic() ;
 
@@ -141,6 +145,42 @@ public class Plateau {
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				p.abandon=true;
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	return abandonner;
+	}
+	private JButton creerBoutonPasserTour(){
+		JButton abandonner=new JButton("Passer son tour");
+		abandonner.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				p.passerTour=true;
 			}
 			
 			@Override
@@ -216,7 +256,8 @@ public class Plateau {
 	public InputEvent waitEvent(int timeout) {
 		int time = 0 ;
 		prepareWaitEvent() ;
-		while ((currentEvent == null) && (time < timeout)) {
+		while ((currentEvent == null) && (time < timeout) ) {
+			System.out.println(p.abandon);
 			try {
 				Thread.sleep(100) ;	// Cette instruction - en plus du délai induit - permet à Swing de traiter les événements GUI 
 			} catch (InterruptedException e) {
@@ -237,7 +278,8 @@ public class Plateau {
 	 */
 	public InputEvent waitEvent() {
 		prepareWaitEvent() ;
-		while (currentEvent == null) {
+		while (currentEvent == null && !p.abandon && !p.passerTour) {
+			
 			Thread.yield() ;	// Redonne la main à Swing pour gérer les événements
 		}
 		return currentEvent ;
