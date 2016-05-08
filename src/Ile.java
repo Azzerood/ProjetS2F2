@@ -819,11 +819,12 @@ public class Ile {
 		open.add(graphe[x1][y1]);
 		
 		do{	
+			
 			Noeud current = open.get(0);
 			System.out.println("tournons "+current.getX()+","+current.getY());
 			for(Noeud n : open){
 				
-				if(n.getHeuristic()<current.getHeuristic()){
+				if(n.getFcost()<current.getFcost()){
 					current=n;
 				}
 			}
@@ -850,9 +851,9 @@ public class Ile {
 							continue;
 						}
 						//else{ 
-							if(voisin.getHeuristic()<current.getHeuristic() || !open.contains(voisin)){
-							voisin.setCost(current.getCost()+1);
-							voisin.setHeuristic(getCost(x1, y1, xp, yp, x2, y2));
+							if(voisin.getFcost()<current.getFcost() || !open.contains(voisin)){
+							//voisin.setCost(current.getCost()+1);
+							voisin.setFcost(getCost(x1, y1, xp, yp, x2, y2));
 							voisin.setPrecedent(current);
 							if(!open.contains(voisin)){
 								open.add(voisin);

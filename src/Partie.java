@@ -11,7 +11,7 @@ public class Partie {
 	SuperPlateau s;
 	public boolean abandon=false;
 	public boolean passerTour=false;
-	String[] imagesjeu={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png","img/ppiege1.png","img/ppiege2.png","img/ppiegeactif.png","img/pbrouillard.PNG"};
+	String[] imagesjeu={"psol.png","procher.png","pnavire1.png","pnavire2.png","pcoffre.png","pclé.png","peau.png","pexplo1.png","pexplo2.png","pvoleur1.png","pvoleur2.png","ppiegeur1.png","ppiegeur2.png","pguerrier1.png","pguerrier2.png","ptresor.png","ppiege1.png","ppiege2.png","ppiegeactif.png","pbrouillard.png"};
 	private int définirTailleIle(){
 		boolean isnombre=false;
 		String t;
@@ -481,13 +481,9 @@ public class Partie {
 				if(s.i.plateau[PersoChoisi[0]][PersoChoisi[1]].perso.coffre){//si le personnage a le trésor 
 				caseChoisi=s.i.getMeilleurVoisin(PersoChoisi[0],PersoChoisi[1],navire[0], navire[1],joueur,casePrecedente); //il va au navire
 				}else{//sinon
-					if(PersoChoisi[0]>2 && s.i.plateau[PersoChoisi[0]-1][PersoChoisi[1]].estVide()){
-					caseChoisi=s.i.getMeilleurVoisin(PersoChoisi[0],PersoChoisi[1],PersoChoisi[0]-1,PersoChoisi[1],joueur,casePrecedente);	//il reste sur place car il sait qu'il a perdu.
-					}else{
-						if(PersoChoisi[0]<s.i.plateau.length-2 && s.i.plateau[PersoChoisi[0]+1][PersoChoisi[1]].estVide()){
-							caseChoisi=s.i.getMeilleurVoisin(PersoChoisi[0],PersoChoisi[1],PersoChoisi[0]+1,PersoChoisi[1],joueur,casePrecedente);
-						}
-					}
+					passerTour=true;
+					caseChoisi[0]=0;
+					caseChoisi[1]=1;
 				}
 			}
 		}

@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -42,7 +43,18 @@ class GraphicPane extends JPanel {
 		if (gif!=null){
 			nbImages=gif.length;
 			images=new ImageIcon[nbImages];	
-			for (int i=0;i<nbImages;i++) images[i]=new ImageIcon(gif[i]);
+			
+			for (int i=0;i<nbImages;i++) {
+				
+				//java.net.URL imageURL = ClassLoader.getSystemResource(gif[i]);
+				java.net.URL imageURL = GraphicPane.class.getResource(gif[i]);
+				 if (imageURL != null) {
+				      images[i] = new ImageIcon(imageURL);
+				   } else{
+				   }
+				
+				//images[i]=new ImageIcon(gif[i]);
+				}
 			dimImage=images[0].getIconHeight()+2;
 			setGraphicSize() ;
 			this.setBackground(Color.LIGHT_GRAY);

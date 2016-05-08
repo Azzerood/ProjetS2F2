@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Main {
-	static String[] imagesjeu={"img/psol.png","img/procher.png","img/pnavire1.png","img/pnavire2.png","img/pcoffre.png","img/pclé.png","img/peau.png","img/pexplo1.png","img/pexplo2.png","img/pvoleur1.png","img/pvoleur2.png","img/ppiegeur1.png","img/ppiegeur2.png","img/pguerrier1.png","img/pguerrier2.png","img/ptresor.png","img/ppiege1.png","img/ppiege2.png","img/ppiegeactif.png","img/pbrouillard.PNG"};
+	static String[] imagesjeu={"psol.png","procher.png","pnavire1.png","pnavire2.png","pcoffre.png","pclé.png","peau.png","pexplo1.png","pexplo2.png","pvoleur1.png","pvoleur2.png","ppiegeur1.png","ppiegeur2.png","pguerrier1.png","pguerrier2.png","ptresor.png","ppiege1.png","ppiege2.png","ppiegeactif.png","pbrouillard.png"};
 	/**
 	 * Affiche un menu à l'utilisateur pour qu'il choisisse que faire
 	 * @throws InterruptedException
@@ -224,7 +224,7 @@ public class Main {
 	 * @throws InterruptedException
 	 */
 	public static void tuto() throws InterruptedException{
-		String[] images={"img/tuto1.png","img/tuto2.png","img/tuto3.png","img/tuto4.png","img/tuto5.png","img/tuto6.png","img/tuto7.png",};
+		String[] images={"tuto1.png","tuto2.png","tuto3.png","tuto4.png","tuto5.png","tuto6.png","tuto7.png",};
 		SuperPlateau s=new SuperPlateau(images,1);
 		s.setPreferedSize(820, 650);
 		int[][] tab=new int[1][1];
