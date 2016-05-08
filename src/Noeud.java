@@ -4,9 +4,9 @@ public class Noeud {
 	private int y;
 	private Noeud precedent;
 	private Noeud successor;
-	private float fcost;
-	private float heuristic=10000; //Mathematiquement , devrait être initialise a +l'infini
-	private float gcost; //gcost
+	private double fcost;
+	private double heuristic; //Mathematiquement , devrait être initialise a +l'infini
+	private double gcost=Double.MAX_VALUE; //gcost
 	public Noeud(int x,int y){
 		this.x=x;
 		this.y=y;
@@ -32,27 +32,27 @@ public class Noeud {
 		this.x = x;
 	}
 
-	public float getFcost() {
+	public double getFcost() {
 		return fcost;
 	}
 
-	public void setFcost(float cost) {
+	public void setFcost(double cost) {
 		this.fcost = cost;
 	}
 
-	public float getHeuristic() {
+	public double getHeuristic() {
 		return heuristic;
 	}
 
-	public void setHeuristic(float heuristic) {
+	public void setHeuristic(double heuristic) {
 		this.heuristic = heuristic;
 	}
 
-	public float getGcost() {
+	public double getGcost() {
 		return gcost;
 	}
 
-	public void setGcost(float profondeur) {
+	public void setGcost(double profondeur) {
 		this.gcost = profondeur;
 	}
 	public boolean equals(Noeud n){

@@ -11,7 +11,7 @@ public class Partie {
 	SuperPlateau s;
 	public boolean abandon=false;
 	public boolean passerTour=false;
-	String[] imagesjeu={"psol.png","procher.png","pnavire1.png","pnavire2.png","pcoffre.png","pclé.png","peau.png","pexplo1.png","pexplo2.png","pvoleur1.png","pvoleur2.png","ppiegeur1.png","ppiegeur2.png","pguerrier1.png","pguerrier2.png","ptresor.png","ppiege1.png","ppiege2.png","ppiegeactif.png","pbrouillard.png"};
+	String[]  imagesjeu={"psol.png","procher.png","pnavire1.png","pnavire2.png","pcoffre.png","pclé.png","peau.png","pexplo1.png","pexplo2.png","pvoleur1.png","pvoleur2.png","ppiegeur1.png","ppiegeur2.png","pguerrier1.png","pguerrier2.png","ptresor.png","ppiege1.png","ppiege2.png","ppiegeactif.png","pbrouillard.png"};
 	private int définirTailleIle(){
 		boolean isnombre=false;
 		String t;
@@ -378,7 +378,9 @@ public class Partie {
 					}
 				}
 			}
-			
+			if(!trouve){
+				passerTour=true;
+			}
 			}else{
 				
 				for(int l=0;l<s.i.plateau.length;l++){
@@ -400,6 +402,8 @@ public class Partie {
 				
 			}
 		}
+		
+		if(meilleurIndice==1000)passerTour=true;
 		caseChoisi[0]=meilleurIndice/s.i.plateau.length;
 		caseChoisi[1]=meilleurIndice%s.i.plateau.length;
 		return caseChoisi;
@@ -589,7 +593,9 @@ public class Partie {
 		if(joueur==1){
 			if(s.i.e1.stratégie==1){//si l'équipe est composé d'explorateur seulement
 				persoChoisi=ChoisirPersoIaS1(joueur);
-				caseChoisi=ChoisirCaseIaS1(persoChoisi, joueur);
+				if(!abandon && !passerTour){
+					caseChoisi=ChoisirCaseIaS1(persoChoisi, joueur);
+				}
 			}else{
 				if(s.i.e1.stratégie==2){//si l'équipe est composé de guerriers seulement
 					persoChoisi=ChoisirPersoIaS2(joueur);
@@ -602,7 +608,9 @@ public class Partie {
 		}else{//si c'est le joueur 2
 			if(s.i.e2.stratégie==1){//si l'équipe est composé d'explorateur seulement
 				persoChoisi=ChoisirPersoIaS1(joueur);
-				caseChoisi=ChoisirCaseIaS1(persoChoisi, joueur);
+				if(!abandon && !passerTour){
+					caseChoisi=ChoisirCaseIaS1(persoChoisi, joueur);
+				}
 				
 			}else{
 				if(s.i.e2.stratégie==2){//si l'équipe est composé de guerriers seulement
@@ -613,7 +621,10 @@ public class Partie {
 			}
 			
 		}
-		s.i.deplacerPersonnage(persoChoisi[0], persoChoisi[1], caseChoisi[0], caseChoisi[1], joueur);
+		
+		if(!abandon && !passerTour){
+			s.i.deplacerPersonnage(persoChoisi[0],persoChoisi[1],caseChoisi[0],caseChoisi[1],joueur);
+			}
 		if(godMod){vision=s.i.getPlateau(godMod);}
 		else{vision=s.i.getPlateau(joueur);}
 		s.refresh(vision);

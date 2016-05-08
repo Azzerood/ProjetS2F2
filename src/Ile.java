@@ -788,11 +788,31 @@ public class Ile {
 	}
 	
 	
-	private float getCost(int x0,int y0,int x1,int y1,int x2,int y2){ 
-		float hCost=Math.abs(x1-x2)+Math.abs(y1-y2)*14; //distance entre la case et la destination souhaitée (heuristic)
-		float gCost=Math.abs(x1-x0)+Math.abs(y1-y0)*10; // distance entre le point de départ et la case
+	private double getCost(int x0,int y0,int x1,int y1,int x2,int y2){ 
+		double hCost=Math.abs(x1-x2)+Math.abs(y1-y2)*14; //distance entre la case et la destination souhaitée (heuristic)
+		double gCost=Math.abs(x1-x0)+Math.abs(y1-y0)*10; // distance entre le point de départ et la case
 		return gCost+hCost;
 		//return  Math.min(Math.abs(x0-x1),Math.abs(y0-y1)) * 10 + Math.abs(Math.abs(x1-x2) - Math.abs(y1-y2)) * 14;
+	}
+	private int[] getProchain(int x0,int y0,int x1,int y1,int x2,int y2,Noeud[][]graphe){
+		
+		if(graphe[x1][y1].getPrecedent().getX() !=x0 && graphe[x1][y1].getPrecedent().getY() !=y0){
+			System.out.println(graphe[x1][y1].getFcost());
+			return getProchain(x0, y0,graphe[x1][y1].getPrecedent().getX(),graphe[x1][y1].getPrecedent().getY(),x2,y2,graphe);
+		}
+		else{
+			return new int[]{graphe[x1][y1].getPrecedent().getX(),graphe[x1][y1].getPrecedent().getY()};
+		}
+		
+	}
+	private boolean explorateurPeutMarcherdessus(Personnage explo,int x,int y,int joueur){
+		if(plateau[x][y].estNavireDe(joueur))return true;
+		if(explo.clé){
+			if(plateau[x][y].estAccessiblePourExplorateur(joueur))return true;
+		}else{
+			if(plateau[x][y].estVide() || plateau[x][y].contientClé())return true;
+		}
+		return false;
 	}
 	
 	
@@ -821,7 +841,7 @@ public class Ile {
 		do{	
 			
 			Noeud current = open.get(0);
-			System.out.println("tournons "+current.getX()+","+current.getY());
+			
 			for(Noeud n : open){
 				
 				if(n.getFcost()<current.getFcost()){
@@ -832,6 +852,7 @@ public class Ile {
 			closed.add(current);
 			if(current.equals(graphe[x2][y2])){ // si la case actuelle est la case recherché
 				return new int[]{closed.get(1).getX(),closed.get(1).getY()}; //on retourne la premiere case que l'on trouvé sur le chemin
+				//return getProchain(x1, y1, x2, y2, x2, y2, graphe);
 			}
 			for(int x=-1;x<2;x++){ //on parcours les cases de x-1 a x+1 autour du noued actuel
 				for(int y=-1;y<2;y++){ //on parcours les cases de y-1 a y+1 autour du noued actuel
@@ -847,16 +868,16 @@ public class Ile {
 					if(xp>0 && xp<graphe.length && yp>0 && yp<graphe[0].length ){ //limite aux bornes du plateau
 						Noeud voisin=graphe[xp][yp]; //Le noeud voisin devient celui aux coordonnées xp et yp
 					
-						if(!plateau[xp][yp].estAccessiblePourExplorateur(joueur) || closed.contains(voisin) ){ // ne pas évaluer les case qui ne sont pas accessible ou celles dont l'évaluation a été effectué de manière définitive
+						if(!explorateurPeutMarcherdessus(plateau[x1][y1].perso, xp, yp, joueur) || closed.contains(voisin) ){ // ne pas évaluer les case qui ne sont pas accessible ou celles dont l'évaluation a été effectué de manière définitive
 							continue;
 						}
 						//else{ 
-							if(voisin.getFcost()<current.getFcost() || !open.contains(voisin)){
+							if(voisin.getFcost()<current.getFcost() || !open.contains(voisin)){ //si le chemin est plus court ou que le voisin n'est pas dans la liste ouverte
 							//voisin.setCost(current.getCost()+1);
-							voisin.setFcost(getCost(x1, y1, xp, yp, x2, y2));
-							voisin.setPrecedent(current);
-							if(!open.contains(voisin)){
-								open.add(voisin);
+							voisin.setFcost(getCost(x1,y1, xp, yp, x2, y2)); //on calcule le cout du voisin
+							voisin.setPrecedent(current); //on fixe comme prédecesseur du voisin la case actuelle
+							if(!open.contains(voisin)){ //si le voisin n'est pas dans la liste ouverte
+								open.add(voisin); //on le rajoute
 							}
 						//}
 						}
@@ -866,6 +887,7 @@ public class Ile {
 		//}while(!open.isEmpty());
 		}while(!closed.contains(graphe[x2][y2]));
 		return new int[]{closed.get(1).getX(),closed.get(1).getY()};
+		//return getProchain(x1, y1, x1, y1, x2, y2, graphe);
 		
 	}
 	/* public int[] getBetterVoisin(int x1,int y1,int x2,int y2,int joueur,int[] casePrecedente){
