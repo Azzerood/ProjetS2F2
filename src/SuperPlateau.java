@@ -37,7 +37,9 @@ public class SuperPlateau {
 	public int getX(MouseEvent event) {
 		return test.getX(event) ; 
 	}
-	
+	public void setRezisable(boolean resizable){
+		this.test.setResizable(resizable);
+	}
 	public int getY(MouseEvent event) { 	
 		return test.getY(event) ;
 	}

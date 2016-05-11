@@ -226,7 +226,8 @@ public class Main {
 	public static void tuto() throws InterruptedException{
 		String[] images={"tuto1.png","tuto2.png","tuto3.png","tuto4.png","tuto5.png","tuto6.png","tuto7.png",};
 		SuperPlateau s=new SuperPlateau(images,1);
-		s.setPreferedSize(820, 650);
+		s.setPreferedSize(810, 630);
+		s.setRezisable(false);
 		int[][] tab=new int[1][1];
 		int nb=1;
 		int nbimages=5;

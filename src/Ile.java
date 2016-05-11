@@ -795,14 +795,15 @@ public class Ile {
 		//return  Math.min(Math.abs(x0-x1),Math.abs(y0-y1)) * 10 + Math.abs(Math.abs(x1-x2) - Math.abs(y1-y2)) * 14;
 	}
 	private int[] getProchain(int x0,int y0,int x1,int y1,int x2,int y2,Noeud[][]graphe){
+		ArrayList<Noeud> path=new ArrayList<Noeud>();
+		Noeud current=graphe[x2][y2];
+		while(!current.equals(graphe[x0][y0])){
+			current.getPrecedent().setSuccessor(current);
+			path.add(current);
+			current=current.getPrecedent();
+		}
+		return new int[]{ path.get(path.size()-1).getX(),path.get(path.size()-1).getY()};
 		
-		if(graphe[x1][y1].getPrecedent().getX() !=x0 && graphe[x1][y1].getPrecedent().getY() !=y0){
-			System.out.println(graphe[x1][y1].getFcost());
-			return getProchain(x0, y0,graphe[x1][y1].getPrecedent().getX(),graphe[x1][y1].getPrecedent().getY(),x2,y2,graphe);
-		}
-		else{
-			return new int[]{graphe[x1][y1].getPrecedent().getX(),graphe[x1][y1].getPrecedent().getY()};
-		}
 		
 	}
 	private boolean explorateurPeutMarcherdessus(Personnage explo,int x,int y,int joueur){
@@ -851,8 +852,8 @@ public class Ile {
 			open.remove(current);
 			closed.add(current);
 			if(current.equals(graphe[x2][y2])){ // si la case actuelle est la case recherché
-				return new int[]{closed.get(1).getX(),closed.get(1).getY()}; //on retourne la premiere case que l'on trouvé sur le chemin
-				//return getProchain(x1, y1, x2, y2, x2, y2, graphe);
+				//return new int[]{closed.get(1).getX(),closed.get(1).getY()}; //on retourne la premiere case que l'on trouvé sur le chemin
+				return getProchain(x1, y1, x2, y2, x2, y2, graphe);
 			}
 			for(int x=-1;x<2;x++){ //on parcours les cases de x-1 a x+1 autour du noued actuel
 				for(int y=-1;y<2;y++){ //on parcours les cases de y-1 a y+1 autour du noued actuel
@@ -874,7 +875,7 @@ public class Ile {
 						//else{ 
 							if(voisin.getFcost()<current.getFcost() || !open.contains(voisin)){ //si le chemin est plus court ou que le voisin n'est pas dans la liste ouverte
 							//voisin.setCost(current.getCost()+1);
-							voisin.setFcost(getCost(x1,y1, xp, yp, x2, y2)); //on calcule le cout du voisin
+							voisin.setFcost(current.getFcost()+getCost(current.getX(),current.getY(), xp, yp, x2, y2)); //on calcule le cout du voisin
 							voisin.setPrecedent(current); //on fixe comme prédecesseur du voisin la case actuelle
 							if(!open.contains(voisin)){ //si le voisin n'est pas dans la liste ouverte
 								open.add(voisin); //on le rajoute

@@ -256,7 +256,7 @@ public class Plateau {
 	public InputEvent waitEvent(int timeout) {
 		int time = 0 ;
 		prepareWaitEvent() ;
-		while ((currentEvent == null) && (time < timeout) ) {
+		while ((currentEvent == null) && (time < timeout) && currentEvent instanceof KeyEvent ) {
 			System.out.println(p.abandon);
 			try {
 				Thread.sleep(100) ;	// Cette instruction - en plus du délai induit - permet à Swing de traiter les événements GUI 
@@ -267,6 +267,13 @@ public class Plateau {
 		}
 		return currentEvent ;
 	}
+	
+	
+	public void setResizable(boolean resizable){
+			this.window.setResizable(resizable);
+	}
+	
+	
 	/**
 	 * Attends (indéfiniment) un événement clavier ou souris. 
 	 * Pour limiter le temps d'attente (timeout) voir {@link #waitEvent(int)}.
@@ -278,7 +285,7 @@ public class Plateau {
 	 */
 	public InputEvent waitEvent() {
 		prepareWaitEvent() ;
-		while (currentEvent == null && !p.abandon && !p.passerTour) {
+		while (currentEvent == null && !p.abandon && !p.passerTour || currentEvent instanceof KeyEvent) {
 			
 			Thread.yield() ;	// Redonne la main à Swing pour gérer les événements
 		}
