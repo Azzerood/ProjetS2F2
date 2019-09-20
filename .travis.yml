@@ -4,5 +4,7 @@ addons:
     organization: "mon-orga" # the key of the org you chose at step #3
 script:
   # other script steps might be done before running the actual analysis
+  - mkdir output
+  - javac src/Main.java -d output
   - sonar-scanner
 
